@@ -5,6 +5,8 @@ import '../styles/about.css';
 const About = () => {
     const { name, bio, aboutImage } = portfolioData.personal;
 
+    const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+
     return (
         <section id="about" className="section about-section">
             <div className="container">
@@ -13,7 +15,7 @@ const About = () => {
                 <div className="about-content">
                     <div className="about-image-wrapper">
                         <div className="image-glass-panel glass-panel">
-                            <img src={aboutImage || "/profile2.jpg"} alt={name} className="profile-image" />
+                            <img src={resolveUrl(aboutImage || '/profile2.jpg')} alt={name} className="profile-image" />
                         </div>
                         {/* Decorative element */}
                         <div className="about-shape"></div>

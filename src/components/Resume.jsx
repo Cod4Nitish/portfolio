@@ -7,12 +7,14 @@ const Resume = () => {
     const { experience } = portfolioData;
     const { resumeUrl } = portfolioData.contact;
 
+    const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+
     return (
         <section id="resume" className="section resume-section">
             <div className="container">
                 <div className="resume-header">
                     <h2 className="section-title" style={{ marginBottom: 0 }}>Experience & Education</h2>
-                    <a href={resumeUrl} download className="btn btn-primary" target="_blank" rel="noreferrer">
+                    <a href={resolveUrl(resumeUrl)} download className="btn btn-primary" target="_blank" rel="noreferrer">
                         <Download size={18} /> Download Resume
                     </a>
                 </div>

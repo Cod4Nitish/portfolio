@@ -13,6 +13,9 @@ const Hero = () => {
     const [currentText, setCurrentText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
 
+    // Resolve public URLs for GitHub Pages
+    const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+
     // Mouse Parallax Logic
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -88,7 +91,7 @@ const Hero = () => {
                         <a href="#projects" className="btn btn-primary">
                             View Projects <ArrowRight size={18} />
                         </a>
-                        <a href={resumeUrl} download className="btn btn-outline" target="_blank" rel="noreferrer">
+                        <a href={resolveUrl(resumeUrl)} download className="btn btn-outline" target="_blank" rel="noreferrer">
                             <Download size={18} /> Resume
                         </a>
                     </div>
@@ -124,7 +127,7 @@ const Hero = () => {
 
                 <div className="hero-image-container" style={{ transform: `translate(${mousePosition.x * 1}px, ${mousePosition.y * 1}px) perspective(1000px) rotateY(${mousePosition.x * -0.5}deg) rotateX(${mousePosition.y * 0.5}deg)` }}>
                     <div className="hero-image-glow"></div>
-                    <img src={profileImage} alt={name} className="hero-img" onError={(e) => { e.target.style.display = 'none'; }} />
+                    <img src={resolveUrl(profileImage)} alt={name} className="hero-img" onError={(e) => { e.target.style.display = 'none'; }} />
                 </div>
             </div>
         </section>
