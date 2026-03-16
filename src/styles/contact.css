@@ -1,0 +1,120 @@
+.contact-section {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 992px) {
+    .contact-content {
+        flex-direction: row;
+    }
+}
+
+.contact-info,
+.contact-form-container {
+    flex: 1;
+    padding: var(--spacing-xl);
+}
+
+.contact-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-desc {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    padding: var(--spacing-sm) 0;
+}
+
+.contact-link:hover {
+    color: var(--accent-primary);
+    transform: translateX(5px);
+}
+
+.contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-primary);
+    transition: all var(--transition-normal);
+}
+
+.contact-link:hover .contact-icon {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-message {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-weight: 500;
+    animation: fadeInOut 5s forwards;
+}
+
+.submit-message.success {
+    background: rgba(16, 185, 129, 0.1);
+    /* Emerald glow */
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}

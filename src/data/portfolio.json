@@ -1,0 +1,75 @@
+{
+  "personal": {
+    "name": "Nitish Singh",
+    "role": "Full Stack Developer | AI Enthusiast",
+    "tagline": "Building real world tech products using Web Development and Artificial Intelligence",
+    "location": "India",
+    "bio": "Computer Science student focused on Full Stack Development, Artificial Intelligence and building practical tech projects. Currently learning DSA, modern web development and AI tools while building real world applications.",
+    "profileImage": "/profile4.jpg",
+    "aboutImage": "/profile1.jpg"
+  },
+  "contact": {
+    "email": "theeditornitish@gmail.com",
+    "github": "https://github.com/Cod4Nitish",
+    "linkedin": "https://www.linkedin.com/in/nitish-6206-nk",
+    "instagram": "https://instagram.com/nitish.10.1",
+    "twitter": "https://x.com/predator_nitish",
+    "resumeUrl": "/Nitish_Singh_Resume.pdf"
+  },
+  "skills": [
+    {
+      "category": "Frontend",
+      "items": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Angular"
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        "Node.js",
+        "Express"
+      ]
+    },
+    {
+      "category": "Database",
+      "items": [
+        "MongoDB",
+        "MySQL"
+      ]
+    },
+    {
+      "category": "AI / Machine Learning",
+      "items": [
+        "Python",
+        "Machine Learning",
+        "Generative AI"
+      ]
+    },
+    {
+      "category": "Dev Tools",
+      "items": [
+        "Git",
+        "GitHub",
+        "VS Code"
+      ]
+    }
+  ],
+  "projects": [],
+  "experience": [
+    {
+      "role": "Computer Science Student (B.Tech)",
+      "company": "Currently Pursuing",
+      "period": "Present",
+      "description": "Currently learning DSA, modern web development, and AI tools while building real-world applications."
+    },
+    {
+      "role": "Diploma in Electrical Engineering (EE)",
+      "company": "Previous Education",
+      "period": "Completed",
+      "description": "Gained a strong foundation in core engineering principles, analytical problem solving, and logical thinking."
+    }
+  ]
+}

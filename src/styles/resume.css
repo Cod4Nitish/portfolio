@@ -1,0 +1,153 @@
+.resume-section {
+    position: relative;
+    z-index: 2;
+}
+
+.resume-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    gap: var(--spacing-md);
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Vertical Line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 2px;
+    background: var(--border-color);
+}
+
+@media (min-width: 768px) {
+    .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: var(--spacing-xl);
+    width: 100%;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Timeline Dot */
+.timeline-dot {
+    position: absolute;
+    top: 24px;
+    left: 14px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    box-shadow: 0 0 10px var(--accent-glow);
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .timeline-dot {
+        left: calc(50% - 7px);
+    }
+}
+
+.timeline-content {
+    position: relative;
+    margin-left: 50px;
+    padding: var(--spacing-lg);
+    width: calc(100% - 50px);
+}
+
+@media (min-width: 768px) {
+    .timeline-content {
+        width: calc(50% - 40px);
+        margin-left: 0;
+    }
+
+    /* Even items to the right */
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: auto;
+    }
+
+    /* Arrows pointing to line */
+    .timeline-content::before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        right: -10px;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent var(--border-color);
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+        left: -10px;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--border-color) transparent transparent;
+    }
+}
+
+.timeline-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+@media (min-width: 576px) {
+    .timeline-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.timeline-role {
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+    font-family: var(--font-heading);
+}
+
+.timeline-period {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+}
+
+.timeline-company {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+.timeline-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
