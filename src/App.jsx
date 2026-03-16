@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import ColorCustomizer from './components/ColorCustomizer';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   const [theme, setTheme] = useState('dark');
@@ -43,6 +44,7 @@ function App() {
       {!isAppLoaded && <Loader onLoaded={() => setIsAppLoaded(true)} />}
 
       <div className={`app-container ${isAppLoaded ? 'app-enter' : ''}`} style={{ opacity: isAppLoaded ? 1 : 0, transition: 'opacity 0.8s ease-in' }}>
+        <CustomCursor />
         <div className="scroll-progress" style={{ width: scrollProgress }}></div>
         <Navigation theme={theme} toggleTheme={toggleTheme} />
         <ColorCustomizer />

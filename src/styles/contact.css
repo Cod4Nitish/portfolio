@@ -97,6 +97,12 @@
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+.submit-message.error {
+    background: rgba(255, 71, 87, 0.1);
+    color: #ff4757;
+    border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
 @keyframes fadeInOut {
     0% {
         opacity: 0;

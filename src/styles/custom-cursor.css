@@ -1,0 +1,80 @@
+/* Override default cursor for the whole body, but keep pointers for links */
+body {
+    cursor: none;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+    cursor: none;
+    /* We handle this with our custom cursor's hover state */
+}
+
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-primary);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent-secondary);
+    transition: width 0.15s ease-out, height 0.15s ease-out, transform 0.1s ease-out, background-color 0.2s;
+    /* The transform transition creates the trailing delay effect naturally */
+}
+
+/* Hover States (Links, Buttons) */
+.cursor-dot.hovering {
+    background-color: transparent;
+}
+
+.cursor-outline.hovering {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(var(--accent-primary-rgb, 120, 110, 255), 0.1);
+    /* fallback to slight tint */
+    border-color: var(--accent-primary);
+    backdrop-filter: blur(2px);
+}
+
+/* Click States */
+.cursor-outline.clicked {
+    width: 30px;
+    height: 30px;
+    background-color: var(--accent-secondary);
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* Hide custom cursor on mobile touch devices */
+@media (max-width: 768px) {
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+
+    body,
+    a,
+    button,
+    input,
+    textarea,
+    select {
+        cursor: auto;
+    }
+}

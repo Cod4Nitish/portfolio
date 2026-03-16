@@ -4,7 +4,7 @@ import portfolioData from '../data/portfolio.json';
 import '../styles/contact.css';
 
 const Contact = () => {
-    const { email, github, linkedin } = portfolioData.contact;
+    const { email, github, linkedin, web3formsKey } = portfolioData.contact;
 
     const [formData, setFormData] = useState({
         name: '',
@@ -14,25 +14,59 @@ const Contact = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setIsError(false);
 
-        // Simulate form submission
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setSubmitMessage('Thank you! Your message has been sent successfully.');
-            setFormData({ name: '', email: '', message: '' });
+        if (web3formsKey) {
+            // Real Web3Forms Submission
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        access_key: web3formsKey,
+                        ...formData
+                    }),
+                });
 
-            // Clear success message after 5 seconds
-            setTimeout(() => setSubmitMessage(''), 5000);
-        }, 1500);
+                const result = await response.json();
+
+                if (result.success) {
+                    setSubmitMessage('Thank you! Your message has been sent directly to my inbox.');
+                    setFormData({ name: '', email: '', message: '' });
+                } else {
+                    setIsError(true);
+                    setSubmitMessage('Something went wrong. Please try emailing me directly.');
+                }
+            } catch (error) {
+                setIsError(true);
+                setSubmitMessage('Network error. Please try emailing me directly.');
+            } finally {
+                setIsSubmitting(false);
+                setTimeout(() => setSubmitMessage(''), 5000);
+            }
+        } else {
+            // Simulated form submission (development mode)
+            setTimeout(() => {
+                setIsSubmitting(false);
+                setSubmitMessage('Message simulated successfully! (Web3Forms Key missing)');
+                setFormData({ name: '', email: '', message: '' });
+
+                setTimeout(() => setSubmitMessage(''), 5000);
+            }, 1000);
+        }
     };
 
     return (
@@ -103,7 +137,7 @@ const Contact = () => {
                             </button>
 
                             {submitMessage && (
-                                <div className="submit-message success">
+                                <div className={`submit-message ${isError ? 'error' : 'success'}`}>
                                     {submitMessage}
                                 </div>
                             )}
