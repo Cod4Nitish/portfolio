@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
+import heroProfileImg from '../assets/profile4.jpg';
 import '../styles/hero.css';
 
 const Hero = () => {
-    const { name, role, bio, tagline, profileImage } = portfolioData.personal;
+    const { name, role, bio, tagline } = portfolioData.personal;
     const { github, linkedin, email, twitter, instagram, resumeUrl } = portfolioData.contact;
 
     // Typing Effect Logic
@@ -127,7 +128,7 @@ const Hero = () => {
 
                 <div className="hero-image-container" style={{ transform: `translate(${mousePosition.x * 1}px, ${mousePosition.y * 1}px) perspective(1000px) rotateY(${mousePosition.x * -0.5}deg) rotateX(${mousePosition.y * 0.5}deg)` }}>
                     <div className="hero-image-glow"></div>
-                    <img src={resolveUrl(profileImage)} alt={name} className="hero-img" onError={(e) => { e.target.style.display = 'none'; }} />
+                    <img src={heroProfileImg} alt={name} className="hero-img" onError={(e) => { e.target.style.display = 'none'; }} />
                 </div>
             </div>
         </section>
