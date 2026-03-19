@@ -163,7 +163,7 @@ Error generating stack: `+e.message+`
           background: var(--accent-bg);
           padding-left: 1.25rem;
         }
-      `})]})},Yu=`/portfolio/assets/profile4-CPE80-CY.jpg`,Xu=[`Web Developer`,`AI Learner`,`Problem Solver`,`Builder`],Zu=()=>{let{name:e}=Ku.personal,{github:t,linkedin:n,email:r,twitter:i,instagram:a,resumeUrl:o}=Ku.contact,[s,c]=(0,S.useState)(0),[l,u]=(0,S.useState)(``),[d,f]=(0,S.useState)(!1);(0,S.useEffect)(()=>{let e=Xu[s],t=d?42:90,n=setTimeout(()=>{if(!d&&l===e)return setTimeout(()=>f(!0),1600);if(d&&l===``){f(!1),c(e=>(e+1)%Xu.length);return}u(d?e.slice(0,l.length-1):e.slice(0,l.length+1))},t);return()=>clearTimeout(n)},[l,d,s]);let p=[{icon:(0,V.jsx)(Pu,{size:18}),href:t,label:`GitHub`},{icon:(0,V.jsx)(Iu,{size:18}),href:n,label:`LinkedIn`},{icon:(0,V.jsx)(Wu,{size:18}),href:i,label:`Twitter`},{icon:(0,V.jsx)(Fu,{size:18}),href:a,label:`Instagram`},{icon:(0,V.jsx)(Lu,{size:18}),href:r?`mailto:${r}`:null,label:`Email`}].filter(e=>e.href),m={hidden:{},show:{transition:{staggerChildren:.09,delayChildren:.2}}},h={hidden:{opacity:0,y:20},show:{opacity:1,y:0,transition:{duration:.5,ease:[.16,1,.3,1]}}};return(0,V.jsxs)(V.Fragment,{children:[(0,V.jsxs)(X.div,{className:`scroll-indicator`,initial:{opacity:0},animate:{opacity:1},transition:{delay:2.5},"aria-hidden":`true`,children:[(0,V.jsx)(`span`,{className:`scroll-label`,children:`scroll`}),(0,V.jsx)(X.span,{className:`scroll-line`,animate:{scaleY:[.7,1,.7]},transition:{repeat:1/0,duration:1.4,ease:`easeInOut`}})]}),(0,V.jsxs)(`section`,{id:`home`,className:`hero-section`,"aria-label":`Hero`,children:[(0,V.jsx)(`div`,{className:`hero-glow`,"aria-hidden":`true`}),(0,V.jsxs)(`div`,{className:`hero-container`,children:[(0,V.jsxs)(X.div,{className:`hero-text`,variants:m,initial:`hidden`,animate:`show`,children:[(0,V.jsx)(X.div,{variants:h,children:(0,V.jsx)(`span`,{className:`hero-chip`,children:`✦ Open to Internship & Full‑time`})}),(0,V.jsxs)(X.h1,{variants:h,className:`hero-headline`,children:[`Hi, I'm`,` `,(0,V.jsx)(`span`,{className:`gradient-text-accent`,children:`Nitish`})]}),(0,V.jsxs)(X.p,{variants:h,className:`hero-statement`,children:[`I build real‑world tech products using`,` `,(0,V.jsx)(`strong`,{children:`Web Development`}),` & `,(0,V.jsx)(`strong`,{children:`AI`}),`.`]}),(0,V.jsxs)(X.div,{variants:h,className:`hero-typing`,"aria-live":`polite`,children:[(0,V.jsx)(`span`,{className:`hero-typing-prefix`,children:`I am a\xA0`}),(0,V.jsx)(`span`,{className:`hero-typing-word`,children:l}),(0,V.jsx)(`span`,{className:`hero-caret`,"aria-hidden":`true`})]}),(0,V.jsxs)(X.div,{variants:h,className:`hero-cta`,children:[(0,V.jsxs)(`a`,{href:`#projects`,className:`btn-primary`,onClick:e=>{e.preventDefault(),document.querySelector(`#projects`)?.scrollIntoView({behavior:`smooth`,block:`start`})},children:[`View Projects `,(0,V.jsx)(Au,{size:16})]}),(0,V.jsx)(`a`,{href:`#contact`,className:`btn-secondary`,onClick:e=>{e.preventDefault(),document.querySelector(`#contact`)?.scrollIntoView({behavior:`smooth`,block:`start`})},children:`Contact Me`})]}),(0,V.jsx)(X.div,{variants:h,className:`hero-socials`,children:p.map((e,t)=>(0,V.jsx)(`a`,{href:e.href,className:`social-btn`,target:`_blank`,rel:`noreferrer`,"aria-label":e.label,children:e.icon},t))})]}),(0,V.jsxs)(X.div,{className:`hero-image`,initial:{opacity:0,scale:.88},animate:{opacity:1,scale:1},transition:{duration:.65,delay:.3,ease:[.16,1,.3,1]},children:[(0,V.jsx)(`div`,{className:`hero-img-wrap`,children:(0,V.jsx)(`img`,{src:Yu,alt:`Nitish Singh — portfolio photo`,className:`hero-img`,loading:`eager`,decoding:`async`})}),(0,V.jsxs)(X.div,{className:`hero-work-chip`,animate:{y:[0,-5,0]},transition:{repeat:1/0,duration:3.2,ease:`easeInOut`},"aria-label":`Open to work`,children:[`🚀\xA0`,(0,V.jsx)(`strong`,{children:`Open to work`}),(0,V.jsx)(`span`,{className:`hero-work-sub`,children:`Full‑time / Internship`})]})]})]})]}),(0,V.jsx)(`style`,{children:`
+      `})]})},Yu=`/portfolio/assets/profile4-CPE80-CY.jpg`,Xu=[`Web Developer`,`AI Learner`,`Problem Solver`,`Builder`],Zu=()=>{let{name:e}=Ku.personal,{github:t,linkedin:n,email:r,twitter:i,instagram:a,resumeUrl:o}=Ku.contact,[s,c]=(0,S.useState)(0),[l,u]=(0,S.useState)(``),[d,f]=(0,S.useState)(!1);(0,S.useEffect)(()=>{let e=Xu[s],t=d?42:90,n=setTimeout(()=>{if(!d&&l===e)return setTimeout(()=>f(!0),1600);if(d&&l===``){f(!1),c(e=>(e+1)%Xu.length);return}u(d?e.slice(0,l.length-1):e.slice(0,l.length+1))},t);return()=>clearTimeout(n)},[l,d,s]);let p=[{icon:(0,V.jsx)(Pu,{size:18}),href:t,label:`GitHub`},{icon:(0,V.jsx)(Iu,{size:18}),href:n,label:`LinkedIn`},{icon:(0,V.jsx)(Wu,{size:18}),href:i,label:`Twitter`},{icon:(0,V.jsx)(Fu,{size:18}),href:a,label:`Instagram`},{icon:(0,V.jsx)(Lu,{size:18}),href:r?`mailto:${r}`:null,label:`Email`}].filter(e=>e.href),m={hidden:{},show:{transition:{staggerChildren:.09,delayChildren:.2}}},h={hidden:{opacity:0,y:20},show:{opacity:1,y:0,transition:{duration:.5,ease:[.16,1,.3,1]}}};return(0,V.jsxs)(V.Fragment,{children:[(0,V.jsxs)(X.div,{className:`scroll-indicator`,initial:{opacity:0},animate:{opacity:1},transition:{delay:2.5},"aria-hidden":`true`,children:[(0,V.jsx)(`span`,{className:`scroll-label`,children:`scroll`}),(0,V.jsx)(X.span,{className:`scroll-line`,animate:{scaleY:[.7,1,.7]},transition:{repeat:1/0,duration:1.4,ease:`easeInOut`}})]}),(0,V.jsxs)(`section`,{id:`home`,className:`hero-section`,"aria-label":`Hero`,children:[(0,V.jsx)(`div`,{className:`hero-glow`,"aria-hidden":`true`}),(0,V.jsxs)(`div`,{className:`hero-container`,children:[(0,V.jsxs)(X.div,{className:`hero-text`,variants:m,initial:`hidden`,animate:`show`,children:[(0,V.jsx)(X.div,{variants:h,children:(0,V.jsx)(`span`,{className:`hero-chip`,children:`✦ Open to Internship & Full‑time`})}),(0,V.jsxs)(X.h1,{variants:h,className:`hero-headline`,children:[`Hi, I'm`,` `,(0,V.jsx)(`span`,{className:`gradient-text-accent`,children:`Nitish`})]}),(0,V.jsxs)(X.p,{variants:h,className:`hero-statement`,children:[`I build real‑world tech products using`,` `,(0,V.jsx)(`strong`,{children:`Web Development`}),` & `,(0,V.jsx)(`strong`,{children:`AI`}),`.`]}),(0,V.jsxs)(X.div,{variants:h,className:`hero-typing`,"aria-live":`polite`,children:[(0,V.jsx)(`span`,{className:`hero-typing-prefix`,children:`I am a\xA0`}),(0,V.jsx)(`span`,{className:`hero-typing-word`,children:l}),(0,V.jsx)(`span`,{className:`hero-caret`,"aria-hidden":`true`})]}),(0,V.jsxs)(X.div,{variants:h,className:`hero-cta`,children:[(0,V.jsxs)(`a`,{href:`#projects`,className:`btn-primary`,onClick:e=>{e.preventDefault(),document.querySelector(`#projects`)?.scrollIntoView({behavior:`smooth`,block:`start`})},children:[`View Projects `,(0,V.jsx)(Au,{size:16})]}),(0,V.jsx)(`a`,{href:`#contact`,className:`btn-secondary`,onClick:e=>{e.preventDefault(),document.querySelector(`#contact`)?.scrollIntoView({behavior:`smooth`,block:`start`})},children:`Contact Me`})]}),(0,V.jsx)(X.div,{variants:h,className:`hero-socials`,children:p.map((e,t)=>(0,V.jsx)(`a`,{href:e.href,className:`social-btn`,target:`_blank`,rel:`noreferrer`,"aria-label":e.label,children:e.icon},t))})]}),(0,V.jsxs)(X.div,{className:`hero-image`,initial:{opacity:0,x:40},animate:{opacity:1,x:0},transition:{duration:.7,delay:.3,ease:[.16,1,.3,1]},children:[(0,V.jsxs)(`div`,{className:`hero-img-glow-ring`,children:[(0,V.jsx)(`div`,{className:`hero-img-glow-bg`,"aria-hidden":`true`}),(0,V.jsx)(`div`,{className:`hero-img-container`,children:(0,V.jsx)(`img`,{src:Yu,alt:`Nitish Singh — portfolio photo`,className:`hero-img`,loading:`eager`,decoding:`async`})})]}),(0,V.jsxs)(X.div,{className:`hero-work-chip`,animate:{y:[0,-5,0]},transition:{repeat:1/0,duration:3.2,ease:`easeInOut`},"aria-label":`Open to work`,children:[`🚀\xA0`,(0,V.jsx)(`strong`,{children:`Open to work`}),(0,V.jsx)(`span`,{className:`hero-work-sub`,children:`Full‑time / Internship`})]})]})]})]}),(0,V.jsx)(`style`,{children:`
         /* ── Section ────────────────────────────────── */
         .hero-section {
           position: relative;
@@ -320,54 +320,113 @@ Error generating stack: `+e.message+`
         .hero-image {
           display: flex;
           justify-content: center;
+          align-items: center;
           position: relative;
         }
 
-        .hero-img-wrap {
+        /* Outer glow ring — soft purple halo around image */
+        .hero-img-glow-ring {
           position: relative;
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        /* Circular profile image */
+        /* Radial gradient behind image — blends into dark/light bg */
+        .hero-img-glow-bg {
+          position: absolute;
+          inset: -20%;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(100, 80, 255, 0.10) 40%,
+            transparent 70%
+          );
+          pointer-events: none;
+          z-index: 0;
+          /* Subtle pulse animation */
+          animation: img-pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes img-pulse {
+          0%   { transform: scale(0.96); opacity: 0.7; }
+          100% { transform: scale(1.04); opacity: 1;   }
+        }
+        [data-theme='light'] .hero-img-glow-bg {
+          background: radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.12) 0%,
+            rgba(100, 80, 255, 0.05) 40%,
+            transparent 70%
+          );
+        }
+
+        /* Glass container — premium frame */
+        .hero-img-container {
+          position: relative;
+          z-index: 1;
+          /* Glassmorphism card */
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid var(--glass-border);
+          border-radius: 24px;
+          padding: 12px;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          box-shadow:
+            0 0 0 1px rgba(100, 80, 255, 0.15),
+            0 20px 60px rgba(0, 0, 0, 0.35),
+            0 0 40px rgba(100, 80, 255, 0.12);
+          overflow: hidden;
+        }
+        [data-theme='light'] .hero-img-container {
+          background: rgba(255, 255, 255, 0.7);
+          box-shadow:
+            0 0 0 1px rgba(100, 80, 255, 0.1),
+            0 16px 48px rgba(0, 0, 0, 0.10);
+        }
+
+        /* ── THE IMAGE — object-fit: contain, never cropped ── */
         .hero-img {
           display: block;
-          width: clamp(160px, 35vw, 240px);
-          height: clamp(160px, 35vw, 240px);
-          border-radius: 50%;
-          object-fit: cover;
-          /* Ring: accent border + outer subtle glow */
-          border: 3px solid rgba(100, 80, 255, 0.55);
-          box-shadow:
-            0 0 0 8px rgba(100, 80, 255, 0.07),
-            0 20px 60px rgba(0, 0, 0, 0.45);
+          /* Width scales with viewport — contain mode */
+          width: clamp(200px, 38vw, 320px);
+          /* Auto height — preserves aspect ratio */
+          height: auto;
+          /* Max height so it doesn't get too tall on wide screens */
+          max-height: clamp(260px, 50vw, 420px);
+          /* CONTAIN: full image visible, no cropping */
+          object-fit: contain;
+          object-position: center bottom;
+          border-radius: 16px;
         }
 
         @media (min-width: 768px) {
           .hero-img {
-            width: clamp(200px, 26vw, 280px);
-            height: clamp(200px, 26vw, 280px);
+            width: clamp(240px, 28vw, 340px);
+            max-height: clamp(300px, 45vw, 460px);
           }
         }
 
-        /* Open to work chip */
+        /* Open to work chip — centered below image on mobile, right on desktop */
         .hero-work-chip {
           position: absolute;
-          bottom: 6px;
+          bottom: -18px;
           left: 50%;
           transform: translateX(-50%);
           display: flex;
           align-items: center;
           gap: 5px;
           padding: 0.4rem 0.9rem;
-          background: rgba(13, 18, 36, 0.88);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          background: var(--glass-bg);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
           border: 1px solid rgba(100, 80, 255, 0.3);
           border-radius: 999px;
           font-size: 0.8rem;
           color: var(--text-h);
           white-space: nowrap;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          z-index: 2;
         }
         .hero-work-chip strong { font-weight: 700; }
         .hero-work-sub {
@@ -375,13 +434,11 @@ Error generating stack: `+e.message+`
           font-size: 0.7rem;
           margin-left: 4px;
         }
-
         @media (min-width: 768px) {
           .hero-work-chip {
-            left: auto;
-            right: -10px;
-            transform: none;
-            bottom: 12px;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
           }
         }
 
