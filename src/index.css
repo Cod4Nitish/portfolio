@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;700;800;900&display=swap');
 
 :root {
-  /* New Premium Dark Palette */
-  --bg: #050505;
+  /* Extreme Premium Dark Palette */
+  --bg: #030303;
   --bg-secondary: #0a0a0c;
-  --bg-dots: rgba(255, 255, 255, 0.03);
+  --bg-dots: rgba(255, 255, 255, 0.04);
   
   --text: #a1a1aa; /* Zinc 400 */
-  --text-h: #f4f4f5; /* Zinc 100 */
+  --text-h: #ffffff; /* Pure White */
   --text-dim: #71717a; /* Zinc 500 */
   
   --border: rgba(255,255,255,0.08);
@@ -16,44 +16,23 @@
   
   /* Primary accents */
   --accent: #8b5cf6; /* Violet 500 */
-  --accent-light: #a78bfa;
-  --accent-glow: rgba(139, 92, 246, 0.3);
+  --accent-light: #c4b5fd;
+  --accent-glow: rgba(139, 92, 246, 0.4);
   --accent-bg: rgba(139, 92, 246, 0.1);
   --accent-border: rgba(139, 92, 246, 0.5);
   
   /* Secondary accents */
   --secondary: #06b6d4; /* Cyan 500 */
+  --secondary-glow: rgba(6, 182, 212, 0.4);
   
-  .light-theme {
-    --bg: #fafafa;
-    --bg-secondary: #ffffff;
-    --bg-dots: rgba(0, 0, 0, 0.05);
-    
-    --text: #52525b;
-    --text-h: #09090b;
-    --text-dim: #a1a1aa;
-    
-    --border: rgba(0,0,0,0.08);
-    --border-light: rgba(0,0,0,0.15);
-    --code-bg: rgba(0, 0, 0, 0.03);
-    
-    --accent: #7c3aed;
-    --accent-light: #8b5cf6;
-    --accent-glow: rgba(124, 58, 237, 0.2);
-    --accent-bg: rgba(124, 58, 237, 0.1);
-    --accent-border: rgba(124, 58, 237, 0.5);
-    --secondary: #0891b2;
-  }
-  
-  --glass-bg: rgba(10, 10, 12, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(10, 10, 12, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
   
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --heading: 'Outfit', system-ui, -apple-system, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  font: 16px/1.6 var(--sans);
+  font: 18px/1.6 var(--sans);
   color-scheme: dark light;
   color: var(--text);
   background: var(--bg);
@@ -61,15 +40,22 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  cursor: none; /* Hide default cursor for Jackie Hu style */
+}
+
+/* Ensure links and buttons hide native cursor too */
+a, button, input, textarea {
+  cursor: none !important;
 }
 
 [data-theme='light'] {
-  --bg: #fafafa;
+  --bg: #f8fafc;
   --bg-secondary: #ffffff;
-  --bg-dots: rgba(0, 0, 0, 0.05);
-  --text: #52525b;
-  --text-h: #09090b;
-  --text-dim: #a1a1aa;
+  --bg-dots: rgba(0, 0, 0, 0.06);
+  --text: #475569;
+  --text-h: #020617;
+  --text-dim: #94a3b8;
   --border: rgba(0,0,0,0.08);
   --border-light: rgba(0,0,0,0.15);
   --code-bg: rgba(0, 0, 0, 0.03);
@@ -79,17 +65,23 @@
   --accent-bg: rgba(124, 58, 237, 0.1);
   --accent-border: rgba(124, 58, 237, 0.5);
   --secondary: #0891b2;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.05);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --secondary-glow: rgba(8, 145, 178, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.08);
 }
 
 body {
   margin: 0;
   overflow-x: hidden;
   background-color: var(--bg);
-  background-image: radial-gradient(var(--bg-dots) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: 
+    radial-gradient(var(--bg-dots) 1px, transparent 1px),
+    radial-gradient(ellipse at top, var(--accent-glow) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, var(--secondary-glow) 0%, transparent 50%);
+  background-size: 24px 24px, 100vw 100vh, 100vw 100vh;
+  background-attachment: fixed;
+  background-position: 0 0, 50% 0, 100% 100%;
   transition: background-color 0.4s ease;
 }
 
@@ -103,73 +95,61 @@ body {
   box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Jackie Hu Massive Typography */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-h);
-  line-height: 1.1;
+  line-height: 1.05;
   margin: 0 0 1rem;
-}
-
-h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
   letter-spacing: -0.04em;
 }
 
+h1 {
+  font-size: clamp(4rem, 10vw, 7rem); /* Huge Impact */
+}
+
 h2 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(3rem, 7vw, 4.5rem);
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
 }
 
 p {
-  margin: 0 0 1rem;
-  font-size: 1.125rem;
-  line-height: 1.7;
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.125rem, 2vw, 1.35rem); /* Larger readable text */
+  line-height: 1.8;
+  font-weight: 300;
 }
 
 a {
   color: var(--accent);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
 
 /* Scrollbar styles */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border-light);
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* Glassmorphism utility */
+/* Framer Premium Glassmorphism */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
 .gradient-text {
@@ -180,7 +160,7 @@ a:hover {
 }
 
 .gradient-text-accent {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 50%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -189,24 +169,24 @@ a:hover {
 /* Base App Layout */
 main {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 150px;
   position: relative;
   z-index: 1;
 }
 
 section {
   width: 100%;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 120px;
 }
 
 @media (max-width: 768px) {
   main {
-    padding: 0 1rem;
-    gap: 80px;
+    padding: 0 1.5rem;
+    gap: 100px;
   }
 }

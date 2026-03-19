@@ -1,6 +1,5 @@
 /* App.css Overhaul for Premium UI */
 
-/* App Container */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -8,172 +7,130 @@
   position: relative;
 }
 
-/* Scroll Progress Bar */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
+  height: 4px;
   background: linear-gradient(90deg, var(--accent), var(--secondary));
   z-index: 9999;
   transition: width 0.1s ease-out;
 }
 
-/* Navigation */
-nav {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  padding: 0.75rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  max-width: 800px;
-  transition: all 0.3s ease;
-  border-radius: 999px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.nav-link {
-  color: var(--text);
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
-  cursor: pointer;
-  position: relative;
-}
-
-.nav-link:hover {
-  color: var(--text-h);
-  text-decoration: none;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-.theme-toggle {
-  background: transparent;
-  border: none;
-  color: var(--text-h);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--border-light);
-}
-
-/* Buttons */
+/* Framer Workshop Animated Gradient Buttons */
 .btn-primary {
-  background: var(--text-h);
-  color: var(--bg);
-  padding: 0.75rem 1.5rem;
-  border-radius: 99px;
+  position: relative;
+  background: var(--bg-secondary);
+  color: var(--text-h);
+  padding: 1rem 2rem;
+  border-radius: 999px;
   font-weight: 600;
-  border: none;
-  cursor: pointer;
+  font-size: 1.1rem;
+  border: 1px solid transparent;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px -10px var(--accent-glow);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* The glowing gradient border effect */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--accent), var(--secondary), var(--accent), var(--secondary));
+  background-size: 400% 400%;
+  z-index: -2;
+  animation: gradient-flow 3s ease infinite;
+  border-radius: 999px;
+  transition: opacity 0.3s ease;
+}
+
+/* The solid inner background */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-secondary);
+  z-index: -1;
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover::after {
+  background: transparent;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px var(--accent-glow);
-  text-decoration: none;
+  transform: translateY(-4px) scale(1.02);
+  color: #fff;
+  box-shadow: 0 20px 40px -10px var(--accent-glow);
 }
 
 .btn-secondary {
+  position: relative;
   background: transparent;
   color: var(--text-h);
-  padding: 0.75rem 1.5rem;
-  border-radius: 99px;
+  padding: 1rem 2rem;
+  border-radius: 999px;
   font-weight: 600;
+  font-size: 1.1rem;
   border: 1px solid var(--border-light);
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-secondary:hover {
-  background: var(--border);
-  text-decoration: none;
+  background: var(--glass-bg);
+  border-color: var(--text-h);
+  transform: translateY(-4px);
 }
 
-/* Base Component Styles for Sections */
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Base Component Styles */
 .section-header {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   text-align: center;
 }
 
 .section-label {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.25rem;
   background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--accent-light);
   border-radius: 999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   border: 1px solid var(--accent-border);
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* Glow effects behind specific components */
 .glow-blob {
   position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 60%);
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(100px);
   z-index: -1;
   pointer-events: none;
+  animation: float-blob 10s ease-in-out infinite alternate;
 }
 
-/* Animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-.floating {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; /* simple mobile nav approach for now */
-  }
+@keyframes float-blob {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+  100% { transform: scale(1.2) translate(50px, 50px); opacity: 0.8; }
 }
