@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
-import heroProfileImg from '../assets/profile_hero.jpg';
+import heroProfileImg from '../assets/profile_casual_glow.jpg';
 
 const ROLES = ['Web Developer', 'AI Learner', 'Problem Solver', 'Builder'];
 
