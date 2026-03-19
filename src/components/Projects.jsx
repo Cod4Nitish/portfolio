@@ -48,7 +48,7 @@ const Projects = () => {
         ))}
       </div>
 
-      <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}>
+      <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
         <AnimatePresence>
           {filteredProjects.map((project, index) => (
             <motion.div

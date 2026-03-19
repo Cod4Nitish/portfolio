@@ -86,13 +86,14 @@ body {
 }
 
 #root {
-  width: 100vw;
-  max-width: 100%;
+  width: 100%;
+  max-width: 100vw;
   margin: 0 auto;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Jackie Hu Massive Typography */
@@ -106,7 +107,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: clamp(4rem, 10vw, 7rem); /* Huge Impact */
+  font-size: clamp(3rem, 8vw, 6.5rem); /* Huge Impact, slightly smaller on mobile */
+  word-break: break-word;
 }
 
 h2 {
@@ -186,7 +188,24 @@ section {
 
 @media (max-width: 768px) {
   main {
-    padding: 0 1.5rem;
-    gap: 100px;
+    padding: 0 1rem;
+    gap: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 0 0.75rem;
+    gap: 60px;
+  }
+  
+  /* Disable custom cursor on touch devices to avoid ghost circles sticking */
+  @media (pointer: coarse) {
+    a, button, input, textarea {
+      cursor: auto !important;
+    }
+    body {
+      cursor: auto !important;
+    }
   }
 }

@@ -55,7 +55,7 @@ const GithubActivity = () => {
           <p>Configure your GitHub username in data.json to see recent repositories here.</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
           {repos.map((repo, index) => (
             <motion.a
               href={repo.html_url}

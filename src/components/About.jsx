@@ -20,7 +20,7 @@ const About = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
-          style={{ flex: '1 1 400px', position: 'relative' }}
+          style={{ flex: '1 1 280px', position: 'relative' }}
         >
           <div className="glass" style={{ padding: '1rem', borderRadius: '24px', display: 'inline-block', position: 'relative', zIndex: 2 }}>
             <img 
@@ -44,7 +44,7 @@ const About = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ flex: '1 1 400px' }}
+          style={{ flex: '1 1 280px' }}
         >
           <div className="glass" style={{ padding: '2.5rem', borderRadius: '24px' }}>
             <h3 style={{ fontSize: '1.75rem', marginBottom: '1.5rem', color: 'var(--text-h)' }}>Get to know me</h3>

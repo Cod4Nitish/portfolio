@@ -60,7 +60,7 @@ const Contact = () => {
         <h2>Get In Touch</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem' }}>
         
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
