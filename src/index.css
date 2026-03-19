@@ -46,6 +46,7 @@
 
   /* Hide default cursor on pointer devices */
   cursor: none;
+  scroll-behavior: smooth;
 }
 @media (pointer: coarse) {
   :root { cursor: auto; }
@@ -169,7 +170,10 @@ main {
   z-index: 1;
 }
 
-section { width: 100%; scroll-margin-top: 100px; }
+section {
+  width: 100%;
+  scroll-margin-top: 80px; /* offset for sticky navbar */
+}
 
 @media (max-width: 900px) { main { padding: 0 1.5rem; gap: 90px; } }
 @media (max-width: 600px) { main { padding: 0 1rem; gap: 70px; } }
