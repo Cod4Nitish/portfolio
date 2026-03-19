@@ -1,65 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;700;800&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* New Premium Dark Palette */
+  --bg: #050505;
+  --bg-secondary: #0a0a0c;
+  --bg-dots: rgba(255, 255, 255, 0.03);
+  
+  --text: #a1a1aa; /* Zinc 400 */
+  --text-h: #f4f4f5; /* Zinc 100 */
+  --text-dim: #71717a; /* Zinc 500 */
+  
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.15);
+  --code-bg: rgba(255, 255, 255, 0.03);
+  
+  /* Primary accents */
+  --accent: #8b5cf6; /* Violet 500 */
+  --accent-light: #a78bfa;
+  --accent-glow: rgba(139, 92, 246, 0.3);
+  --accent-bg: rgba(139, 92, 246, 0.1);
+  --accent-border: rgba(139, 92, 246, 0.5);
+  
+  /* Secondary accents */
+  --secondary: #06b6d4; /* Cyan 500 */
+  
+  .light-theme {
+    --bg: #fafafa;
+    --bg-secondary: #ffffff;
+    --bg-dots: rgba(0, 0, 0, 0.05);
+    
+    --text: #52525b;
+    --text-h: #09090b;
+    --text-dim: #a1a1aa;
+    
+    --border: rgba(0,0,0,0.08);
+    --border-light: rgba(0,0,0,0.15);
+    --code-bg: rgba(0, 0, 0, 0.03);
+    
+    --accent: #7c3aed;
+    --accent-light: #8b5cf6;
+    --accent-glow: rgba(124, 58, 237, 0.2);
+    --accent-bg: rgba(124, 58, 237, 0.1);
+    --accent-border: rgba(124, 58, 237, 0.5);
+    --secondary: #0891b2;
+  }
+  
+  --glass-bg: rgba(10, 10, 12, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --heading: 'Outfit', system-ui, -apple-system, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font: 16px/1.6 var(--sans);
+  color-scheme: dark light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+[data-theme='light'] {
+  --bg: #fafafa;
+  --bg-secondary: #ffffff;
+  --bg-dots: rgba(0, 0, 0, 0.05);
+  --text: #52525b;
+  --text-h: #09090b;
+  --text-dim: #a1a1aa;
+  --border: rgba(0,0,0,0.08);
+  --border-light: rgba(0,0,0,0.15);
+  --code-bg: rgba(0, 0, 0, 0.03);
+  --accent: #7c3aed;
+  --accent-light: #8b5cf6;
+  --accent-glow: rgba(124, 58, 237, 0.2);
+  --accent-bg: rgba(124, 58, 237, 0.1);
+  --accent-border: rgba(124, 58, 237, 0.5);
+  --secondary: #0891b2;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--bg-dots) 1px, transparent 1px);
+  background-size: 24px 24px;
+  transition: background-color 0.4s ease;
 }
 
 #root {
-  width: 1126px;
+  width: 100vw;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -67,45 +104,109 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text-h);
+  line-height: 1.1;
+  margin: 0 0 1rem;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: clamp(3rem, 8vw, 5rem);
+  letter-spacing: -0.04em;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.03em;
 }
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
 p {
-  margin: 0;
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--text-h) 0%, var(--text-dim) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Base App Layout */
+main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  width: 100%;
+  scroll-margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 0 1rem;
+    gap: 80px;
+  }
 }

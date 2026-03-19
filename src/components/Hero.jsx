@@ -1,138 +1,144 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 import heroProfileImg from '../assets/profile4.jpg';
-import '../styles/hero.css';
+import HeroCanvas from './HeroCanvas';
 
 const Hero = () => {
-    const { name, role, bio, tagline } = portfolioData.personal;
-    const { github, linkedin, email, twitter, instagram, resumeUrl } = portfolioData.contact;
+  const { name, role, bio, tagline } = portfolioData.personal;
+  const { github, linkedin, email, twitter, instagram, resumeUrl } = portfolioData.contact;
 
-    // Typing Effect Logic
-    const roles = role.split('|').map(r => r.trim());
-    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-    const [currentText, setCurrentText] = useState('');
-    const [isDeleting, setIsDeleting] = useState(false);
+  // Typing Effect Logic
+  const roles = role.split('|').map(r => r.trim());
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [currentText, setCurrentText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
-    // Resolve public URLs for GitHub Pages
-    const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+  // Resolve public URLs for GitHub Pages
+  const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
 
-    // Mouse Parallax Logic
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const typingSpeed = isDeleting ? 40 : 100;
+    const currentFullText = roles[currentRoleIndex];
 
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20; // -10 to 10
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            setMousePosition({ x, y });
-        };
+    const timeout = setTimeout(() => {
+      if (!isDeleting && currentText === currentFullText) {
+        setTimeout(() => setIsDeleting(true), 1500); 
+      } else if (isDeleting && currentText === '') {
+        setIsDeleting(false);
+        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+      } else {
+        const nextText = isDeleting
+            ? currentFullText.substring(0, currentText.length - 1)
+            : currentFullText.substring(0, currentText.length + 1);
+        setCurrentText(nextText);
+      }
+    }, typingSpeed);
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    return () => clearTimeout(timeout);
+  }, [currentText, isDeleting, currentRoleIndex, roles]);
 
-    useEffect(() => {
-        const typingSpeed = isDeleting ? 50 : 100;
-        const currentFullText = roles[currentRoleIndex];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      } 
+    }
+  };
 
-        const timeout = setTimeout(() => {
-            if (!isDeleting && currentText === currentFullText) {
-                setTimeout(() => setIsDeleting(true), 1500); // Pause at end
-            } else if (isDeleting && currentText === '') {
-                setIsDeleting(false);
-                setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-            } else {
-                const nextText = isDeleting
-                    ? currentFullText.substring(0, currentText.length - 1)
-                    : currentFullText.substring(0, currentText.length + 1);
-                setCurrentText(nextText);
-            }
-        }, typingSpeed);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { type: 'spring', stiffness: 100 }
+    }
+  };
 
-        return () => clearTimeout(timeout);
-    }, [currentText, isDeleting, currentRoleIndex, roles]);
+  return (
+    <section id="home" style={{ position: 'relative', width: '100%', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <HeroCanvas />
+      
+      <div className="glow-blob" style={{ top: '10%', left: '10%' }}></div>
+      <div className="glow-blob" style={{ bottom: '10%', right: '10%', background: 'radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(0,0,0,0) 70%)' }}></div>
 
-    return (
-        <section id="home" className="hero-section">
-            {/* 3D Parallax Background Elements */}
-            <div className="bg-shapes">
-                <div
-                    className="shape parallax-shape shape-1"
-                    style={{ transform: `translate(${mousePosition.x * 2}px, ${mousePosition.y * 2}px) rotate(${mousePosition.x}deg)` }}
-                ></div>
-                <div
-                    className="shape parallax-shape shape-2"
-                    style={{ transform: `translate(${mousePosition.x * -1.5}px, ${mousePosition.y * -1.5}px) rotate(${mousePosition.y}deg)` }}
-                ></div>
-                <div
-                    className="shape parallax-shape shape-3"
-                    style={{ transform: `translate(${mousePosition.x * 3}px, ${mousePosition.y * -2}px)` }}
-                ></div>
-                {/* Extra 3D floating orb */}
-                <div
-                    className="parallax-orb"
-                    style={{ transform: `translate(${mousePosition.x * -4}px, ${mousePosition.y * 5}px) scale(1.1) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)` }}
-                ></div>
-            </div>
+      <motion.div 
+        className="hero-content-wrapper" 
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 10, padding: '0 20px', maxWidth: '800px' }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants} className="profile-img-wrapper" style={{ marginBottom: '2rem' }}>
+          <img src={heroProfileImg} alt={name} style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border-light)', boxShadow: 'var(--glass-shadow)' }} onError={(e) => { e.target.style.display = 'none'; }} />
+        </motion.div>
 
-            <div className="container hero-container">
-                <div className="hero-content" style={{ transform: `translate(${mousePosition.x * -0.5}px, ${mousePosition.y * -0.5}px)` }}>
-                    <h2 className="greeting">Hello, I'm</h2>
-                    <h1 className="name">{name}</h1>
+        <motion.h2 variants={itemVariants} style={{ fontSize: '1.25rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
+          Hello, world.
+        </motion.h2>
 
-                    <div className="typing-container">
-                        <span className="typing-text">{currentText}</span>
-                        <span className="cursor">|</span>
-                    </div>
+        <motion.h1 variants={itemVariants} style={{ marginBottom: '0.5rem' }}>
+          I'm <span className="gradient-text-accent">{name}</span>
+        </motion.h1>
 
-                    <p className="tagline" style={{ fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '1rem', fontWeight: 500 }}>{tagline}</p>
-                    <p className="bio">{bio}</p>
+        <motion.div variants={itemVariants} style={{ fontSize: '1.5rem', fontWeight: 500, height: '35px', marginBottom: '1.5rem', color: 'var(--text-h)' }}>
+          <span style={{ borderRight: '2px solid var(--accent)', paddingRight: '5px', animation: 'blink 1s step-end infinite' }}>
+            {currentText}
+          </span>
+        </motion.div>
 
-                    <div className="hero-cta">
-                        <a href="#projects" className="btn btn-primary">
-                            View Projects <ArrowRight size={18} />
-                        </a>
-                        <a href={resolveUrl(resumeUrl)} download className="btn btn-outline" target="_blank" rel="noreferrer">
-                            <Download size={18} /> Resume
-                        </a>
-                    </div>
+        <motion.p variants={itemVariants} style={{ fontSize: '1.1rem', color: 'var(--text)', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
+          {tagline} {bio}
+        </motion.p>
 
-                    <div className="social-links">
-                        {github && (
-                            <a href={github} target="_blank" rel="noreferrer" className="btn-icon" aria-label="GitHub">
-                                <Github size={20} />
-                            </a>
-                        )}
-                        {linkedin && (
-                            <a href={linkedin} target="_blank" rel="noreferrer" className="btn-icon" aria-label="LinkedIn">
-                                <Linkedin size={20} />
-                            </a>
-                        )}
-                        {twitter && (
-                            <a href={twitter} target="_blank" rel="noreferrer" className="btn-icon" aria-label="Twitter">
-                                <Twitter size={20} />
-                            </a>
-                        )}
-                        {instagram && (
-                            <a href={instagram} target="_blank" rel="noreferrer" className="btn-icon" aria-label="Instagram">
-                                <Instagram size={20} />
-                            </a>
-                        )}
-                        {email && (
-                            <a href={`mailto:${email}`} className="btn-icon" aria-label="Email">
-                                <Mail size={20} />
-                            </a>
-                        )}
-                    </div>
-                </div>
+        <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
+          <a href="#projects" className="btn-primary">
+            View Projects <ArrowRight size={18} />
+          </a>
+          <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
+            <Download size={18} /> Resume
+          </a>
+        </motion.div>
 
-                <div className="hero-image-container" style={{ transform: `translate(${mousePosition.x * 1}px, ${mousePosition.y * 1}px) perspective(1000px) rotateY(${mousePosition.x * -0.5}deg) rotateX(${mousePosition.y * 0.5}deg)` }}>
-                    <div className="hero-image-glow"></div>
-                    <img src={heroProfileImg} alt={name} className="hero-img" onError={(e) => { e.target.style.display = 'none'; }} />
-                </div>
-            </div>
-        </section>
-    );
+        <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          {[
+            { icon: <Github size={20} />, url: github, label: "GitHub" },
+            { icon: <Linkedin size={20} />, url: linkedin, label: "LinkedIn" },
+            { icon: <Twitter size={20} />, url: twitter, label: "Twitter" },
+            { icon: <Instagram size={20} />, url: instagram, label: "Instagram" },
+            { icon: <Mail size={20} />, url: email ? `mailto:${email}` : null, label: "Email" }
+          ].map((item, idx) => item.url && (
+            <motion.a 
+              key={idx}
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={item.label}
+              whileHover={{ scale: 1.1, translateY: -2 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                width: '45px', height: '45px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-h)', transition: 'all 0.2s',
+                boxShadow: 'var(--glass-shadow)'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-h)'; }}
+            >
+              {item.icon}
+            </motion.a>
+          ))}
+        </motion.div>
+      </motion.div>
+      
+      <style>{`
+        @keyframes blink { 50% { border-color: transparent } }
+      `}</style>
+    </section>
+  );
 };
 
 export default Hero;
