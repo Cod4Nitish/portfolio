@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import portfolioData from '../data/portfolio.json';
-import aboutImg from '../assets/profile_hero.jpg';
+import aboutImg from '../assets/profile_suit.jpg';
 
 const STATS = [
   { value: '3+',  label: 'Years Coding'   },
@@ -80,26 +80,74 @@ const About = () => {
           .about-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
         }
 
-        .about-img-col { display: flex; justify-content: center; }
-        .about-img-wrap { position: relative; display: inline-block; }
+        .about-img-col { display: flex; justify-content: center; align-items: flex-start; }
 
-        .about-img {
-          display: block;
-          width: 100%;
-          max-width: 320px;
-          aspect-ratio: 4 / 5;
-          object-fit: cover;
-          border-radius: 20px;
-          margin: 0 auto;
-          box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        /* ── FRAME WRAPPER ───────────────────────────────────── */
+        .about-img-wrap {
+          position: relative;
+          display: inline-block;
+          /* Padding creates the inner frame spacing */
+          padding: 10px;
+          /* Glass card as the frame border */
+          background: var(--surface);
           border: 1px solid var(--glass-border);
+          border-radius: 24px;
+          /* Outer glow — matches site accent */
+          box-shadow:
+            0 0 0 1px rgba(124,92,255,0.18),
+            0 0 40px rgba(124,92,255,0.14),
+            0 20px 60px rgba(0,0,0,0.35);
         }
 
+        /* Image — object-fit contain so full portrait is visible */
+        .about-img {
+          display: block;
+          width: clamp(180px, 28vw, 280px);   /* tight width — shrunk to fit cleanly */
+          height: auto;
+          max-height: clamp(240px, 42vw, 380px);
+          object-fit: contain;
+          object-position: center top;
+          border-radius: 16px;
+        }
+
+        /* Decorative inner glow layer */
+        .about-img-wrap::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: 25px;
+          background: linear-gradient(
+            135deg,
+            rgba(124,92,255,0.25) 0%,
+            transparent 50%,
+            rgba(0,229,255,0.15) 100%
+          );
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        /* Decorative corner accent — bottom-right */
         .about-img-accent {
-          position: absolute; bottom: -10px; right: -10px;
-          width: 60%; height: 60%;
+          position: absolute;
+          bottom: -14px; right: -14px;
+          width: 55%; height: 55%;
           border: 2px solid var(--accent);
-          border-radius: 16px; opacity: 0.2; z-index: -1;
+          border-radius: 18px;
+          opacity: 0.25;
+          z-index: -1;
+          pointer-events: none;
+        }
+
+        /* Second decorative corner — top-left */
+        .about-img-wrap::after {
+          content: '';
+          position: absolute;
+          top: -14px; left: -14px;
+          width: 35%; height: 35%;
+          border: 2px solid var(--accent-2);
+          border-radius: 12px;
+          opacity: 0.2;
+          z-index: -1;
           pointer-events: none;
         }
 
