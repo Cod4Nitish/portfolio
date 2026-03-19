@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import portfolioData from '../data/portfolio.json';
-import aboutImg from '../assets/profile1.jpg';
+import aboutImg from '../assets/profile_hero.jpg';
 
 // ── Stats data ────────────────────────────────────────────────────
 const STATS = [

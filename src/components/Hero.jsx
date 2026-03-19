@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
-import heroProfileImg from '../assets/profile4.jpg';
+import heroProfileImg from '../assets/profile_hero.jpg';
 
 const ROLES = ['Web Developer', 'AI Learner', 'Problem Solver', 'Builder'];
 
@@ -410,22 +410,24 @@ const Hero = () => {
         /* ── THE IMAGE — object-fit: contain, never cropped ── */
         .hero-img {
           display: block;
-          /* Width scales with viewport — contain mode */
-          width: clamp(200px, 38vw, 320px);
-          /* Auto height — preserves aspect ratio */
+          /* Width matches container */
+          width: 100%;
+          /* Auto height — preserves aspect ratio perfectly */
           height: auto;
-          /* Max height so it doesn't get too tall on wide screens */
-          max-height: clamp(260px, 50vw, 420px);
-          /* CONTAIN: full image visible, no cropping */
+          /* Hard cap on height so it doesn't overflow on desktop */
+          max-height: clamp(340px, 55vw, 480px);
+          /* CONTAIN: full image, no cropping ever */
           object-fit: contain;
           object-position: center bottom;
-          border-radius: 16px;
+          border-radius: 12px;
+          /* Filter: blend image edges into the glow background */
+          filter: drop-shadow(0 8px 32px rgba(100, 80, 255, 0.25));
         }
 
         @media (min-width: 768px) {
-          .hero-img {
-            width: clamp(240px, 28vw, 340px);
-            max-height: clamp(300px, 45vw, 460px);
+          .hero-img-container {
+            /* Fixed width on desktop so image doesn't grow too wide */
+            width: clamp(260px, 30vw, 360px);
           }
         }
 
