@@ -5,68 +5,68 @@ import portfolioData from '../data/portfolio.json';
 const Skills = () => {
   const { skills } = portfolioData;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { staggerChildren: 0.1 } 
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
-  };
-
   return (
-    <section id="skills" style={{ padding: '6rem 0', position: 'relative' }}>
-      <div className="section-header">
-        <span className="section-label">Expertise</span>
-        <h2>My Skills</h2>
+    <section id="skills">
+      <div className="section-header center">
+        <span className="section-label">what I know</span>
+        <h2>My Tech Stack</h2>
+        <p style={{ maxWidth: 520, margin: '1rem auto 0', color: 'var(--text-dim)' }}>
+          Technologies and tools I use to craft digital experiences
+        </p>
       </div>
 
-      <motion.div 
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}
-      >
-        {skills.map((skillGroup, index) => (
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' }}>
+        {skills.map((group, gi) => (
           <motion.div
-            variants={itemVariants}
-            key={index}
+            key={gi}
             className="glass"
-            style={{ padding: '2rem', borderRadius: '24px' }}
-            whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, delay: gi * 0.08 }}
+            whileHover={{ y: -6, boxShadow: '0 0 30px var(--accent-glow), 0 20px 50px rgba(0,0,0,0.3)' }}
+            style={{ padding: '1.75rem', cursor: 'default' }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--accent-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', fontWeight: 'bold' }}>
-                {index + 1}
-              </div>
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--text-h)', margin: 0 }}>
-                {skillGroup.category}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              <span style={{ fontSize: '1.75rem' }}>{group.icon}</span>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-h)', margin: 0 }}>
+                {group.category}
               </h3>
             </div>
-            
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-              {skillGroup.items.map((skill, i) => (
-                <motion.span 
-                  key={i} 
-                  whileHover={{ scale: 1.05, backgroundColor: 'var(--accent-bg)', color: 'var(--accent)', borderColor: 'var(--accent-border)' }}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {group.items.map((item, ii) => (
+                <motion.span
+                  key={ii}
+                  whileHover={{ scale: 1.07 }}
                   style={{
-                    padding: '0.5rem 1rem', fontSize: '0.9rem', borderRadius: '12px',
-                    background: 'var(--bg-secondary)', color: 'var(--text)', border: '1px solid var(--border)',
-                    transition: 'all 0.2s', cursor: 'default'
+                    padding: '0.3rem 0.75rem',
+                    background: 'var(--surface)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: 8,
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    color: 'var(--text)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'var(--accent-bg)';
+                    e.currentTarget.style.borderColor = 'var(--accent)';
+                    e.currentTarget.style.color = 'var(--accent-2)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'var(--surface)';
+                    e.currentTarget.style.borderColor = 'var(--glass-border)';
+                    e.currentTarget.style.color = 'var(--text)';
                   }}
                 >
-                  {skill}
+                  {item}
                 </motion.span>
               ))}
             </div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 };

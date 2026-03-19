@@ -1,113 +1,113 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [isHovering, setIsHovering] = useState(false);
-    const [isClicked, setIsClicked] = useState(false);
+  const cursorDotRef = useRef(null);
+  const cursorRingRef = useRef(null);
+  const isHovering = useRef(false);
 
-    // Spring physics for buttery smooth tracking
-    const cursorX = useSpring(0, { stiffness: 500, damping: 28, mass: 0.5 });
-    const cursorY = useSpring(0, { stiffness: 500, damping: 28, mass: 0.5 });
+  useEffect(() => {
+    // Only show on non-touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    useEffect(() => {
-        const updateMousePosition = (e) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
-        };
+    let mouseX = 0;
+    let mouseY = 0;
+    let dotX = 0;
+    let dotY = 0;
+    let ringX = 0;
+    let ringY = 0;
+    let animFrame;
 
-        const handleMouseOver = (e) => {
-            const isClickable = e.target.closest('a') || 
-                                e.target.closest('button') || 
-                                e.target.closest('input') || 
-                                e.target.closest('textarea');
-            setIsHovering(!!isClickable);
-        };
+    const dot = cursorDotRef.current;
+    const ring = cursorRingRef.current;
+    if (!dot || !ring) return;
 
-        const handleMouseDown = () => setIsClicked(true);
-        const handleMouseUp = () => setIsClicked(false);
+    // Show cursors
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
 
-        window.addEventListener('mousemove', updateMousePosition);
-        window.addEventListener('mouseover', handleMouseOver);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
+    const moveCursor = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
 
-        return () => {
-            window.removeEventListener('mousemove', updateMousePosition);
-            window.removeEventListener('mouseover', handleMouseOver);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [cursorX, cursorY]);
+    const checkHover = (e) => {
+      const target = e.target;
+      const clickable = target.closest('a, button, input, textarea, [data-cursor-hover]');
+      isHovering.current = !!clickable;
+    };
 
-    return (
-        <motion.div
-            style={{
-                x: cursorX,
-                y: cursorY,
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                pointerEvents: 'none',
-                zIndex: 9999,
-                mixBlendMode: 'difference' /* Jackie Hu blend mode effect */
-            }}
-        >
-            {/* The outer elegant circle */}
-            <motion.div
-                animate={{
-                    x: '-50%',
-                    y: '-50%',
-                    width: isHovering ? 80 : 24,
-                    height: isHovering ? 80 : 24,
-                    scale: isClicked ? 0.8 : 1,
-                    backgroundColor: isHovering ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)',
-                    border: isHovering ? '1px solid transparent' : '2px solid rgba(255, 255, 255, 1)',
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                style={{
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                {/* Text inside cursor when hovering */}
-                <motion.span
-                    animate={{ opacity: isHovering ? 1 : 0 }}
-                    style={{
-                        color: 'black',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase'
-                    }}
-                >
-                    View
-                </motion.span>
-            </motion.div>
-            
-            {/* The tiny center dot */}
-            <motion.div
-                animate={{
-                    x: '-50%',
-                    y: '-50%',
-                    opacity: isHovering ? 0 : 1,
-                    scale: isClicked ? 1.5 : 1
-                }}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: 4,
-                    height: 4,
-                    backgroundColor: 'white',
-                    borderRadius: '50%',
-                }}
-            />
-        </motion.div>
-    );
+    const animate = () => {
+      // Dot follows instantly
+      dotX = mouseX;
+      dotY = mouseY;
+
+      // Ring follows with lag (lerp)
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+
+      if (dot) {
+        dot.style.transform = `translate(${dotX - 4}px, ${dotY - 4}px)`;
+      }
+
+      if (ring) {
+        const scale = isHovering.current ? 1.8 : 1;
+        ring.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px) scale(${scale})`;
+        ring.style.borderColor = isHovering.current ? 'var(--accent)' : 'rgba(255,255,255,0.6)';
+        ring.style.background = isHovering.current ? 'var(--accent-bg)' : 'transparent';
+      }
+
+      animFrame = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mouseover', checkHover);
+    animFrame = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mouseover', checkHover);
+      cancelAnimationFrame(animFrame);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Tiny solid dot - no lag */}
+      <div
+        ref={cursorDotRef}
+        style={{
+          position: 'fixed',
+          top: 0, left: 0,
+          width: 8, height: 8,
+          borderRadius: '50%',
+          background: '#fff',
+          pointerEvents: 'none',
+          zIndex: 99999,
+          opacity: 0,
+          transition: 'background 0.2s ease',
+          willChange: 'transform',
+        }}
+      />
+      {/* Trailing ring */}
+      <div
+        ref={cursorRingRef}
+        style={{
+          position: 'fixed',
+          top: 0, left: 0,
+          width: 40, height: 40,
+          borderRadius: '50%',
+          border: '1.5px solid rgba(255,255,255,0.6)',
+          pointerEvents: 'none',
+          zIndex: 99998,
+          opacity: 0,
+          transition: 'border-color 0.3s ease, background 0.3s ease',
+          willChange: 'transform',
+          backdropFilter: 'none',
+        }}
+      />
+    </>
+  );
 };
 
 export default CustomCursor;

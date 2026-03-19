@@ -3,78 +3,92 @@ import { motion } from 'framer-motion';
 import portfolioData from '../data/portfolio.json';
 import aboutProfileImg from '../assets/profile1.jpg';
 
+const STATS = [
+  { value: '3+', label: 'Years Coding' },
+  { value: '10+', label: 'Projects' },
+  { value: '5+', label: 'Technologies' },
+];
+
 const About = () => {
   const { name, bio } = portfolioData.personal;
 
   return (
-    <section id="about" style={{ padding: '6rem 0', position: 'relative' }}>
+    <section id="about">
       <div className="section-header">
-        <span className="section-label">Discover</span>
+        <span className="section-label">get to know me</span>
         <h2>About Me</h2>
       </div>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'center' }}>
-        
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', alignItems: 'center' }}>
+
+        {/* Image column */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6 }}
-          style={{ flex: '1 1 280px', position: 'relative' }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.16,1,0.3,1] }}
+          style={{ flex: '0 1 320px', maxWidth: '100%', margin: '0 auto' }}
         >
-          <div className="glass" style={{ padding: '1rem', borderRadius: '24px', display: 'inline-block', position: 'relative', zIndex: 2 }}>
-            <img 
-              src={aboutProfileImg} 
-              alt={name} 
-              style={{ width: '100%', borderRadius: '16px', objectFit: 'cover', display: 'block' }} 
-              onError={(e) => { e.target.style.display = 'none'; }} 
-            />
+          <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+            <div style={{
+              borderRadius: 24,
+              overflow: 'hidden',
+              border: '1px solid var(--glass-border)',
+              boxShadow: '0 0 40px var(--accent-glow), 0 20px 50px rgba(0,0,0,0.4)',
+            }}>
+              <img src={aboutProfileImg} alt={name} style={{ width: '100%', display: 'block', objectFit: 'cover' }} />
+            </div>
+            {/* Accent border decoration */}
+            <div style={{
+              position: 'absolute', bottom: -12, right: -12,
+              width: '70%', height: '70%',
+              border: '2px solid var(--accent)',
+              borderRadius: 24,
+              opacity: 0.3,
+              zIndex: -1,
+            }} />
           </div>
-          <div 
-            style={{ 
-              position: 'absolute', top: '10%', right: '-10%', width: '100%', height: '100%', 
-              background: 'linear-gradient(135deg, var(--accent) 0%, transparent 100%)', 
-              borderRadius: '24px', zIndex: 1, opacity: 0.3, filter: 'blur(20px)' 
-            }} 
-          ></div>
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
+        {/* Text column */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ flex: '1 1 280px' }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.16,1,0.3,1] }}
+          style={{ flex: '1 1 320px', minWidth: 0 }}
         >
-          <div className="glass" style={{ padding: '2.5rem', borderRadius: '24px' }}>
-            <h3 style={{ fontSize: '1.75rem', marginBottom: '1.5rem', color: 'var(--text-h)' }}>Get to know me</h3>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginBottom: '2.5rem', lineHeight: 1.8 }}>
-              {bio}
-            </p>
-            
-            <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-              {[
-                { number: '3+', label: 'Years of Coding' },
-                { number: '10+', label: 'Projects Completed' }
-              ].map((item, idx) => (
-                <motion.div 
-                  key={idx}
-                  whileHover={{ y: -5 }}
-                  style={{ 
-                    flex: '1', minWidth: '120px', padding: '1.5rem', background: 'var(--bg-secondary)', 
-                    borderRadius: '16px', border: '1px solid var(--border)', textAlign: 'center'
-                  }}
-                >
-                  <div className="gradient-text-accent" style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>
-                    {item.number}
-                  </div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {item.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <p style={{ marginBottom: '2rem', fontSize: '1.0625rem' }}>{bio}</p>
+
+          {/* Stats */}
+          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+            {STATS.map(s => (
+              <motion.div
+                key={s.label}
+                whileHover={{ y: -4 }}
+                style={{
+                  flex: '1 1 100px',
+                  padding: '1.25rem 1rem',
+                  background: 'var(--surface)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: 16,
+                  textAlign: 'center',
+                  cursor: 'default',
+                }}
+              >
+                <div className="gradient-text-accent" style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-head)' }}>
+                  {s.value}
+                </div>
+                <div style={{ color: 'var(--text-dim)', fontSize: '0.8125rem', marginTop: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  {s.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          <a href="#contact" className="btn-primary" style={{ width: 'fit-content' }}>
+            Let's Talk →
+          </a>
         </motion.div>
 
       </div>

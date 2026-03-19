@@ -1,151 +1,137 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, Send } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 
 const Contact = () => {
-  const { email, github, linkedin, web3formsKey } = portfolioData.contact;
+  const { email, github, linkedin, twitter, web3formsKey } = portfolioData.contact;
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(null); // 'sending' | 'ok' | 'err'
 
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const onChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setIsError(false);
-
+    setStatus('sending');
     if (web3formsKey) {
       try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ access_key: web3formsKey, ...formData }),
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ access_key: web3formsKey, ...form }),
         });
-        const result = await response.json();
-        if (result.success) {
-          setSubmitMessage('Message sent successfully!');
-          setFormData({ name: '', email: '', message: '' });
-        } else {
-          setIsError(true);
-          setSubmitMessage('Failed to send. Please email directly.');
-        }
-      } catch (error) {
-        setIsError(true);
-        setSubmitMessage('Network error. Please email directly.');
-      } finally {
-        setIsSubmitting(false);
-        setTimeout(() => setSubmitMessage(''), 5000);
-      }
+        const data = await res.json();
+        setStatus(data.success ? 'ok' : 'err');
+        if (data.success) setForm({ name: '', email: '', message: '' });
+      } catch { setStatus('err'); }
     } else {
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmitMessage('Message simulated successfully!');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitMessage(''), 5000);
-      }, 1000);
+      setTimeout(() => { setStatus('ok'); setForm({ name: '', email: '', message: '' }); }, 900);
     }
+    setTimeout(() => setStatus(null), 4000);
   };
 
+  const input = {
+    width: '100%', padding: '0.875rem 1rem', borderRadius: 12,
+    background: 'var(--surface)', border: '1px solid var(--glass-border)',
+    color: 'var(--text-h)', fontSize: '1rem', fontFamily: 'inherit',
+    outline: 'none', transition: 'border-color 0.2s ease',
+  };
+
+  const LINKS = [
+    { icon: <Mail size={20} />, label: email, href: `mailto:${email}` },
+    { icon: <Github size={20} />, label: 'GitHub', href: github },
+    { icon: <Linkedin size={20} />, label: 'LinkedIn', href: linkedin },
+    { icon: <Twitter size={20} />, label: 'Twitter / X', href: twitter },
+  ];
+
   return (
-    <section id="contact" style={{ padding: '6rem 0', position: 'relative' }}>
-      <div className="section-header">
-        <span className="section-label">Connect</span>
+    <section id="contact">
+      <div className="section-header center">
+        <span className="section-label">say hello</span>
         <h2>Get In Touch</h2>
+        <p style={{ maxWidth: 460, margin: '1rem auto 0', color: 'var(--text-dim)' }}>
+          Open to full-time roles, internships, freelance projects, or just a friendly chat!
+        </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem' }}>
-        
-        <motion.div 
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+
+        {/* Info card */}
+        <motion.div
+          className="glass"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.55 }}
+          style={{ padding: '2.5rem' }}
         >
-          <div className="glass" style={{ padding: '3rem', borderRadius: '24px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h3 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--text-h)' }}>Let's work together.</h3>
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', marginBottom: '3rem', lineHeight: 1.6 }}>
-              I'm always open to discussing product design work or partnership opportunities.
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <a href={`mailto:${email}`} style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text)', fontSize: '1.1rem' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--accent-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)' }}>
-                  <Mail size={24} />
-                </div>
-                <span>{email}</span>
+          <h3 style={{ marginBottom: '0.625rem' }}>Let's Connect</h3>
+          <p style={{ color: 'var(--text-dim)', marginBottom: '2rem', fontSize: '0.9375rem' }}>
+            Whether you have a question, a project idea, or just want to say hi — I'll get back to you soon!
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {LINKS.map((l, i) => (
+              <a key={i} href={l.href} target="_blank" rel="noreferrer"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '1rem',
+                  padding: '0.875rem 1rem',
+                  background: 'var(--surface)',
+                  border: '1px solid var(--glass-border)',
+                  borderRadius: 12, color: 'var(--text)',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-bg)'; e.currentTarget.style.color = 'var(--text-h)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.color = 'var(--text)'; }}
+              >
+                <span style={{ color: 'var(--accent)' }}>{l.icon}</span>
+                <span style={{ fontSize: '0.9375rem', fontWeight: 500 }}>{l.label}</span>
               </a>
-              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                <a href={github} target="_blank" rel="noreferrer" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-h)' }}>
-                  <Github size={24} />
-                </a>
-                <a href={linkedin} target="_blank" rel="noreferrer" style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-h)' }}>
-                  <Linkedin size={24} />
-                </a>
-              </div>
-            </div>
+            ))}
           </div>
         </motion.div>
 
-        <motion.div 
+        {/* Form */}
+        <motion.form
+          className="glass"
+          onSubmit={onSubmit}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.55, delay: 0.15 }}
+          style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
         >
-          <form className="glass" onSubmit={handleSubmit} style={{ padding: '3rem', borderRadius: '24px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.9rem', color: 'var(--text-dim)', fontWeight: 500 }}>Name</label>
-              <input 
-                type="text" name="name" value={formData.name} onChange={handleChange} required
-                style={{ width: '100%', padding: '1rem', borderRadius: '12px', background: 'var(--code-bg)', border: '1px solid var(--border)', color: 'var(--text-h)', fontSize: '1rem', outline: 'none' }}
-                onFocus={(e) => e.target.style.borderColor = 'var(--accent)'}
-                onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-              />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Name</label>
+            <input name="name" value={form.name} onChange={onChange} required placeholder="Your name" style={input}
+              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email</label>
+            <input name="email" type="email" value={form.email} onChange={onChange} required placeholder="you@example.com" style={input}
+              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Message</label>
+            <textarea name="message" value={form.message} onChange={onChange} required rows={5} placeholder="Tell me about your project..." style={{ ...input, resize: 'vertical' }}
+              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
+          </div>
+
+          <button type="submit" className="btn-primary" disabled={status === 'sending'} style={{ justifyContent: 'center', opacity: status === 'sending' ? 0.7 : 1 }}>
+            {status === 'sending' ? 'Sending…' : <><Send size={17} /> Send Message</>}
+          </button>
+
+          {status === 'ok' && (
+            <div style={{ padding: '0.875rem', borderRadius: 10, background: 'rgba(0,216,100,0.1)', border: '1px solid rgba(0,216,100,0.3)', color: '#00d864', textAlign: 'center', fontWeight: 600 }}>
+              ✓ Message sent successfully!
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.9rem', color: 'var(--text-dim)', fontWeight: 500 }}>Email</label>
-              <input 
-                type="email" name="email" value={formData.email} onChange={handleChange} required
-                style={{ width: '100%', padding: '1rem', borderRadius: '12px', background: 'var(--code-bg)', border: '1px solid var(--border)', color: 'var(--text-h)', fontSize: '1rem', outline: 'none' }}
-                onFocus={(e) => e.target.style.borderColor = 'var(--accent)'}
-                onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-              />
+          )}
+          {status === 'err' && (
+            <div style={{ padding: '0.875rem', borderRadius: 10, background: 'rgba(255,50,50,0.1)', border: '1px solid rgba(255,50,50,0.3)', color: '#ff5050', textAlign: 'center', fontWeight: 600 }}>
+              ✕ Failed — please email me directly.
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label style={{ fontSize: '0.9rem', color: 'var(--text-dim)', fontWeight: 500 }}>Message</label>
-              <textarea 
-                name="message" value={formData.message} onChange={handleChange} required rows={4}
-                style={{ width: '100%', padding: '1rem', borderRadius: '12px', background: 'var(--code-bg)', border: '1px solid var(--border)', color: 'var(--text-h)', fontSize: '1rem', outline: 'none', resize: 'vertical' }}
-                onFocus={(e) => e.target.style.borderColor = 'var(--accent)'}
-                onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-              />
-            </div>
-            <button 
-              type="submit" 
-              className="btn-primary" 
-              disabled={isSubmitting}
-              style={{ width: '100%', justifyContent: 'center', padding: '1.25rem', marginTop: '1rem', opacity: isSubmitting ? 0.7 : 1 }}
-            >
-              {isSubmitting ? 'Sending...' : <><Send size={20} /> Send Message</>}
-            </button>
-            
-            {submitMessage && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                style={{ padding: '1rem', borderRadius: '12px', textAlign: 'center', fontSize: '0.9rem', fontWeight: 500, background: isError ? 'rgba(239, 68, 68, 0.1)' : 'var(--accent-bg)', color: isError ? '#ef4444' : 'var(--accent)', border: `1px solid ${isError ? 'rgba(239,68,68,0.3)' : 'var(--accent-border)'}` }}
-              >
-                {submitMessage}
-              </motion.div>
-            )}
-          </form>
-        </motion.div>
+          )}
+        </motion.form>
 
       </div>
     </section>

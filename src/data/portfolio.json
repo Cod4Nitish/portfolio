@@ -1,10 +1,10 @@
 {
   "personal": {
     "name": "Nitish Singh",
-    "role": "Full Stack Developer | AI Enthusiast",
+    "role": "Full Stack Developer | AI Enthusiast | Problem Solver",
     "tagline": "Building real world tech products using Web Development and Artificial Intelligence",
     "location": "India",
-    "bio": "Computer Science student focused on Full Stack Development, Artificial Intelligence and building practical tech projects. Currently learning DSA, modern web development and AI tools while building real world applications.",
+    "bio": "Computer Science student focused on Full Stack Development, Artificial Intelligence and building practical tech projects. Currently learning DSA, modern web development and AI tools while building real world applications that solve real problems.",
     "profileImage": "/profile4.jpg",
     "aboutImage": "/profile1.jpg"
   },
@@ -20,57 +20,71 @@
   "skills": [
     {
       "category": "Frontend",
-      "items": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "Angular"
-      ]
+      "icon": "🎨",
+      "items": ["HTML5", "CSS3", "JavaScript", "React.js", "Angular"]
     },
     {
       "category": "Backend",
-      "items": [
-        "Node.js",
-        "Express"
-      ]
+      "icon": "⚙️",
+      "items": ["Node.js", "Express.js", "REST API"]
     },
     {
       "category": "Database",
-      "items": [
-        "MongoDB",
-        "MySQL"
-      ]
+      "icon": "🗄️",
+      "items": ["MongoDB", "MySQL", "Firebase"]
     },
     {
-      "category": "AI / Machine Learning",
-      "items": [
-        "Python",
-        "Machine Learning",
-        "Generative AI"
-      ]
+      "category": "AI / ML",
+      "icon": "🤖",
+      "items": ["Python", "Machine Learning", "Generative AI", "TensorFlow"]
     },
     {
       "category": "Dev Tools",
-      "items": [
-        "Git",
-        "GitHub",
-        "VS Code"
-      ]
+      "icon": "🛠️",
+      "items": ["Git", "GitHub", "VS Code", "Postman", "Vite"]
     }
   ],
-  "projects": [],
+  "projects": [
+    {
+      "id": 1,
+      "title": "PhishGuard AI",
+      "description": "An AI-powered phishing detection platform with real-time URL scanning, malware awareness, and a live threat dashboard. Built with React.js and ML-based detection logic.",
+      "techStack": ["React.js", "Python", "Machine Learning", "TailwindCSS"],
+      "image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
+      "github": "https://github.com/Cod4Nitish",
+      "live": ""
+    },
+    {
+      "id": 2,
+      "title": "SmartDash Analytics",
+      "description": "A modern analytics dashboard featuring real-time data visualization, interactive charts, and a clean dark UI. Built with React and custom chart components.",
+      "techStack": ["React.js", "Node.js", "MongoDB", "Express"],
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+      "github": "https://github.com/Cod4Nitish",
+      "live": ""
+    },
+    {
+      "id": 3,
+      "title": "Developer Portfolio",
+      "description": "The very portfolio you are viewing! Built with React + Vite, Three.js for 3D elements, Framer Motion for animations, and deployed on GitHub Pages.",
+      "techStack": ["React.js", "Three.js", "Framer Motion", "Vite"],
+      "image": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+      "github": "https://github.com/Cod4Nitish/portfolio",
+      "live": "https://cod4nitish.github.io/portfolio/"
+    }
+  ],
   "experience": [
     {
       "role": "Computer Science Student (B.Tech)",
-      "company": "Currently Pursuing",
-      "period": "Present",
-      "description": "Currently learning DSA, modern web development, and AI tools while building real-world applications."
+      "company": "AKTU — Currently Pursuing",
+      "period": "2023 – Present",
+      "description": "Learning Data Structures & Algorithms, modern web development frameworks, and cutting-edge AI tools. Building real-world production applications alongside coursework."
     },
     {
-      "role": "Diploma in Electrical Engineering (EE)",
-      "company": "Previous Education",
-      "period": "Completed",
-      "description": "Gained a strong foundation in core engineering principles, analytical problem solving, and logical thinking."
+      "role": "Diploma in Electrical Engineering",
+      "company": "UP Board of Technical Education",
+      "period": "2020 – 2023",
+      "description": "Gained a strong foundation in core engineering principles, circuit analysis, analytical problem solving, and logical thinking that now supports my software engineering approach."
     }
   ]
 }

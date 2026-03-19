@@ -4,23 +4,20 @@ import portfolioData from '../data/portfolio.json';
 const Footer = () => {
   const { name } = portfolioData.personal;
   const year = new Date().getFullYear();
-
   return (
-    <footer style={{
-      textAlign: 'center',
-      padding: '4rem 0 2rem 0',
-      color: 'var(--text-dim)',
-      fontSize: '0.9rem',
-      background: 'transparent',
-      marginTop: 'auto',
-      position: 'relative',
-      zIndex: 10
-    }}>
-      <div style={{ width: '100%', height: '1px', background: 'linear-gradient(90deg, transparent, var(--border), transparent)', marginBottom: '2rem' }}></div>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
-        <p style={{ fontWeight: 500 }}>&copy; {year} <span style={{ color: 'var(--text-h)' }}>{name}</span>. All rights reserved.</p>
-        <p style={{ fontSize: '0.8rem', opacity: 0.8 }}>
-          Built dynamically with React & Framer Motion
+    <footer style={{ padding: '3rem 2rem 2rem', position: 'relative', zIndex: 1 }}>
+      <div style={{
+        width: '100%', maxWidth: 1200, margin: '0 auto',
+        borderTop: '1px solid var(--glass-border)',
+        paddingTop: '2rem',
+        display: 'flex', flexWrap: 'wrap', gap: '1rem',
+        justifyContent: 'space-between', alignItems: 'center',
+      }}>
+        <p style={{ margin: 0, color: 'var(--text-dim)', fontSize: '0.875rem' }}>
+          © {year} <span style={{ color: 'var(--text-h)', fontWeight: 600 }}>{name}</span>. All rights reserved.
+        </p>
+        <p style={{ margin: 0, color: 'var(--text-dim)', fontSize: '0.875rem' }}>
+          Built with React, Three.js & Framer Motion
         </p>
       </div>
     </footer>

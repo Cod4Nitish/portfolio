@@ -1,56 +1,74 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Briefcase, GraduationCap } from 'lucide-react';
+import { Download } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 
 const Resume = () => {
   const { experience } = portfolioData;
   const { resumeUrl } = portfolioData.contact;
-
-  const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+  const resolveUrl = (p) => p ? `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}` : '';
 
   return (
-    <section id="resume" style={{ padding: '6rem 0', position: 'relative' }}>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+    <section id="resume">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem' }}>
         <div>
-          <span className="section-label">Journey</span>
-          <h2 style={{ margin: 0 }}>Experience & Education</h2>
+          <span className="section-label">my journey</span>
+          <h2 style={{ marginTop: '1rem' }}>Experience & Education</h2>
         </div>
-        <a href={resolveUrl(resumeUrl)} download className="btn-primary" target="_blank" rel="noreferrer" style={{ width: 'fit-content' }}>
-          <Download size={18} /> Download Resume
+        <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
+          <Download size={17} /> Download CV
         </a>
       </div>
 
-      <div style={{ position: 'relative', borderLeft: '2px solid var(--border)', paddingLeft: '2rem', marginLeft: '1rem' }}>
-        {experience.map((item, index) => (
-          <motion.div 
-            key={index} 
-            initial={{ opacity: 0, x: -20 }}
+      {/* Timeline */}
+      <div style={{ position: 'relative', paddingLeft: '2rem' }}>
+        {/* Vertical line */}
+        <div style={{
+          position: 'absolute', left: 0, top: 0, bottom: 0,
+          width: 2,
+          background: 'linear-gradient(to bottom, var(--accent), var(--accent-2), transparent)',
+          borderRadius: 1,
+        }} />
+
+        {experience.map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            style={{ position: 'relative', marginBottom: index === experience.length - 1 ? 0 : '3rem' }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, delay: i * 0.12 }}
+            style={{ position: 'relative', marginBottom: i === experience.length - 1 ? 0 : '2.5rem' }}
           >
-            <div style={{ 
-              position: 'absolute', left: '-33px', top: '0', width: '24px', height: '24px', 
-              borderRadius: '50%', background: 'var(--accent)', border: '4px solid var(--bg)', 
-              boxShadow: '0 0 0 4px var(--accent-bg)' 
-            }}></div>
-            
-            <div className="glass" style={{ padding: '2rem', borderRadius: '24px', position: 'relative' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
+            {/* Dot */}
+            <div style={{
+              position: 'absolute', left: '-2.4rem', top: '0.25rem',
+              width: 14, height: 14,
+              borderRadius: '50%',
+              background: 'var(--accent)',
+              border: '3px solid var(--bg)',
+              boxShadow: '0 0 12px var(--accent-glow)',
+            }} />
+
+            <div className="glass" style={{ padding: '1.75rem 2rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                 <div>
-                  <h3 style={{ fontSize: '1.5rem', color: 'var(--text-h)', marginBottom: '0.25rem' }}>{item.role}</h3>
-                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontSize: '1rem', fontWeight: 500, margin: 0 }}>
-                    {item.role.toLowerCase().includes('student') ? <GraduationCap size={18} /> : <Briefcase size={18} />}
-                    {item.company}
-                  </h4>
+                  <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{item.role}</h3>
+                  <div style={{ color: 'var(--accent-2)', fontWeight: 600, fontSize: '0.9rem' }}>{item.company}</div>
                 </div>
-                <span style={{ padding: '0.25rem 0.75rem', borderRadius: '999px', background: 'var(--accent-bg)', color: 'var(--accent)', fontSize: '0.85rem', fontWeight: 600 }}>
+                <span style={{
+                  padding: '0.2rem 0.75rem',
+                  background: 'var(--accent-bg)',
+                  border: '1px solid rgba(100,80,255,0.3)',
+                  borderRadius: '999px',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  color: 'var(--accent)',
+                  whiteSpace: 'nowrap',
+                }}>
                   {item.period}
                 </span>
               </div>
-              <p style={{ color: 'var(--text-dim)', fontSize: '1rem', lineHeight: 1.6, margin: 0 }}>
+              <p style={{ margin: 0, fontSize: '0.9375rem', color: 'var(--text-dim)', lineHeight: 1.65 }}>
                 {item.description}
               </p>
             </div>

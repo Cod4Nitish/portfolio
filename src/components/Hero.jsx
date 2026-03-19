@@ -5,138 +5,193 @@ import portfolioData from '../data/portfolio.json';
 import heroProfileImg from '../assets/profile4.jpg';
 import HeroCanvas from './HeroCanvas';
 
+const ROLE_LABELS = ['Full Stack Developer', 'AI Enthusiast', 'Problem Solver'];
+
 const Hero = () => {
-  const { name, role, bio, tagline } = portfolioData.personal;
+  const { name, tagline, bio } = portfolioData.personal;
   const { github, linkedin, email, twitter, instagram, resumeUrl } = portfolioData.contact;
+  const resolveUrl = (p) => p ? `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}` : '';
 
-  // Typing Effect Logic
-  const roles = role.split('|').map(r => r.trim());
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // Resolve public URLs for GitHub Pages
-  const resolveUrl = (path) => path ? `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}` : '';
+  // Typing effect
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [typed, setTyped] = useState('');
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const typingSpeed = isDeleting ? 40 : 100;
-    const currentFullText = roles[currentRoleIndex];
-
-    const timeout = setTimeout(() => {
-      if (!isDeleting && currentText === currentFullText) {
-        setTimeout(() => setIsDeleting(true), 1500); 
-      } else if (isDeleting && currentText === '') {
-        setIsDeleting(false);
-        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
-      } else {
-        const nextText = isDeleting
-            ? currentFullText.substring(0, currentText.length - 1)
-            : currentFullText.substring(0, currentText.length + 1);
-        setCurrentText(nextText);
+    const full = ROLE_LABELS[roleIdx];
+    const speed = deleting ? 38 : 90;
+    const t = setTimeout(() => {
+      if (!deleting && typed === full) return setTimeout(() => setDeleting(true), 1400);
+      if (deleting && typed === '') {
+        setDeleting(false);
+        setRoleIdx(i => (i + 1) % ROLE_LABELS.length);
+        return;
       }
-    }, typingSpeed);
+      setTyped(deleting ? full.slice(0, typed.length - 1) : full.slice(0, typed.length + 1));
+    }, speed);
+    return () => clearTimeout(t);
+  }, [typed, deleting, roleIdx]);
 
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentRoleIndex, roles]);
+  const socials = [
+    { icon: <Github size={18} />, href: github },
+    { icon: <Linkedin size={18} />, href: linkedin },
+    { icon: <Twitter size={18} />, href: twitter },
+    { icon: <Instagram size={18} />, href: instagram },
+    { icon: <Mail size={18} />, href: email ? `mailto:${email}` : null },
+  ].filter(s => s.href);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      } 
-    }
+  const containerVars = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
   };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { type: 'spring', stiffness: 100 }
-    }
+  const itemVars = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
-    <section id="home" style={{ position: 'relative', width: '100%', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+    <section id="home" style={{
+      position: 'relative',
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      overflow: 'hidden',
+      paddingTop: '100px',
+    }}>
+      {/* 3D background canvas */}
       <HeroCanvas />
-      
-      <div className="glow-blob" style={{ top: '10%', left: '10%' }}></div>
-      <div className="glow-blob" style={{ bottom: '10%', right: '10%', background: 'radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(0,0,0,0) 70%)' }}></div>
 
-      <motion.div 
-        className="hero-content-wrapper" 
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 10, padding: '0 20px', maxWidth: '800px' }}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div variants={itemVariants} className="profile-img-wrapper" style={{ marginBottom: '2rem' }}>
-          <img src={heroProfileImg} alt={name} style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border-light)', boxShadow: 'var(--glass-shadow)' }} onError={(e) => { e.target.style.display = 'none'; }} />
-        </motion.div>
+      {/* Glow blobs */}
+      <div className="glow-blob glow-blob-1" />
+      <div className="glow-blob glow-blob-2" />
 
-        <motion.h2 variants={itemVariants} style={{ fontSize: '1.25rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>
-          Hello, world.
-        </motion.h2>
+      <div style={{ width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 2 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4rem' }}>
 
-        <motion.h1 variants={itemVariants} style={{ marginBottom: '0.5rem' }}>
-          I'm <span className="gradient-text-accent">{name}</span>
-        </motion.h1>
+          {/* LEFT — text */}
+          <motion.div
+            variants={containerVars}
+            initial="hidden"
+            animate="show"
+            style={{ flex: '1 1 340px', minWidth: 0 }}
+          >
+            <motion.div variants={itemVars} style={{ marginBottom: '1.5rem' }}>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.375rem 1rem',
+                background: 'var(--accent-bg)',
+                color: 'var(--accent-2)',
+                borderRadius: '999px',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                border: '1px solid rgba(0,216,255,0.2)',
+              }}>
+                ▹ Available for work
+              </span>
+            </motion.div>
 
-        <motion.div variants={itemVariants} style={{ fontSize: '1.5rem', fontWeight: 500, height: '35px', marginBottom: '1.5rem', color: 'var(--text-h)' }}>
-          <span style={{ borderRight: '2px solid var(--accent)', paddingRight: '5px', animation: 'blink 1s step-end infinite' }}>
-            {currentText}
-          </span>
-        </motion.div>
+            <motion.h1 variants={itemVars} style={{ marginBottom: '0.75rem', lineHeight: 1.05 }}>
+              Hi, I'm<br />
+              <span className="gradient-text-accent">{name}</span>
+            </motion.h1>
 
-        <motion.p variants={itemVariants} style={{ fontSize: '1.1rem', color: 'var(--text)', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
-          {tagline} {bio}
-        </motion.p>
+            <motion.div variants={itemVars} style={{
+              fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)',
+              fontWeight: 600,
+              color: 'var(--text-h)',
+              marginBottom: '1.5rem',
+              minHeight: '2em',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <span>{typed}</span>
+              <span style={{ borderRight: '2px solid var(--accent)', marginLeft: 2, animation: 'blink 1s step-end infinite', height: '1.2em' }} />
+            </motion.div>
 
-        <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '3rem' }}>
-          <a href="#projects" className="btn-primary">
-            View Projects <ArrowRight size={18} />
-          </a>
-          <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
-            <Download size={18} /> Resume
-          </a>
-        </motion.div>
+            <motion.p variants={itemVars} style={{ maxWidth: 520, marginBottom: '2.5rem', color: 'var(--text)' }}>
+              {tagline}
+            </motion.p>
 
-        <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-          {[
-            { icon: <Github size={20} />, url: github, label: "GitHub" },
-            { icon: <Linkedin size={20} />, url: linkedin, label: "LinkedIn" },
-            { icon: <Twitter size={20} />, url: twitter, label: "Twitter" },
-            { icon: <Instagram size={20} />, url: instagram, label: "Instagram" },
-            { icon: <Mail size={20} />, url: email ? `mailto:${email}` : null, label: "Email" }
-          ].map((item, idx) => item.url && (
-            <motion.a 
-              key={idx}
-              href={item.url}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={item.label}
-              whileHover={{ scale: 1.1, translateY: -2 }}
-              whileTap={{ scale: 0.95 }}
+            <motion.div variants={itemVars} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+              <a href="#projects" className="btn-primary">
+                View Projects <ArrowRight size={18} />
+              </a>
+              <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
+                <Download size={18} /> Resume
+              </a>
+            </motion.div>
+
+            <motion.div variants={itemVars} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              {socials.map((s, i) => (
+                <a key={i} href={s.href} className="social-btn" target="_blank" rel="noreferrer">
+                  {s.icon}
+                </a>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT — avatar */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{ flex: '0 0 auto', position: 'relative' }}
+          >
+            <div style={{
+              width: 'clamp(220px, 30vw, 320px)',
+              height: 'clamp(220px, 30vw, 320px)',
+              borderRadius: '32px',
+              overflow: 'hidden',
+              border: '1px solid var(--glass-border)',
+              boxShadow: '0 0 60px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.5)',
+              position: 'relative',
+            }}>
+              <img src={heroProfileImg} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              {/* Overlay gradient */}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(6,9,21,0.4) 0%, transparent 60%)' }} />
+            </div>
+            {/* Floating badge */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
               style={{
-                width: '45px', height: '45px', borderRadius: '50%', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-h)', transition: 'all 0.2s',
-                boxShadow: 'var(--glass-shadow)'
+                position: 'absolute', bottom: -16, left: -24,
+                background: 'var(--glass-bg)', backdropFilter: 'blur(16px)',
+                border: '1px solid var(--glass-border)',
+                borderRadius: '14px', padding: '0.75rem 1.25rem',
+                display: 'flex', alignItems: 'center', gap: '0.75rem',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-h)'; }}
             >
-              {item.icon}
-            </motion.a>
-          ))}
+              <span style={{ fontSize: '1.5rem' }}>🚀</span>
+              <div>
+                <div style={{ color: 'var(--text-h)', fontWeight: 700, fontSize: '0.875rem' }}>Open to work</div>
+                <div style={{ color: 'var(--text-dim)', fontSize: '0.75rem' }}>Full-time / Internship</div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          style={{ position: 'absolute', bottom: -60, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
+        >
+          <span style={{ color: 'var(--text-dim)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+            style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, var(--accent), transparent)' }}
+          />
         </motion.div>
-      </motion.div>
-      
-      <style>{`
-        @keyframes blink { 50% { border-color: transparent } }
-      `}</style>
+      </div>
+
+      <style>{`@keyframes blink { 50% { border-color: transparent } }`}</style>
     </section>
   );
 };
