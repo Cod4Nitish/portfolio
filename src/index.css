@@ -18,12 +18,12 @@
   --border:       rgba(255,255,255,0.07);
   --border-glow:  rgba(100,80,255,0.4);
 
-  /* Accent */
-  --accent:       #6450ff;
-  --accent-2:     #00d8ff;
-  --accent-glow:  rgba(100,80,255,0.25);
-  --accent-2-glow:rgba(0,216,255,0.25);
-  --accent-bg:    rgba(100,80,255,0.12);
+  /* Accent — vivid purple + cyan */
+  --accent:       #7c5cff;
+  --accent-2:     #00e5ff;
+  --accent-glow:  rgba(124,92,255,0.32);
+  --accent-2-glow:rgba(0,229,255,0.28);
+  --accent-bg:    rgba(124,92,255,0.12);
 
   /* Glass */
   --glass-bg:     rgba(13,18,36,0.6);
@@ -165,59 +165,87 @@ main {
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 160px;                /* ← bigger gap between sections */
   position: relative;
   z-index: 1;
 }
 
 section {
   width: 100%;
-  scroll-margin-top: 80px; /* offset for sticky navbar */
+  scroll-margin-top: 80px;
 }
 
-@media (max-width: 900px) { main { padding: 0 1.5rem; gap: 90px; } }
-@media (max-width: 600px) { main { padding: 0 1rem; gap: 70px; } }
+@media (max-width: 900px) { main { padding: 0 1.5rem; gap: 120px; } }
+@media (max-width: 600px) { main { padding: 0 1rem;   gap: 90px;  } }
 
 /* ────────────────────────────────────────────────
    SECTION HEADER — shared across all sections
 ───────────────────────────────────────────────── */
 
-/* Default: centered (Skills, Projects, Contact) */
+/* ALL section headers: centered */
 .section-hd {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Row variant (Experience — title + button side by side) */
+/* Row variant for Experience — keep Download CV button inline */
 .section-hd--row {
-  text-align: left;
-  display: flex;
+  flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
+  text-align: center;
+}
+/* h2 and desc inside row variant — centered block */
+.section-hd--row > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
 }
 
-/* The h2 inside section headers */
+/* Section h2 — with gradient highlight on the title itself */
 .section-hd h2 {
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
   line-height: 1.1;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.625rem;
-  color: var(--text-h);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  /* Gradient on every section heading */
+  background: linear-gradient(
+    135deg,
+    var(--text-h) 0%,
+    var(--text-h) 40%,
+    var(--accent-2) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Optional short description line */
+/* Optional short description under heading */
 .section-desc {
   font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
   color: var(--text-dim);
-  margin: 0 auto;
-  max-width: 400px;
-  line-height: 1.6;
+  max-width: 440px;
+  line-height: 1.7;
+  margin: 0;
 }
-.section-hd--row .section-desc { margin: 0; }
 
-/* Keep old .section-label for hero chip (still used there) */
+/* ── Inline highlight span — wrap any keyword ── */
+/* Usage: <span className="hl">word</span>         */
+.hl {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+/* section-label — used only in Hero */
 .section-label {
   display: inline-flex;
   align-items: center;
@@ -230,6 +258,5 @@ section {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border: 1px solid rgba(0,216,255,0.2);
+  border: 1px solid rgba(0,229,255,0.22);
 }
-
