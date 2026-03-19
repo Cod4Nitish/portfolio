@@ -154,8 +154,8 @@ const About = () => {
         .about-content-col {
           display: flex; flex-direction: column; gap: 0;
           text-align: center;
+          align-items: center;
         }
-        @media (min-width: 768px) { .about-content-col { text-align: left; } }
 
         .about-bio {
           font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
@@ -163,16 +163,13 @@ const About = () => {
           line-height: 1.8;
           margin-bottom: 1.75rem;
           max-width: 460px;
-          margin-left: auto; margin-right: auto;
         }
-        @media (min-width: 768px) { .about-bio { margin-left: 0; margin-right: 0; } }
 
         .about-stats {
           display: flex; gap: 1rem; flex-wrap: wrap;
           justify-content: center;
           margin-bottom: 2rem;
         }
-        @media (min-width: 768px) { .about-stats { justify-content: flex-start; } }
 
         .about-stat-card {
           flex: 1 1 80px; min-width: 80px; max-width: 120px;
