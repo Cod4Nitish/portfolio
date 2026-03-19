@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
-import heroProfileImg from '../assets/profile_suit.jpg';
+import heroProfileImg from '../assets/profile_hero.jpg';
 
 const ROLES = ['Web Developer', 'AI Learner', 'Problem Solver', 'Builder'];
 
@@ -415,19 +415,19 @@ const Hero = () => {
           /* Auto height — preserves aspect ratio perfectly */
           height: auto;
           /* Hard cap on height so it doesn't overflow on desktop */
-          max-height: clamp(340px, 55vw, 480px);
+          max-height: clamp(320px, 45vw, 440px);
           /* CONTAIN: full image, no cropping ever */
           object-fit: contain;
           object-position: center bottom;
           border-radius: 12px;
           /* Filter: blend image edges into the glow background */
-          filter: drop-shadow(0 8px 32px rgba(100, 80, 255, 0.25));
+          filter: drop-shadow(0 4px 24px rgba(124, 92, 255, 0.3));
         }
 
         @media (min-width: 768px) {
           .hero-img-container {
             /* Fixed width on desktop so image doesn't grow too wide */
-            width: clamp(260px, 30vw, 360px);
+            width: clamp(240px, 28vw, 320px);
           }
         }
 
