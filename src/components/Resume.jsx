@@ -6,75 +6,194 @@ import portfolioData from '../data/portfolio.json';
 const Resume = () => {
   const { experience } = portfolioData;
   const { resumeUrl } = portfolioData.contact;
-  const resolveUrl = (p) => p ? `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}` : '';
+  const base = import.meta.env.BASE_URL ?? '/';
+  const resolveUrl = (p) => p ? `${base}${p.replace(/^\//, '')}` : '';
 
   return (
-    <section id="resume">
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem' }}>
+    <section id="resume" className="resume-section">
+
+      {/* ── Header row ──────────────────────────────────── */}
+      <div className="resume-header">
         <div>
           <span className="section-label">my journey</span>
-          <h2 style={{ marginTop: '1rem' }}>Experience & Education</h2>
+          <h2 className="resume-title">Experience &amp; Education</h2>
         </div>
-        <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
-          <Download size={17} /> Download CV
-        </a>
+        {resumeUrl && (
+          <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
+            <Download size={16} /> Download CV
+          </a>
+        )}
       </div>
 
-      {/* Timeline */}
-      <div style={{ position: 'relative', paddingLeft: '2rem' }}>
+      {/* ── Timeline ────────────────────────────────────── */}
+      <div className="timeline">
         {/* Vertical line */}
-        <div style={{
-          position: 'absolute', left: 0, top: 0, bottom: 0,
-          width: 2,
-          background: 'linear-gradient(to bottom, var(--accent), var(--accent-2), transparent)',
-          borderRadius: 1,
-        }} />
+        <div className="timeline-line" aria-hidden="true" />
 
         {experience.map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: -30 }}
+            className="timeline-item"
+            initial={{ opacity: 0, x: -28 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.55, delay: i * 0.12 }}
-            style={{ position: 'relative', marginBottom: i === experience.length - 1 ? 0 : '2.5rem' }}
+            transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Dot */}
-            <div style={{
-              position: 'absolute', left: '-2.4rem', top: '0.25rem',
-              width: 14, height: 14,
-              borderRadius: '50%',
-              background: 'var(--accent)',
-              border: '3px solid var(--bg)',
-              boxShadow: '0 0 12px var(--accent-glow)',
-            }} />
+            {/* Dot on the line */}
+            <div className="timeline-dot" aria-hidden="true" />
 
-            <div className="glass" style={{ padding: '1.75rem 2rem' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                <div>
-                  <h3 style={{ fontSize: '1.125rem', marginBottom: '0.25rem' }}>{item.role}</h3>
-                  <div style={{ color: 'var(--accent-2)', fontWeight: 600, fontSize: '0.9rem' }}>{item.company}</div>
+            {/* Card */}
+            <div className="timeline-card">
+              {/* Top row: role + period badge */}
+              <div className="timeline-card-head">
+                <div className="timeline-card-meta">
+                  <h3 className="timeline-role">{item.role}</h3>
+                  <span className="timeline-company">{item.company}</span>
                 </div>
-                <span style={{
-                  padding: '0.2rem 0.75rem',
-                  background: 'var(--accent-bg)',
-                  border: '1px solid rgba(100,80,255,0.3)',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  color: 'var(--accent)',
-                  whiteSpace: 'nowrap',
-                }}>
-                  {item.period}
-                </span>
+                <span className="timeline-period">{item.period}</span>
               </div>
-              <p style={{ margin: 0, fontSize: '0.9375rem', color: 'var(--text-dim)', lineHeight: 1.65 }}>
-                {item.description}
-              </p>
+              {/* Description */}
+              <p className="timeline-desc">{item.description}</p>
             </div>
           </motion.div>
         ))}
       </div>
+
+      <style>{`
+        /* ── Header row ──────────────────────────── */
+        .resume-header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-bottom: 3rem;
+        }
+
+        .resume-header .section-label {
+          display: inline-block;
+          margin-bottom: 0.625rem;
+        }
+
+        .resume-title {
+          font-size: clamp(2rem, 4.5vw, 3rem);
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          margin: 0;
+          color: var(--text-h);
+        }
+
+        /* ── Timeline wrapper ────────────────────── */
+        .timeline {
+          position: relative;
+          padding-left: 2.25rem;
+        }
+
+        /* Gradient vertical line */
+        .timeline-line {
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 2px;
+          background: linear-gradient(
+            to bottom,
+            var(--accent) 0%,
+            var(--accent-2) 60%,
+            transparent 100%
+          );
+          border-radius: 1px;
+        }
+
+        /* ── Individual item ─────────────────────── */
+        .timeline-item {
+          position: relative;
+          margin-bottom: 1.75rem;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        /* Dot */
+        .timeline-dot {
+          position: absolute;
+          left: -2.6rem;
+          top: 1.25rem;
+          width: 14px; height: 14px;
+          border-radius: 50%;
+          background: var(--accent);
+          border: 3px solid var(--bg);
+          box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Card */
+        .timeline-card {
+          background: var(--surface);
+          border: 1px solid var(--glass-border);
+          border-radius: 16px;
+          padding: 1.5rem 1.75rem;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-card:hover {
+          border-color: var(--accent);
+          box-shadow: 0 0 20px var(--accent-glow), 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Top row */
+        .timeline-card-head {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          margin-bottom: 0.875rem;
+        }
+
+        .timeline-card-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+
+        /* Role */
+        .timeline-role {
+          font-size: 1.125rem;
+          font-weight: 700;
+          color: var(--text-h);
+          margin: 0;
+        }
+
+        /* Company */
+        .timeline-company {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: var(--accent-2);
+        }
+
+        /* Period badge */
+        .timeline-period {
+          display: inline-block;
+          padding: 0.2rem 0.75rem;
+          background: var(--accent-bg);
+          border: 1px solid rgba(100,80,255,0.25);
+          border-radius: 999px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: var(--accent);
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        /* Description */
+        .timeline-desc {
+          font-size: 0.9375rem;
+          color: var(--text-dim);
+          line-height: 1.7;
+          margin: 0;
+        }
+
+        @media (max-width: 640px) {
+          .timeline { padding-left: 1.75rem; }
+          .timeline-dot { left: -2.1rem; }
+          .timeline-card { padding: 1.25rem; }
+        }
+      `}</style>
     </section>
   );
 };

@@ -5,17 +5,18 @@ import portfolioData from '../data/portfolio.json';
 
 const Contact = () => {
   const { email, github, linkedin, twitter, web3formsKey } = portfolioData.contact;
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState(null); // 'sending' | 'ok' | 'err'
+
+  const [form,   setForm]   = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(null); // null | 'sending' | 'ok' | 'err'
 
   const onChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = async e => {
     e.preventDefault();
     setStatus('sending');
-    if (web3formsKey) {
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+    try {
+      if (web3formsKey) {
+        const res  = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({ access_key: web3formsKey, ...form }),
@@ -23,117 +24,297 @@ const Contact = () => {
         const data = await res.json();
         setStatus(data.success ? 'ok' : 'err');
         if (data.success) setForm({ name: '', email: '', message: '' });
-      } catch { setStatus('err'); }
-    } else {
-      setTimeout(() => { setStatus('ok'); setForm({ name: '', email: '', message: '' }); }, 900);
-    }
-    setTimeout(() => setStatus(null), 4000);
+      } else {
+        // Demo mode — simulate success
+        await new Promise(r => setTimeout(r, 900));
+        setStatus('ok');
+        setForm({ name: '', email: '', message: '' });
+      }
+    } catch { setStatus('err'); }
+    setTimeout(() => setStatus(null), 4500);
   };
 
-  const input = {
-    width: '100%', padding: '0.875rem 1rem', borderRadius: 12,
-    background: 'var(--surface)', border: '1px solid var(--glass-border)',
-    color: 'var(--text-h)', fontSize: '1rem', fontFamily: 'inherit',
-    outline: 'none', transition: 'border-color 0.2s ease',
-  };
-
-  const LINKS = [
-    { icon: <Mail size={20} />, label: email, href: `mailto:${email}` },
-    { icon: <Github size={20} />, label: 'GitHub', href: github },
-    { icon: <Linkedin size={20} />, label: 'LinkedIn', href: linkedin },
-    { icon: <Twitter size={20} />, label: 'Twitter / X', href: twitter },
-  ];
+  const SOCIAL_LINKS = [
+    { icon: <Github size={20} />,   label: 'GitHub',    href: github },
+    { icon: <Linkedin size={20} />, label: 'LinkedIn',  href: linkedin },
+    { icon: <Twitter size={20} />,  label: 'Twitter',   href: twitter },
+    { icon: <Mail size={20} />,     label: email,       href: email ? `mailto:${email}` : null },
+  ].filter(s => s.href);
 
   return (
-    <section id="contact">
-      <div className="section-header center">
+    <section id="contact" className="contact-section">
+
+      {/* ── Header ────────────────────────────────────────── */}
+      <div className="section-header-centered">
         <span className="section-label">say hello</span>
-        <h2>Get In Touch</h2>
-        <p style={{ maxWidth: 460, margin: '1rem auto 0', color: 'var(--text-dim)' }}>
-          Open to full-time roles, internships, freelance projects, or just a friendly chat!
+        <h2 className="section-title">Get In Touch</h2>
+        <p className="section-subtitle">
+          Open to internships, full‑time roles, freelance projects, or just a friendly chat!
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+      {/* ── Two-column grid ───────────────────────────────── */}
+      <div className="contact-grid">
 
-        {/* Info card */}
+        {/* LEFT — info + social links */}
         <motion.div
-          className="glass"
-          initial={{ opacity: 0, y: 30 }}
+          className="contact-info-card"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55 }}
-          style={{ padding: '2.5rem' }}
+          transition={{ duration: 0.5 }}
         >
-          <h3 style={{ marginBottom: '0.625rem' }}>Let's Connect</h3>
-          <p style={{ color: 'var(--text-dim)', marginBottom: '2rem', fontSize: '0.9375rem' }}>
-            Whether you have a question, a project idea, or just want to say hi — I'll get back to you soon!
+          <h3 className="contact-info-title">Let's Connect</h3>
+          <p className="contact-info-body">
+            Whether you have a project idea, an opportunity, or just want to say hi —
+            my inbox is always open. I'll get back to you!
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {LINKS.map((l, i) => (
-              <a key={i} href={l.href} target="_blank" rel="noreferrer"
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '1rem',
-                  padding: '0.875rem 1rem',
-                  background: 'var(--surface)',
-                  border: '1px solid var(--glass-border)',
-                  borderRadius: 12, color: 'var(--text)',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.background = 'var(--accent-bg)'; e.currentTarget.style.color = 'var(--text-h)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--glass-border)'; e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.color = 'var(--text)'; }}
+          <div className="contact-social-list">
+            {SOCIAL_LINKS.map((s, i) => (
+              <a
+                key={i}
+                href={s.href}
+                className="contact-social-link"
+                target={s.href.startsWith('mailto') ? undefined : '_blank'}
+                rel="noreferrer"
+                aria-label={s.label}
               >
-                <span style={{ color: 'var(--accent)' }}>{l.icon}</span>
-                <span style={{ fontSize: '0.9375rem', fontWeight: 500 }}>{l.label}</span>
+                <span className="contact-social-icon">{s.icon}</span>
+                <span className="contact-social-label">{s.label}</span>
               </a>
             ))}
           </div>
         </motion.div>
 
-        {/* Form */}
+        {/* RIGHT — form */}
         <motion.form
-          className="glass"
+          className="contact-form-card"
           onSubmit={onSubmit}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.15 }}
-          style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+          transition={{ duration: 0.5, delay: 0.12 }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Name</label>
-            <input name="name" value={form.name} onChange={onChange} required placeholder="Your name" style={input}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email</label>
-            <input name="email" type="email" value={form.email} onChange={onChange} required placeholder="you@example.com" style={input}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Message</label>
-            <textarea name="message" value={form.message} onChange={onChange} required rows={5} placeholder="Tell me about your project..." style={{ ...input, resize: 'vertical' }}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--glass-border)'} />
+          {/* Name */}
+          <div className="form-group">
+            <label className="form-label" htmlFor="contact-name">Name</label>
+            <input
+              id="contact-name"
+              className="form-input"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={onChange}
+              placeholder="Your name"
+              required
+              autoComplete="name"
+            />
           </div>
 
-          <button type="submit" className="btn-primary" disabled={status === 'sending'} style={{ justifyContent: 'center', opacity: status === 'sending' ? 0.7 : 1 }}>
-            {status === 'sending' ? 'Sending…' : <><Send size={17} /> Send Message</>}
+          {/* Email */}
+          <div className="form-group">
+            <label className="form-label" htmlFor="contact-email">Email</label>
+            <input
+              id="contact-email"
+              className="form-input"
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={onChange}
+              placeholder="you@example.com"
+              required
+              autoComplete="email"
+            />
+          </div>
+
+          {/* Message */}
+          <div className="form-group">
+            <label className="form-label" htmlFor="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              className="form-input form-textarea"
+              name="message"
+              value={form.message}
+              onChange={onChange}
+              placeholder="Tell me about your project or idea…"
+              rows={5}
+              required
+            />
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={status === 'sending'}
+            style={{ width: '100%', justifyContent: 'center', opacity: status === 'sending' ? 0.7 : 1 }}
+          >
+            {status === 'sending'
+              ? 'Sending…'
+              : <><Send size={16} /> Send Message</>
+            }
           </button>
 
+          {/* Status messages */}
           {status === 'ok' && (
-            <div style={{ padding: '0.875rem', borderRadius: 10, background: 'rgba(0,216,100,0.1)', border: '1px solid rgba(0,216,100,0.3)', color: '#00d864', textAlign: 'center', fontWeight: 600 }}>
-              ✓ Message sent successfully!
+            <div className="form-status form-status--ok">
+              ✓ Message sent! I'll reply soon.
             </div>
           )}
           {status === 'err' && (
-            <div style={{ padding: '0.875rem', borderRadius: 10, background: 'rgba(255,50,50,0.1)', border: '1px solid rgba(255,50,50,0.3)', color: '#ff5050', textAlign: 'center', fontWeight: 600 }}>
-              ✕ Failed — please email me directly.
+            <div className="form-status form-status--err">
+              ✕ Something went wrong — email me directly at {email}
             </div>
           )}
         </motion.form>
 
       </div>
+
+      <style>{`
+        /* ── Two-column grid: 1 → 2 ──────────── */
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+          .contact-grid {
+            grid-template-columns: 1fr 1.4fr;
+            gap: 2rem;
+          }
+        }
+
+        /* ── Info card ───────────────────────── */
+        .contact-info-card {
+          background: var(--surface);
+          border: 1px solid var(--glass-border);
+          border-radius: 18px;
+          padding: 2rem 1.75rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .contact-info-title {
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: var(--text-h);
+          margin-bottom: 0.75rem;
+        }
+        .contact-info-body {
+          font-size: 0.9375rem;
+          color: var(--text-dim);
+          line-height: 1.7;
+          margin-bottom: 1.75rem;
+        }
+
+        /* Social links list */
+        .contact-social-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.625rem;
+        }
+        .contact-social-link {
+          display: flex;
+          align-items: center;
+          gap: 0.875rem;
+          padding: 0.75rem 1rem;
+          background: var(--bg-2, var(--bg));
+          border: 1px solid var(--glass-border);
+          border-radius: 12px;
+          text-decoration: none;
+          transition: border-color 0.25s ease, background 0.25s ease;
+        }
+        .contact-social-link:hover {
+          border-color: var(--accent);
+          background: var(--accent-bg);
+        }
+        .contact-social-icon { color: var(--accent); flex-shrink: 0; }
+        .contact-social-label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--text);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .contact-social-link:hover .contact-social-label {
+          color: var(--text-h);
+        }
+
+        /* ── Form card ───────────────────────── */
+        .contact-form-card {
+          background: var(--surface);
+          border: 1px solid var(--glass-border);
+          border-radius: 18px;
+          padding: 2rem 1.75rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+        }
+
+        /* Form group */
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        /* Label */
+        .form-label {
+          font-size: 0.8125rem;
+          font-weight: 600;
+          color: var(--text-dim);
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        /* Input + textarea */
+        .form-input {
+          width: 100%;
+          padding: 0.8125rem 1rem;
+          border-radius: 10px;
+          border: 1px solid var(--glass-border);
+          background: var(--bg-2, var(--bg));
+          color: var(--text-h);
+          font-family: inherit;
+          font-size: 0.9375rem;
+          outline: none;
+          transition: border-color 0.25s ease, box-shadow 0.25s ease;
+          box-sizing: border-box;
+        }
+        .form-input::placeholder { color: var(--text-dim); }
+        .form-input:focus {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .form-textarea { resize: vertical; min-height: 120px; }
+
+        /* Status box */
+        .form-status {
+          padding: 0.875rem 1rem;
+          border-radius: 10px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-align: center;
+          line-height: 1.5;
+        }
+        .form-status--ok {
+          background: rgba(0, 220, 100, 0.1);
+          border: 1px solid rgba(0, 220, 100, 0.3);
+          color: #00dc64;
+        }
+        .form-status--err {
+          background: rgba(255, 60, 60, 0.1);
+          border: 1px solid rgba(255, 60, 60, 0.3);
+          color: #ff5454;
+        }
+
+        @media (max-width: 480px) {
+          .contact-info-card,
+          .contact-form-card { padding: 1.5rem 1.25rem; }
+        }
+      `}</style>
     </section>
   );
 };
