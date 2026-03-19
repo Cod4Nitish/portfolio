@@ -179,11 +179,45 @@ section {
 @media (max-width: 600px) { main { padding: 0 1rem; gap: 70px; } }
 
 /* ────────────────────────────────────────────────
-   SECTION HEADER
+   SECTION HEADER — shared across all sections
 ───────────────────────────────────────────────── */
-.section-header { margin-bottom: 3.5rem; }
-.section-header.center { text-align: center; }
 
+/* Default: centered (Skills, Projects, Contact) */
+.section-hd {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Row variant (Experience — title + button side by side) */
+.section-hd--row {
+  text-align: left;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* The h2 inside section headers */
+.section-hd h2 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.625rem;
+  color: var(--text-h);
+}
+
+/* Optional short description line */
+.section-desc {
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  color: var(--text-dim);
+  margin: 0 auto;
+  max-width: 400px;
+  line-height: 1.6;
+}
+.section-hd--row .section-desc { margin: 0; }
+
+/* Keep old .section-label for hero chip (still used there) */
 .section-label {
   display: inline-flex;
   align-items: center;
@@ -196,10 +230,6 @@ section {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 1.25rem;
   border: 1px solid rgba(0,216,255,0.2);
 }
-.section-label::before {
-  content: '▹';
-  color: var(--accent);
-}
+
