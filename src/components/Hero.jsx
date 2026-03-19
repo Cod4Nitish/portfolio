@@ -3,65 +3,24 @@ import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 import heroProfileImg from '../assets/profile4.jpg';
-import HeroCanvas from './HeroCanvas';
 
-const ROLES = ['Full Stack Developer', 'AI Enthusiast', 'Problem Solver'];
+const ROLES = ['Web Developer', 'AI Learner', 'Problem Solver', 'Builder'];
 
-// ── Scroll Indicator — fixed at viewport bottom ──────────────────
-const ScrollIndicator = () => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 2 }}
-    style={{
-      position: 'fixed',
-      bottom: 28,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: 6,
-      zIndex: 50,
-      pointerEvents: 'none',
-    }}
-  >
-    <span style={{
-      color: 'var(--text-dim)',
-      fontSize: '0.6875rem',
-      letterSpacing: '0.14em',
-      textTransform: 'uppercase',
-    }}>
-      scroll
-    </span>
-    <motion.div
-      animate={{ y: [0, 8, 0] }}
-      transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-      style={{
-        width: 1,
-        height: 36,
-        background: 'linear-gradient(to bottom, var(--accent), transparent)',
-      }}
-    />
-  </motion.div>
-);
-
-// ── Main Hero ─────────────────────────────────────────────────────
 const Hero = () => {
-  const { name, tagline } = portfolioData.personal;
+  const { name } = portfolioData.personal;
   const { github, linkedin, email, twitter, instagram, resumeUrl } = portfolioData.contact;
   const resolveUrl = (p) => p ? `${import.meta.env.BASE_URL}${p.replace(/^\//, '')}` : '';
 
-  // Typing effect
+  // ── Typing effect ──────────────────────────────────────────────
   const [roleIdx, setRoleIdx] = useState(0);
   const [typed, setTyped] = useState('');
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const full = ROLES[roleIdx];
-    const delay = deleting ? 38 : 90;
+    const delay = deleting ? 42 : 88;
     const t = setTimeout(() => {
-      if (!deleting && typed === full) return setTimeout(() => setDeleting(true), 1500);
+      if (!deleting && typed === full) return setTimeout(() => setDeleting(true), 1600);
       if (deleting && typed === '') {
         setDeleting(false);
         setRoleIdx(i => (i + 1) % ROLES.length);
@@ -72,6 +31,7 @@ const Hero = () => {
     return () => clearTimeout(t);
   }, [typed, deleting, roleIdx]);
 
+  // ── Social links ───────────────────────────────────────────────
   const socials = [
     { icon: <Github size={18} />, href: github, label: 'GitHub' },
     { icon: <Linkedin size={18} />, href: linkedin, label: 'LinkedIn' },
@@ -80,113 +40,109 @@ const Hero = () => {
     { icon: <Mail size={18} />, href: email ? `mailto:${email}` : null, label: 'Email' },
   ].filter(s => s.href);
 
-  const itemVars = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-  };
+  // ── Animation variants ─────────────────────────────────────────
   const containerVars = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.09, delayChildren: 0.25 } },
+    show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+  };
+  const itemVars = {
+    hidden: { opacity: 0, y: 22 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
     <>
-      <section
-        id="home"
+      {/* ── Fixed scroll indicator ──────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2 }}
         style={{
-          position: 'relative',
-          minHeight: '100vh',
+          position: 'fixed',
+          bottom: 24,
+          left: '50%',
+          transform: 'translateX(-50%)',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          overflow: 'hidden',
+          gap: 5,
+          zIndex: 40,
+          pointerEvents: 'none',
         }}
       >
-        {/* 3D canvas — hidden on mobile (performance) */}
-        <div style={{ display: 'var(--canvas-display, block)' }}>
-          <HeroCanvas />
-        </div>
+        <span style={{ color: 'var(--text-dim)', fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+          scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+          style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, var(--accent), transparent)' }}
+        />
+      </motion.div>
 
-        {/* Glow blobs */}
-        <div className="glow-blob glow-blob-1" />
-        <div className="glow-blob glow-blob-2" />
+      {/* ── Hero Section ────────────────────────────────────── */}
+      <section id="home" className="hero-section">
 
-        {/* ── HERO GRID ─────────────────────────────────────── */}
-        <div className="hero-grid">
+        {/* Subtle background glow — not distracting */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 70% 60% at 60% 50%, rgba(100,80,255,0.08) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }} />
 
-          {/* LEFT — text block */}
+        <div className="hero-container">
+
+          {/* ─── LEFT: Text ─────────────────────────────────── */}
           <motion.div
             className="hero-text"
             variants={containerVars}
             initial="hidden"
             animate="show"
           >
-            {/* Available badge */}
-            <motion.div variants={itemVars} style={{ marginBottom: '1.5rem' }}>
-              <span style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                padding: '0.375rem 1rem',
-                background: 'var(--accent-bg)',
-                color: 'var(--accent-2)',
-                borderRadius: 999,
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                border: '1px solid rgba(0,216,255,0.2)',
-              }}>
-                ▹&nbsp;Available for work
+            {/* Status badge */}
+            <motion.div variants={itemVars} style={{ marginBottom: '1.25rem' }}>
+              <span className="hero-badge-status">
+                ✦ Available for Internship / Full-time
               </span>
             </motion.div>
 
-            {/* Name */}
-            <motion.h1 variants={itemVars} style={{ marginBottom: '0.75rem' }}>
-              Hi, I'm <span className="gradient-text-accent">{name}</span>
+            {/* Strong headline */}
+            <motion.h1 variants={itemVars} className="hero-h1">
+              Hi, I'm <span className="gradient-text-accent">Nitish</span>
             </motion.h1>
 
-            {/* Typing role */}
-            <motion.div variants={itemVars} style={{
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-              fontWeight: 600,
-              color: 'var(--text-h)',
-              marginBottom: '1.25rem',
-              minHeight: '1.8em',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-              <span>{typed}</span>
-              <span style={{
-                display: 'inline-block',
-                width: 2,
-                height: '1.1em',
-                background: 'var(--accent)',
-                marginLeft: 3,
-                borderRadius: 1,
-                animation: 'blink 1s step-end infinite',
-                verticalAlign: 'middle',
-              }} />
+            {/* Clear tagline */}
+            <motion.h2 variants={itemVars} className="hero-h2">
+              Building real-world tech using{' '}
+              <span style={{ color: 'var(--accent-2)', fontWeight: 700 }}>Web Dev</span> &amp;{' '}
+              <span style={{ color: 'var(--accent)', fontWeight: 700 }}>AI</span>
+            </motion.h2>
+
+            {/* Typing role line */}
+            <motion.div variants={itemVars} className="hero-typing">
+              <span style={{ color: 'var(--text-dim)', marginRight: 6 }}>I am a</span>
+              <span style={{ color: 'var(--text-h)', fontWeight: 600 }}>{typed}</span>
+              <span className="cursor-blink" />
             </motion.div>
 
-            {/* Tagline */}
-            <motion.p variants={itemVars} style={{
-              maxWidth: 500,
-              marginBottom: '2rem',
-              color: 'var(--text)',
-              fontSize: 'clamp(0.9375rem, 1.5vw, 1.0625rem)',
-            }}>
-              {tagline}
+            {/* Short bio */}
+            <motion.p variants={itemVars} className="hero-bio">
+              Computer Science student passionate about creating practical applications
+              that solve real problems — one project at a time.
             </motion.p>
 
-            {/* CTA Buttons */}
-            <motion.div variants={itemVars} style={{ display: 'flex', gap: '0.875rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
+            {/* CTA buttons */}
+            <motion.div variants={itemVars} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1.75rem' }}>
               <a href="#projects" className="btn-primary">
                 View Projects <ArrowRight size={16} />
               </a>
-              <a href={resolveUrl(resumeUrl)} download className="btn-secondary" target="_blank" rel="noreferrer">
-                <Download size={16} /> Resume
+              <a href="#contact" className="btn-secondary">
+                Contact Me
               </a>
             </motion.div>
 
-            {/* Social icons */}
+            {/* Social links */}
             <motion.div variants={itemVars} style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap' }}>
               {socials.map((s, i) => (
                 <a key={i} href={s.href} className="social-btn" target="_blank" rel="noreferrer" aria-label={s.label}>
@@ -196,51 +152,49 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — image block */}
+          {/* ─── RIGHT: Image ───────────────────────────────── */}
           <motion.div
-            className="hero-img-block"
-            initial={{ opacity: 0, scale: 0.88 }}
+            className="hero-image-block"
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.75, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Circular image wrapper */}
-            <div className="profile-img-wrapper">
-              <img
-                src={heroProfileImg}
-                alt={name}
-                className="profile-img"
-              />
-              {/* Badge — safe inside wrapper */}
-              <motion.div
-                className="hero-badge"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-              >
-                <span style={{ fontSize: '1.25rem' }}>🚀</span>
-                <div>
-                  <div style={{ color: 'var(--text-h)', fontWeight: 700, fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>
-                    Open to work
-                  </div>
-                  <div style={{ color: 'var(--text-dim)', fontSize: '0.6875rem', whiteSpace: 'nowrap' }}>
-                    Full-time / Internship
-                  </div>
-                </div>
-              </motion.div>
+            <div className="hero-img-ring">
+              <img src={heroProfileImg} alt="Nitish Singh" className="hero-profile-img" />
             </div>
+
+            {/* Simple floating "open to work" chip */}
+            <motion.div
+              className="hero-work-chip"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+            >
+              <span style={{ fontSize: '0.9rem' }}>🚀</span>
+              <span style={{ fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-h)' }}>
+                Open to work
+              </span>
+            </motion.div>
           </motion.div>
 
         </div>
       </section>
 
-      <ScrollIndicator />
-
       <style>{`
-        /* ── Hero Grid ── */
-        .hero-grid {
+        /* ── Section ─────────────────────────────────────── */
+        .hero-section {
+          position: relative;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+        }
+
+        /* ── Grid container ──────────────────────────────── */
+        .hero-container {
           width: 100%;
-          max-width: 1200px;
+          max-width: 1160px;
           margin: 0 auto;
-          padding: 100px 20px 80px;
+          padding: 80px 20px;
           display: grid;
           grid-template-columns: 1fr;
           gap: 2.5rem;
@@ -250,85 +204,137 @@ const Hero = () => {
         }
 
         /* Mobile: image on top */
-        .hero-img-block { order: -1; }
+        .hero-image-block { order: -1; }
 
-        /* Desktop: side by side, text first */
         @media (min-width: 768px) {
-          .hero-grid {
-            grid-template-columns: 1fr 1fr;
-            padding: 120px 2rem 100px;
-            gap: 4rem;
+          .hero-container {
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
+            padding: 0 2.5rem;
           }
-          .hero-img-block { order: 0; }
+          .hero-image-block { order: 0; }
         }
 
-        /* Text alignment */
+        /* ── Text side ───────────────────────────────────── */
         .hero-text { text-align: center; }
         @media (min-width: 768px) { .hero-text { text-align: left; } }
 
-        /* Heading size — Phase 3 */
-        .hero-text h1 {
-          font-size: clamp(1.8rem, 5vw, 3.5rem);
-          line-height: 1.15;
+        /* h1 headline */
+        .hero-h1 {
+          font-size: clamp(2.2rem, 6vw, 4rem);
+          line-height: 1.1;
+          margin-bottom: 0.75rem;
+          letter-spacing: -0.03em;
         }
 
-        /* Image wrapper */
-        .profile-img-wrapper {
-          position: relative;
-          display: flex;
-          justify-content: center;
+        /* h2 tagline — clear, readable */
+        .hero-h2 {
+          font-size: clamp(1rem, 2.5vw, 1.35rem);
+          font-weight: 500;
+          color: var(--text);
+          margin-bottom: 1rem;
+          line-height: 1.5;
+          letter-spacing: normal;
         }
 
-        /* Circular image — Phase 3 */
-        .profile-img {
-          width: clamp(150px, 35vw, 220px);
-          height: clamp(150px, 35vw, 220px);
-          border-radius: 50%;
-          object-fit: cover;
-          border: 3px solid var(--glass-border);
-          box-shadow: 0 0 50px var(--accent-glow), 0 16px 50px rgba(0,0,0,0.5);
-          display: block;
-        }
-
-        /* Badge — safe positioning inside wrapper */
-        .hero-badge {
-          position: absolute;
-          bottom: 10px;
-          left: 50%;
-          transform: translateX(-50%);
-          background: var(--glass-bg);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid var(--glass-border);
-          border-radius: 12px;
-          padding: 0.5rem 1rem;
+        /* Typing line */
+        .hero-typing {
           display: flex;
           align-items: center;
-          gap: 0.625rem;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+          justify-content: center;
+          gap: 4px;
+          font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+          margin-bottom: 1.375rem;
+          min-height: 1.6em;
+        }
+        @media (min-width: 768px) { .hero-typing { justify-content: flex-start; } }
+
+        /* Bio text */
+        .hero-bio {
+          font-size: clamp(0.9rem, 1.5vw, 1rem);
+          color: var(--text-dim);
+          max-width: 460px;
+          margin: 0 auto 1.75rem;
+          line-height: 1.75;
+        }
+        @media (min-width: 768px) { .hero-bio { margin-left: 0; } }
+
+        /* Status badge */
+        .hero-badge-status {
+          display: inline-block;
+          padding: 0.35rem 0.9rem;
+          background: var(--accent-bg);
+          color: var(--accent-2);
+          border-radius: 999px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          border: 1px solid rgba(0,216,255,0.2);
+        }
+
+        /* Cursor blink */
+        .cursor-blink {
+          display: inline-block;
+          width: 2px;
+          height: 1em;
+          background: var(--accent);
+          border-radius: 1px;
+          margin-left: 2px;
+          vertical-align: middle;
+          animation: cursor-blink 1s step-end infinite;
+        }
+        @keyframes cursor-blink { 50% { opacity: 0; } }
+
+        /* ── Image side ──────────────────────────────────── */
+        .hero-image-block {
+          display: flex;
+          justify-content: center;
+          position: relative;
+        }
+
+        .hero-img-ring {
+          position: relative;
+          display: inline-block;
+        }
+
+        /* Profile image: circular, clean border */
+        .hero-profile-img {
+          display: block;
+          width: clamp(160px, 32vw, 240px);
+          height: clamp(160px, 32vw, 240px);
+          border-radius: 50%;
+          object-fit: cover;
+          border: 3px solid rgba(100,80,255,0.5);
+          box-shadow:
+            0 0 0 8px rgba(100,80,255,0.07),
+            0 20px 60px rgba(0,0,0,0.45);
+        }
+
+        /* Open to work chip — inside img-ring, no overflow */
+        .hero-work-chip {
+          position: absolute;
+          bottom: 4px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 0.4rem 0.875rem;
+          background: rgba(13,18,36,0.85);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(100,80,255,0.3);
+          border-radius: 999px;
           white-space: nowrap;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         @media (min-width: 768px) {
-          .profile-img {
-            width: clamp(180px, 28vw, 260px);
-            height: clamp(180px, 28vw, 260px);
-          }
-          .hero-badge {
-            left: auto;
-            right: -10px;
-            transform: none;
-            bottom: 16px;
+          .hero-profile-img {
+            width: clamp(200px, 25vw, 280px);
+            height: clamp(200px, 25vw, 280px);
           }
         }
-
-        /* Canvas visible only on desktop */
-        @media (max-width: 767px) {
-          #hero-canvas-wrap { display: none; }
-        }
-
-        /* Blink animation for cursor */
-        @keyframes blink { 50% { opacity: 0; } }
       `}</style>
     </>
   );
