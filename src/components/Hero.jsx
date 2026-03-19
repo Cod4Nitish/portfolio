@@ -146,22 +146,30 @@ const Hero = () => {
           {/* ─── IMAGE (right on desktop, top on mobile) ─────── */}
           <motion.div
             className="hero-image"
-            initial={{ opacity: 0, scale: 0.88 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Profile picture */}
-            <div className="hero-img-wrap">
-              <img
-                src={heroProfileImg}
-                alt="Nitish Singh — portfolio photo"
-                className="hero-img"
-                loading="eager"
-                decoding="async"
-              />
+            {/* Outer glow ring — blends image into the design */}
+            <div className="hero-img-glow-ring">
+
+              {/* Radial gradient background — makes image feel part of design */}
+              <div className="hero-img-glow-bg" aria-hidden="true" />
+
+              {/* Image container — object-fit: contain, full visible */}
+              <div className="hero-img-container">
+                <img
+                  src={heroProfileImg}
+                  alt="Nitish Singh — portfolio photo"
+                  className="hero-img"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+
             </div>
 
-            {/* Floating work chip */}
+            {/* Floating "open to work" chip — anchored to bottom */}
             <motion.div
               className="hero-work-chip"
               animate={{ y: [0, -5, 0] }}
@@ -334,54 +342,113 @@ const Hero = () => {
         .hero-image {
           display: flex;
           justify-content: center;
+          align-items: center;
           position: relative;
         }
 
-        .hero-img-wrap {
+        /* Outer glow ring — soft purple halo around image */
+        .hero-img-glow-ring {
           position: relative;
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        /* Circular profile image */
+        /* Radial gradient behind image — blends into dark/light bg */
+        .hero-img-glow-bg {
+          position: absolute;
+          inset: -20%;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.22) 0%,
+            rgba(100, 80, 255, 0.10) 40%,
+            transparent 70%
+          );
+          pointer-events: none;
+          z-index: 0;
+          /* Subtle pulse animation */
+          animation: img-pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes img-pulse {
+          0%   { transform: scale(0.96); opacity: 0.7; }
+          100% { transform: scale(1.04); opacity: 1;   }
+        }
+        [data-theme='light'] .hero-img-glow-bg {
+          background: radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.12) 0%,
+            rgba(100, 80, 255, 0.05) 40%,
+            transparent 70%
+          );
+        }
+
+        /* Glass container — premium frame */
+        .hero-img-container {
+          position: relative;
+          z-index: 1;
+          /* Glassmorphism card */
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid var(--glass-border);
+          border-radius: 24px;
+          padding: 12px;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          box-shadow:
+            0 0 0 1px rgba(100, 80, 255, 0.15),
+            0 20px 60px rgba(0, 0, 0, 0.35),
+            0 0 40px rgba(100, 80, 255, 0.12);
+          overflow: hidden;
+        }
+        [data-theme='light'] .hero-img-container {
+          background: rgba(255, 255, 255, 0.7);
+          box-shadow:
+            0 0 0 1px rgba(100, 80, 255, 0.1),
+            0 16px 48px rgba(0, 0, 0, 0.10);
+        }
+
+        /* ── THE IMAGE — object-fit: contain, never cropped ── */
         .hero-img {
           display: block;
-          width: clamp(160px, 35vw, 240px);
-          height: clamp(160px, 35vw, 240px);
-          border-radius: 50%;
-          object-fit: cover;
-          /* Ring: accent border + outer subtle glow */
-          border: 3px solid rgba(100, 80, 255, 0.55);
-          box-shadow:
-            0 0 0 8px rgba(100, 80, 255, 0.07),
-            0 20px 60px rgba(0, 0, 0, 0.45);
+          /* Width scales with viewport — contain mode */
+          width: clamp(200px, 38vw, 320px);
+          /* Auto height — preserves aspect ratio */
+          height: auto;
+          /* Max height so it doesn't get too tall on wide screens */
+          max-height: clamp(260px, 50vw, 420px);
+          /* CONTAIN: full image visible, no cropping */
+          object-fit: contain;
+          object-position: center bottom;
+          border-radius: 16px;
         }
 
         @media (min-width: 768px) {
           .hero-img {
-            width: clamp(200px, 26vw, 280px);
-            height: clamp(200px, 26vw, 280px);
+            width: clamp(240px, 28vw, 340px);
+            max-height: clamp(300px, 45vw, 460px);
           }
         }
 
-        /* Open to work chip */
+        /* Open to work chip — centered below image on mobile, right on desktop */
         .hero-work-chip {
           position: absolute;
-          bottom: 6px;
+          bottom: -18px;
           left: 50%;
           transform: translateX(-50%);
           display: flex;
           align-items: center;
           gap: 5px;
           padding: 0.4rem 0.9rem;
-          background: rgba(13, 18, 36, 0.88);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          background: var(--glass-bg);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
           border: 1px solid rgba(100, 80, 255, 0.3);
           border-radius: 999px;
           font-size: 0.8rem;
           color: var(--text-h);
           white-space: nowrap;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          z-index: 2;
         }
         .hero-work-chip strong { font-weight: 700; }
         .hero-work-sub {
@@ -389,13 +456,11 @@ const Hero = () => {
           font-size: 0.7rem;
           margin-left: 4px;
         }
-
         @media (min-width: 768px) {
           .hero-work-chip {
-            left: auto;
-            right: -10px;
-            transform: none;
-            bottom: 12px;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
           }
         }
 
