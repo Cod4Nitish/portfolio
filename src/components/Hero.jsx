@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, ArrowRight, Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
-import heroProfileImg from '../assets/profile_casual_glow.jpg';
+import heroProfileImg from '../assets/profile_pro.jpg';
+import Hero3D from './Hero3D';
 
 const ROLES = ['Web Developer', 'AI Learner', 'Problem Solver', 'Builder'];
 
@@ -71,6 +72,9 @@ const Hero = () => {
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section id="home" className="hero-section" aria-label="Hero">
+
+        {/* 3D background scene */}
+        <Hero3D />
 
         {/* Subtle radial glow — not distracting */}
         <div className="hero-glow" aria-hidden="true" />
