@@ -4,161 +4,118 @@ import { Moon, Sun, Menu, X } from 'lucide-react';
 import portfolioData from '../data/portfolio.json';
 
 const NAV_LINKS = [
-  { label: 'About',      href: '#about' },
-  { label: 'Skills',     href: '#skills' },
+  { label: 'About',      href: '#about'    },
+  { label: 'Skills',     href: '#skills'   },
   { label: 'Projects',   href: '#projects' },
-  { label: 'Experience', href: '#resume' },
-  { label: 'Contact',    href: '#contact' },
+  { label: 'Experience', href: '#resume'   },
+  { label: 'Contact',    href: '#contact'  },
 ];
 
 const Navigation = ({ theme, toggleTheme }) => {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [activeLink,  setActiveLink]  = useState('');
-  const [mobileOpen,  setMobileOpen]  = useState(false);
+  const [scrolled,   setScrolled]   = useState(false);
+  const [active,     setActive]     = useState('');
+  const [menuOpen,   setMenuOpen]   = useState(false);
   const { name } = portfolioData.personal;
 
-  /* ── Scroll: glass + active section tracking ───────────────── */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    const sectionIds = NAV_LINKS.map(l => l.href.replace('#', ''));
-    const observers  = [];
-
-    sectionIds.forEach(id => {
+    const ids  = NAV_LINKS.map(l => l.href.slice(1));
+    const obs  = ids.map(id => {
       const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveLink(`#${id}`); },
-        { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+      if (!el) return null;
+      const o = new IntersectionObserver(
+        ([e]) => { if (e.isIntersecting) setActive(`#${id}`); },
+        { rootMargin: '-35% 0px -60% 0px' }
       );
-      obs.observe(el);
-      observers.push(obs);
+      o.observe(el);
+      return o;
     });
-
-    return () => observers.forEach(o => o.disconnect());
+    return () => obs.forEach(o => o?.disconnect());
   }, []);
 
-  /* ── Smooth scroll with navbar-offset ─────────────────────── */
-  const handleNavClick = useCallback((e, href) => {
+  const scrollTo = useCallback((e, href) => {
     e.preventDefault();
-    setMobileOpen(false);
-    const target = document.querySelector(href);
-    if (!target) return;
-    const navH   = document.querySelector('.navbar')?.offsetHeight ?? 72;
-    const top    = target.getBoundingClientRect().top + window.scrollY - navH - 8;
+    setMenuOpen(false);
+    const el  = document.querySelector(href);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 72;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   }, []);
 
   return (
     <>
       <motion.header
-        className={`navbar${scrolled ? ' scrolled' : ''}`}
-        initial={{ y: -80, opacity: 0 }}
+        className={`nav${scrolled ? ' nav--scrolled' : ''}`}
+        initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0,   opacity: 1 }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* ── Logo ─────────────────────────────────────────── */}
-        <a
-          href="#home"
-          className="nav-logo"
-          onClick={e => handleNavClick(e, '#home')}
-          aria-label="Home"
-        >
-          {name.split(' ')[0]}<span className="nav-logo-dot">.</span>
+        {/* Logo */}
+        <a href="#home" className="nav-logo" onClick={e => scrollTo(e, '#home')}>
+          {name.split(' ')[0]}<span>.</span>
         </a>
 
-        {/* ── Desktop links ────────────────────────────────── */}
-        <nav aria-label="Main navigation">
-          <ul className="nav-links-list">
-            {NAV_LINKS.map(({ label, href }) => {
-              const isActive = activeLink === href;
-              return (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className={`nav-link${isActive ? ' nav-link--active' : ''}`}
-                    onClick={e => handleNavClick(e, href)}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    {label}
-                    <span className="nav-link-bar" />
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+        {/* Desktop nav */}
+        <nav className="nav-links">
+          {NAV_LINKS.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              className={`nav-link${active === href ? ' active' : ''}`}
+              onClick={e => scrollTo(e, href)}
+            >
+              {label}
+            </a>
+          ))}
         </nav>
 
-        {/* ── Actions ──────────────────────────────────────── */}
+        {/* Actions */}
         <div className="nav-actions">
-          <button
-            className="nav-icon-btn"
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+          <button className="nav-btn" onClick={toggleTheme} aria-label="Toggle theme">
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-
-          <button
-            className="nav-icon-btn nav-hamburger"
-            onClick={() => setMobileOpen(v => !v)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={19} /> : <Menu size={19} />}
+          <button className="nav-btn nav-ham" onClick={() => setMenuOpen(v => !v)} aria-label="Menu">
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </motion.header>
 
-      {/* ── Mobile drawer ──────────────────────────────────── */}
+      {/* Mobile menu */}
       <AnimatePresence>
-        {mobileOpen && (
+        {menuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setMobileOpen(false)}
-              style={{
-                position: 'fixed', inset: 0,
-                background: 'rgba(0,0,0,0.5)',
-                zIndex: 998,
-              }}
+              key="bd"
+              className="nav-backdrop"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setMenuOpen(false)}
             />
-
-            {/* Drawer */}
             <motion.div
               key="drawer"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 40 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="mobile-drawer"
+              className="nav-drawer"
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
-              <nav aria-label="Mobile navigation">
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  {NAV_LINKS.map(({ label, href }) => {
-                    const isActive = activeLink === href;
-                    return (
-                      <li key={label}>
-                        <a
-                          href={href}
-                          className={`mobile-nav-link${isActive ? ' active' : ''}`}
-                          onClick={e => handleNavClick(e, href)}
-                        >
-                          {label}
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
+              <div className="nav-drawer-head">
+                <span className="nav-logo">{name.split(' ')[0]}.</span>
+                <button className="nav-btn" onClick={() => setMenuOpen(false)}><X size={18} /></button>
+              </div>
+              <nav className="nav-drawer-links">
+                {NAV_LINKS.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    className={`nav-drawer-link${active === href ? ' active' : ''}`}
+                    onClick={e => scrollTo(e, href)}
+                  >
+                    {label}
+                  </a>
+                ))}
               </nav>
             </motion.div>
           </>
@@ -166,153 +123,100 @@ const Navigation = ({ theme, toggleTheme }) => {
       </AnimatePresence>
 
       <style>{`
-        /* ── Navbar base ──────────────────────────────── */
-        .navbar {
-          position: fixed;
-          top: 0; left: 0; right: 0;
-          z-index: 999;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 1.125rem 2rem;
-          transition: padding 0.3s ease, background 0.3s ease,
-                      border-color 0.3s ease, box-shadow 0.3s ease;
+        .nav {
+          position: fixed; top: 0; left: 0; right: 0;
+          z-index: 100;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 1.125rem 2.5rem;
+          transition: padding .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
           border-bottom: 1px solid transparent;
         }
-
-        /* ── Scrolled = glass ────────────────────────── */
-        .navbar.scrolled {
-          padding: 0.75rem 2rem;
-          background: rgba(6, 9, 21, 0.75);
+        .nav--scrolled {
+          padding: .75rem 2.5rem;
+          background: rgba(10,10,15,.82);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border-bottom-color: rgba(255,255,255,0.07);
-          box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+          border-bottom-color: var(--border);
+          box-shadow: 0 1px 32px rgba(0,0,0,.25);
         }
-        [data-theme='light'] .navbar.scrolled {
-          background: rgba(244,246,251,0.80);
-        }
+        [data-theme='light'] .nav--scrolled { background: rgba(248,248,252,.88); }
 
-        /* ── Logo ────────────────────────────────────── */
         .nav-logo {
           font-family: var(--font-head);
-          font-size: 1.375rem;
-          font-weight: 800;
-          color: var(--text-h);
-          letter-spacing: -0.04em;
-          text-decoration: none;
-          transition: opacity 0.2s;
+          font-size: 1.375rem; font-weight: 800;
+          color: var(--text-h); letter-spacing: -.04em;
         }
-        .nav-logo:hover { opacity: 0.8; }
-        .nav-logo-dot { color: var(--accent); }
+        .nav-logo span { color: var(--accent); }
 
-        /* ── Desktop links ───────────────────────────── */
-        .nav-links-list {
-          display: flex;
-          gap: 0.25rem;
-          list-style: none;
-          margin: 0; padding: 0;
+        .nav-links {
+          display: flex; align-items: center; gap: .25rem;
         }
-
         .nav-link {
+          padding: .45rem .85rem;
+          font-size: .9rem; font-weight: 500;
+          color: var(--text); border-radius: 8px;
+          transition: color .2s, background .2s;
           position: relative;
-          display: block;
-          padding: 0.5rem 0.875rem;
-          font-size: 0.9375rem;
-          font-weight: 500;
-          color: var(--text);
-          text-decoration: none;
-          border-radius: 8px;
-          transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-          outline-offset: 3px;
         }
-        .nav-link:hover {
-          color: var(--text-h);
-          background: var(--surface);
-          transform: translateY(-1px);
-        }
-        .nav-link:active { transform: scale(0.96); }
-
-        /* Active state */
-        .nav-link--active { color: var(--accent) !important; }
-
-        /* Animated underline bar */
-        .nav-link-bar {
-          position: absolute;
-          bottom: 4px; left: 0.875rem; right: 0.875rem;
-          height: 2px;
+        .nav-link::after {
+          content: ''; position: absolute;
+          bottom: 2px; left: .85rem; right: .85rem;
+          height: 2px; border-radius: 1px;
           background: var(--accent);
-          border-radius: 1px;
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform 0.28s ease;
+          transform: scaleX(0); transform-origin: center;
+          transition: transform .22s ease;
         }
-        .nav-link:hover .nav-link-bar,
-        .nav-link--active .nav-link-bar {
-          transform: scaleX(1);
-        }
+        .nav-link:hover { color: var(--text-h); background: var(--card-bg); }
+        .nav-link.active { color: var(--accent); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 
-        /* ── Action buttons ──────────────────────────── */
-        .nav-actions {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .nav-icon-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 38px; height: 38px;
-          border-radius: 9px;
-          background: var(--surface);
-          border: 1px solid var(--glass-border);
+        .nav-actions { display: flex; gap: .5rem; align-items: center; }
+        .nav-btn {
+          width: 36px; height: 36px; border-radius: 8px;
+          display: flex; align-items: center; justify-content: center;
+          background: var(--card-bg); border: 1px solid var(--border);
           color: var(--text-h);
-          cursor: none;
-          transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+          transition: background .2s, border-color .2s, transform .15s;
         }
-        .nav-icon-btn:hover { background: var(--accent-bg); border-color: var(--accent); }
-        .nav-icon-btn:active { transform: scale(0.9); }
+        .nav-btn:hover { background: var(--card-bg-h); border-color: var(--border-h); }
+        .nav-btn:active { transform: scale(.9); }
+        .nav-ham { display: none; cursor: pointer; }
 
-        /* hamburger only on mobile */
-        .nav-hamburger { display: none; cursor: auto; }
-
-        /* ── Mobile ──────────────────────────────────── */
         @media (max-width: 768px) {
-          .navbar { padding: 1rem; }
-          .navbar.scrolled { padding: 0.75rem 1rem; }
-          .nav-links-list { display: none; }
-          .nav-hamburger { display: flex; }
+          .nav { padding: 1rem 1.25rem; }
+          .nav--scrolled { padding: .75rem 1.25rem; }
+          .nav-links { display: none; }
+          .nav-ham { display: flex; }
         }
 
-        /* ── Mobile drawer ───────────────────────────── */
-        .mobile-drawer {
-          position: fixed;
-          top: 0; right: 0; bottom: 0;
-          width: min(280px, 80vw);
-          background: var(--bg-2);
-          border-left: 1px solid var(--glass-border);
-          padding: 5rem 1.5rem 2rem;
-          z-index: 999;
-          display: flex;
-          flex-direction: column;
+        .nav-backdrop {
+          position: fixed; inset: 0;
+          background: rgba(0,0,0,.55); z-index: 101;
         }
-
-        .mobile-nav-link {
-          display: block;
-          padding: 0.875rem 1rem;
-          font-size: 1.0625rem;
-          font-weight: 600;
-          color: var(--text);
-          text-decoration: none;
-          border-radius: 10px;
-          transition: all 0.2s ease;
+        .nav-drawer {
+          position: fixed; top: 0; right: 0; bottom: 0;
+          width: min(300px, 85vw);
+          background: var(--bg-2); z-index: 102;
+          border-left: 1px solid var(--border);
+          display: flex; flex-direction: column; gap: 0;
         }
-        .mobile-nav-link:hover,
-        .mobile-nav-link.active {
-          color: var(--accent);
-          background: var(--accent-bg);
-          padding-left: 1.25rem;
+        .nav-drawer-head {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 1.25rem 1.5rem;
+          border-bottom: 1px solid var(--border);
+        }
+        .nav-drawer-links {
+          display: flex; flex-direction: column; gap: .25rem;
+          padding: 1.25rem 1rem;
+        }
+        .nav-drawer-link {
+          padding: .85rem 1rem;
+          font-size: 1rem; font-weight: 500;
+          color: var(--text); border-radius: 10px;
+          transition: all .2s;
+        }
+        .nav-drawer-link:hover, .nav-drawer-link.active {
+          color: var(--accent); background: var(--accent-bg);
         }
       `}</style>
     </>

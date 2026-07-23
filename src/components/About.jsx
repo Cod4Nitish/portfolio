@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import portfolioData from '../data/portfolio.json';
 import aboutImg from '../assets/profile_suit.jpg';
+import { ArrowRight } from 'lucide-react';
 
 const STATS = [
   { value: '3+',  label: 'Years Coding'   },
@@ -9,62 +10,59 @@ const STATS = [
   { value: '5+',  label: 'Technologies'   },
 ];
 
+const fade = dir => ({
+  hidden: { opacity: 0, x: dir === 'left' ? -28 : dir === 'right' ? 28 : 0, y: dir === 'up' ? 20 : 0 },
+  show:   { opacity: 1, x: 0, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+});
+
 const About = () => {
   const { bio } = portfolioData.personal;
-
   return (
-    <section id="about">
-      <div className="section-hd">
+    <section id="about" className="container">
+      {/* Heading */}
+      <div className="s-head">
+        <span className="s-tag">About</span>
         <h2>About Me</h2>
-        <p className="section-desc">A Computer Science student building real‑world products with Web Dev &amp; AI.</p>
+        <p className="s-sub">CS student building real‑world products with Web Dev &amp; AI.</p>
       </div>
 
       <div className="about-grid">
         {/* Image */}
         <motion.div
           className="about-img-col"
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          variants={fade('left')} initial="hidden"
+          whileInView="show" viewport={{ once: true, margin: '-60px' }}
         >
-          <div className="about-img-wrap">
-            <img src={aboutImg} alt="Nitish" className="about-img" loading="lazy" />
-            <div className="about-img-accent" aria-hidden="true" />
+          <div className="about-img-frame">
+            <img src={aboutImg} alt="Nitish Singh" className="about-img" loading="lazy" />
           </div>
         </motion.div>
 
         {/* Content */}
         <motion.div
-          className="about-content-col"
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          className="about-content"
+          variants={fade('right')} initial="hidden"
+          whileInView="show" viewport={{ once: true, margin: '-60px' }}
+          transition={{ delay: 0.1 }}
         >
           <p className="about-bio">{bio}</p>
 
+          {/* Stats */}
           <div className="about-stats">
             {STATS.map(({ value, label }) => (
-              <motion.div
-                key={label}
-                className="about-stat-card"
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="about-stat-value gradient-text-accent">{value}</span>
-                <span className="about-stat-label">{label}</span>
-              </motion.div>
+              <div key={label} className="about-stat card">
+                <span className="about-stat-val grad">{value}</span>
+                <span className="about-stat-lbl">{label}</span>
+              </div>
             ))}
           </div>
 
           <a
             href="#contact"
-            className="btn-primary"
-            style={{ width: 'fit-content' }}
+            className="btn btn-primary"
             onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
           >
-            Let's Talk →
+            Let's Talk <ArrowRight size={15} />
           </a>
         </motion.div>
       </div>
@@ -73,127 +71,57 @@ const About = () => {
         .about-grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: 3rem;
           align-items: center;
         }
         @media (min-width: 768px) {
-          .about-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+          .about-grid { grid-template-columns: 1fr 1fr; gap: 5rem; }
         }
 
-        .about-img-col { display: flex; justify-content: center; align-items: flex-start; }
-
-        /* ── FRAME WRAPPER ───────────────────────────────────── */
-        .about-img-wrap {
-          position: relative;
-          display: inline-block;
-          /* Padding creates the inner frame spacing */
-          padding: 10px;
-          /* Glass card as the frame border */
-          background: var(--surface);
-          border: 1px solid var(--glass-border);
-          border-radius: 24px;
-          /* Outer glow — matches site accent */
-          box-shadow:
-            0 0 0 1px rgba(124,92,255,0.18),
-            0 0 40px rgba(124,92,255,0.14),
-            0 20px 60px rgba(0,0,0,0.35);
+        .about-img-col { display: flex; justify-content: center; }
+        .about-img-frame {
+          width: clamp(200px, 55vw, 320px);
+          padding: 8px;
+          background: var(--card-bg);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          box-shadow: 0 0 0 1px rgba(108,99,255,.08), 0 20px 50px rgba(0,0,0,.25);
         }
-
-        /* Image — object-fit contain so full portrait is visible */
+        @media (min-width: 768px) { .about-img-frame { width: clamp(220px, 28vw, 320px); } }
         .about-img {
+          width: 100%; height: auto;
+          max-height: clamp(260px, 50vw, 420px);
+          object-fit: contain; object-position: center top;
+          border-radius: calc(var(--radius-lg) - 6px);
           display: block;
-          width: clamp(180px, 28vw, 280px);   /* tight width — shrunk to fit cleanly */
-          height: auto;
-          max-height: clamp(240px, 42vw, 380px);
-          object-fit: contain;
-          object-position: center top;
-          border-radius: 16px;
         }
 
-        /* Decorative inner glow layer */
-        .about-img-wrap::before {
-          content: '';
-          position: absolute;
-          inset: -1px;
-          border-radius: 25px;
-          background: linear-gradient(
-            135deg,
-            rgba(124,92,255,0.25) 0%,
-            transparent 50%,
-            rgba(0,229,255,0.15) 100%
-          );
-          pointer-events: none;
-          z-index: 0;
+        .about-content {
+          display: flex; flex-direction: column; gap: 1.5rem;
+          align-items: center; text-align: center;
         }
-
-        /* Decorative corner accent — bottom-right */
-        .about-img-accent {
-          position: absolute;
-          bottom: -14px; right: -14px;
-          width: 55%; height: 55%;
-          border: 2px solid var(--accent);
-          border-radius: 18px;
-          opacity: 0.25;
-          z-index: -1;
-          pointer-events: none;
-        }
-
-        /* Second decorative corner — top-left */
-        .about-img-wrap::after {
-          content: '';
-          position: absolute;
-          top: -14px; left: -14px;
-          width: 35%; height: 35%;
-          border: 2px solid var(--accent-2);
-          border-radius: 12px;
-          opacity: 0.2;
-          z-index: -1;
-          pointer-events: none;
-        }
-
-        .about-content-col {
-          display: flex; flex-direction: column; gap: 0;
-          text-align: center;
-          align-items: center;
+        @media (min-width: 768px) {
+          .about-content { align-items: flex-start; text-align: left; }
         }
 
         .about-bio {
-          font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
-          color: var(--text);
-          line-height: 1.8;
-          margin-bottom: 1.75rem;
-          max-width: 460px;
+          font-size: clamp(.9rem, 1.6vw, 1.05rem);
+          line-height: 1.8; color: var(--text); max-width: 480px;
         }
 
         .about-stats {
-          display: flex; gap: 1rem; flex-wrap: wrap;
-          justify-content: center;
-          margin-bottom: 2rem;
+          display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
         }
+        @media (min-width: 768px) { .about-stats { justify-content: flex-start; } }
 
-        .about-stat-card {
-          flex: 1 1 80px; min-width: 80px; max-width: 120px;
+        .about-stat {
+          flex: 1 1 90px; min-width: 90px; max-width: 130px;
           display: flex; flex-direction: column; align-items: center; gap: 4px;
-          padding: 1rem 0.75rem;
-          background: var(--surface);
-          border: 1px solid var(--glass-border);
-          border-radius: 14px;
+          padding: 1rem .75rem; border-radius: var(--radius);
           cursor: default;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .about-stat-card:hover { box-shadow: 0 0 20px var(--accent-glow); }
-
-        .about-stat-value {
-          font-family: var(--font-head);
-          font-size: clamp(1.5rem, 3vw, 2rem);
-          font-weight: 800; line-height: 1;
-        }
-        .about-stat-label {
-          font-size: 0.72rem; font-weight: 600;
-          color: var(--text-dim);
-          text-transform: uppercase; letter-spacing: 0.06em;
-          text-align: center;
-        }
+        .about-stat-val { font-family: var(--font-head); font-size: 2rem; font-weight: 800; line-height: 1; }
+        .about-stat-lbl { font-size: .72rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; text-align: center; }
       `}</style>
     </section>
   );

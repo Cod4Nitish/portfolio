@@ -5,7 +5,7 @@ import portfolioData from '../data/portfolio.json';
 
 const GithubActivity = () => {
   const { github } = portfolioData.contact;
-  const username = github.split('/').filter(Boolean).pop();
+  const username = github?.split('/').filter(Boolean).pop();
 
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,6 @@ const GithubActivity = () => {
       setLoading(false);
       return;
     }
-
     const fetchRepos = async () => {
       try {
         const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
@@ -29,79 +28,85 @@ const GithubActivity = () => {
         setLoading(false);
       }
     };
-
     fetchRepos();
   }, [username]);
 
+  if (!username || username === 'yourusername') return null;
+
   return (
-    <section id="github" style={{ padding: '6rem 0', position: 'relative' }}>
-      <div className="section-header">
-        <span className="section-label">Code</span>
-        <h2 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
-          <GithubIcon size={36} color="var(--accent)" /> Latest Activity
-        </h2>
+    <section id="github" className="container">
+      <div className="s-head">
+        <span className="s-tag">Code</span>
+        <h2>Latest Activity</h2>
+        <p className="s-sub">Recent repositories and contributions from my GitHub</p>
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-dim)' }}>
-          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }} style={{ display: 'inline-block', marginBottom: '1rem' }}>
-            <GithubIcon size={32} />
+        <div className="gh-status">
+          <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
+            <GithubIcon size={32} color="var(--text-dim)" />
           </motion.div>
-          <p>Loading repositories...</p>
         </div>
       ) : error || repos.length === 0 ? (
-        <div className="glass" style={{ textAlign: 'center', padding: '4rem 2rem', borderRadius: '24px' }}>
-          <GithubIcon size={48} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
-          <p>Configure your GitHub username in data.json to see recent repositories here.</p>
+        <div className="gh-status card">
+          <p>No recent public repositories found.</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-          {repos.map((repo, index) => (
+        <div className="gh-grid">
+          {repos.map((repo, i) => (
             <motion.a
               href={repo.html_url}
               target="_blank"
               rel="noreferrer"
               key={repo.id}
-              className="glass"
+              className="gh-card card"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.3)', borderColor: 'var(--accent)' }}
-              style={{
-                padding: '2rem',
-                borderRadius: '24px',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'inherit',
-                textDecoration: 'none'
-              }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              whileHover={{ y: -4, borderColor: 'var(--accent)' }}
             >
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--text-h)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                {repo.name}
-              </h3>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-dim)', flexGrow: 1, marginBottom: '1.5rem', lineHeight: 1.5 }}>
+              <div className="gh-card-head">
+                <GithubIcon size={18} color="var(--accent-light)" />
+                <h3 className="gh-title">{repo.name}</h3>
+              </div>
+              <p className="gh-desc">
                 {repo.description ? repo.description.substring(0, 100) + (repo.description.length > 100 ? '...' : '') : 'No description provided.'}
               </p>
-              
-              <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.85rem', color: 'var(--text)', fontWeight: 500 }}>
+              <div className="gh-stats">
                 {repo.language && (
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--accent)' }}></span> 
-                    {repo.language}
-                  </span>
+                  <span className="gh-stat"><span className="gh-lang-dot" /> {repo.language}</span>
                 )}
-                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <Star size={14} color="var(--text-dim)" /> {repo.stargazers_count}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <GitFork size={14} color="var(--text-dim)" /> {repo.forks_count}
-                </span>
+                <span className="gh-stat"><Star size={14} /> {repo.stargazers_count}</span>
+                <span className="gh-stat"><GitFork size={14} /> {repo.forks_count}</span>
               </div>
             </motion.a>
           ))}
         </div>
       )}
+
+      <style>{`
+        .gh-grid {
+          display: grid; gap: 1.25rem;
+          grid-template-columns: 1fr;
+        }
+        @media (min-width: 600px) { .gh-grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { .gh-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .gh-status { padding: 4rem 2rem; display: flex; justify-content: center; align-items: center; text-align: center; color: var(--text-dim); }
+
+        .gh-card {
+          padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+          text-decoration: none;
+        }
+        .gh-card-head { display: flex; align-items: center; gap: .625rem; }
+        .gh-title { font-size: 1.0625rem; font-weight: 700; color: var(--text-h); margin: 0; }
+        .gh-desc { font-size: .875rem; color: var(--text); line-height: 1.6; flex: 1; }
+        
+        .gh-stats { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .gh-stat { display: flex; align-items: center; gap: .375rem; font-size: .8rem; font-weight: 600; color: var(--text-dim); }
+        .gh-lang-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+      `}</style>
     </section>
   );
 };
