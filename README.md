@@ -2,14 +2,17 @@
 
 [![Live site](https://img.shields.io/badge/Live_site-Visit_portfolio-7c3aed?style=for-the-badge)](https://cod4nitish.github.io/portfolio/)
 
-An interactive personal portfolio for **Nitish Singh**, built to present selected AI, full-stack, and frontend work. It combines a responsive React interface, subtle 3D visuals, animation, project data, a résumé download, and recent public GitHub activity in one static site.
+An interactive personal portfolio for **Nitish Singh**, built to present selected AI, full-stack, and frontend work. It combines a responsive React interface, motion, project data, a résumé download, and recent public GitHub activity in one static site.
 
 **Live site:** [cod4nitish.github.io/portfolio](https://cod4nitish.github.io/portfolio/)
+
+![Portfolio hero section](docs/screenshots/hero.png)
 
 ## Highlights
 
 - Responsive sections for the introduction, skills, experience, projects, résumé, and contact.
-- A React Three Fiber/Three.js hero scene and Framer Motion interactions.
+- Framer Motion entrance and navigation animations, with a light/dark theme toggle.
+- Featured project cards for ForgeMind, MRStay AI, PhishGuard AI, and this site, each using a real screenshot from `public/projects/`.
 - Portfolio content managed in one place: [`src/data/portfolio.json`](src/data/portfolio.json).
 - Recent public-repository activity fetched directly from the GitHub REST API at runtime.
 - GitHub Pages deployment through `gh-pages`.
@@ -35,7 +38,6 @@ The application is a static client-side site: there is no custom server or datab
 | Area | Technology |
 | --- | --- |
 | UI | React 19, Vite |
-| 3D | Three.js, React Three Fiber, Drei |
 | Motion | Framer Motion |
 | Styling | Custom CSS |
 | Icons | Lucide React, React Icons |
@@ -52,6 +54,8 @@ src/
 public/
   Nitish_Singh_Resume.pdf
   profile*.{jpg,png}
+  projects/         # Project-card screenshots referenced from portfolio.json
+docs/screenshots/   # README images
 ```
 
 ## Run locally
@@ -76,6 +80,14 @@ npm run preview
 ## Customize the portfolio
 
 Update [`src/data/portfolio.json`](src/data/portfolio.json) to change the introduction, social links, skills, experience, project cards, and contact settings. Replace the résumé and portrait assets under `public/` and `src/assets/` when those change.
+
+Project-card `image` values are paths relative to the site root (for example `projects/forgemind.png`), so they resolve correctly under the `/portfolio/` base path set in `vite.config.js`. Keep each card's description to what the linked repository actually does.
+
+## Accessibility and performance notes
+
+- Project images use `loading="lazy"` and `alt` text; the project-card links and theme toggle carry `aria-label`s.
+- The site is fully static, so GitHub Pages serves it without a server runtime.
+- The GitHub activity panel calls the unauthenticated GitHub REST API from the visitor's browser, which is rate-limited to 60 requests per hour per IP. If the limit is hit, the panel shows an error state instead of repositories.
 
 ### Contact form behaviour
 
