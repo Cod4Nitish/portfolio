@@ -47,28 +47,37 @@
   "projects": [
     {
       "id": 1,
-      "title": "PhishGuard AI",
-      "description": "An AI-powered phishing detection platform with real-time URL scanning, malware awareness, and a live threat dashboard. Built with React.js and ML-based detection logic.",
-      "techStack": ["React.js", "Python", "Machine Learning", "TailwindCSS"],
-      "image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80",
-      "github": "https://github.com/Cod4Nitish",
-      "live": ""
+      "title": "ForgeMind",
+      "description": "An AI software engineer that turns a plain-language request into GitHub, Jira, and Slack work. Claude reasons over each step, LangGraph.js routes the workflow, and Swytchcode executes external actions. The public demo runs in a sandbox with simulated integrations.",
+      "techStack": ["Next.js", "TypeScript", "LangGraph.js", "Claude"],
+      "image": "projects/forgemind.png",
+      "github": "https://github.com/Cod4Nitish/ForgeMind",
+      "live": "https://forgemind-ashy.vercel.app"
     },
     {
       "id": 2,
-      "title": "SmartDash Analytics",
-      "description": "A modern analytics dashboard featuring real-time data visualization, interactive charts, and a clean dark UI. Built with React and custom chart components.",
-      "techStack": ["React.js", "Node.js", "MongoDB", "Express"],
-      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      "github": "https://github.com/Cod4Nitish",
+      "title": "MRStay AI",
+      "description": "An in-development agentic real-estate assistant: a FastAPI service routes buyer conversations to reception, property, and lead-qualification agents grounded in a ChromaDB property knowledge base, with a browser chat widget on top.",
+      "techStack": ["Python", "FastAPI", "Gemini", "ChromaDB"],
+      "image": "projects/mrstay.png",
+      "github": "https://github.com/Cod4Nitish/MRStay_AI",
       "live": ""
     },
     {
       "id": 3,
+      "title": "PhishGuard AI",
+      "description": "A phishing-awareness and URL-security UX prototype. It demonstrates a scan flow, risk report, and animated threat map using simulated data. It does not perform live threat detection.",
+      "techStack": ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "image": "projects/phishguard.png",
+      "github": "https://github.com/Cod4Nitish/PhishGuard-AI",
+      "live": "https://cod4nitish.github.io/PhishGuard-AI/"
+    },
+    {
+      "id": 4,
       "title": "Developer Portfolio",
-      "description": "The very portfolio you are viewing! Built with React + Vite, Three.js for 3D elements, Framer Motion for animations, and deployed on GitHub Pages.",
-      "techStack": ["React.js", "Three.js", "Framer Motion", "Vite"],
-      "image": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+      "description": "The site you are viewing: a React and Vite single-page app with Framer Motion animation, content driven by one JSON file, live GitHub activity, and GitHub Pages deployment.",
+      "techStack": ["React", "Vite", "Framer Motion", "GitHub Pages"],
+      "image": "projects/portfolio.png",
       "github": "https://github.com/Cod4Nitish/portfolio",
       "live": "https://cod4nitish.github.io/portfolio/"
     }
