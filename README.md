@@ -111,4 +111,4 @@ This runs the production build and publishes `dist/` to the `gh-pages` branch. C
 
 ## License
 
-No license has been selected for this repository yet. Add one before accepting external contributions or reuse.
+Released under the [MIT License](LICENSE).
