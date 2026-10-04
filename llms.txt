@@ -1,0 +1,21 @@
+# Nitish Singh — Portfolio
+
+> Nitish Singh is an AI and full-stack developer from India (Noida) and a B.Tech Computer Science (AI) student. He builds agentic AI systems, RAG pipelines, and TypeScript/React web products. Open to collaborations, internships and product-focused engineering roles.
+
+## About
+- [Portfolio](https://cod4nitish.github.io/portfolio/): projects, skills, experience and contact
+- [GitHub profile](https://github.com/Cod4Nitish): public repositories and activity
+- [LinkedIn](https://www.linkedin.com/in/nitish-6206-nk)
+- [Résumé (PDF)](https://cod4nitish.github.io/portfolio/Nitish_Singh_Resume.pdf)
+
+## Projects
+- [ForgeMind](https://github.com/Cod4Nitish/ForgeMind): AI software engineer that triages GitHub issues and coordinates Jira and Slack work (Next.js, TypeScript, LangGraph.js, Claude). Live demo: https://forgemind-ashy.vercel.app
+- [MRStay AI](https://github.com/Cod4Nitish/MRStay_AI): agentic real-estate assistant for lead qualification and property recommendations (Python, FastAPI, Gemini, ChromaDB).
+- [PhishGuard AI](https://github.com/Cod4Nitish/PhishGuard-AI): phishing-awareness and URL-security UX prototype with simulated scans (React, TypeScript, Tailwind CSS). Live demo: https://cod4nitish.github.io/PhishGuard-AI/
+- [Developer Portfolio](https://github.com/Cod4Nitish/portfolio): this site (React, Vite, Framer Motion, GitHub Pages).
+
+## Skills
+TypeScript, JavaScript, Python, React, Next.js, Node.js, NestJS, FastAPI, PostgreSQL, MongoDB, LangChain, LangGraph, RAG, Docker, GitHub Actions.
+
+## Contact
+theeditornitish@gmail.com
