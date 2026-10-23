@@ -1018,6 +1018,8 @@ const applyGitHubProjects = (repositories, source = 'live') => {
     })
     .map((repository, index) => {
       const liveUrl = publicUrl(repository.homepage);
+      // Opted-in private repos (from /api/projects) carry no repo URL: show the live link only.
+      const isPrivate = Boolean(repository.private);
       const language = String(repository.language || '').trim();
       const topicTags = Array.isArray(repository.topics) ? repository.topics.slice(0, 3) : [];
       const tags = [...new Set([language, ...topicTags, 'GitHub'].filter(Boolean))].slice(0, 4);
@@ -1027,10 +1029,10 @@ const applyGitHubProjects = (repositories, source = 'live') => {
         description: repository.description || 'A public build from Nitish’s GitHub. Open the project or source to see the latest work.',
         tags,
         category: projectCategoryFromRepository(repository),
-        status: 'Public · GitHub',
-        href: liveUrl || repository.html_url,
-        repository: liveUrl ? repository.html_url : null,
-        action: liveUrl ? 'Open live project' : 'View on GitHub',
+        status: isPrivate ? 'Private · GitHub' : 'Public · GitHub',
+        href: liveUrl || (isPrivate ? null : repository.html_url),
+        repository: !isPrivate && liveUrl ? repository.html_url : null,
+        action: liveUrl ? 'Open live project' : isPrivate ? 'Private build' : 'View on GitHub',
         accent: githubAccentCycle[index % githubAccentCycle.length],
         featured: false,
         githubSynced: true,
@@ -1047,9 +1049,10 @@ const applyGitHubProjects = (repositories, source = 'live') => {
 
   if (githubSyncStatus) {
     const count = syncedProjects.length;
+    const privateCount = syncedProjects.filter((project) => project.status.startsWith('Private')).length;
     githubSyncStatus.textContent = count
-      ? `${count} public GitHub ${count === 1 ? 'project' : 'projects'} synced automatically (${source}).`
-      : 'Public GitHub builds are up to date.';
+      ? `${count} GitHub ${count === 1 ? 'project' : 'projects'} synced automatically${privateCount ? ` (${privateCount} private)` : ''} (${source}).`
+      : 'GitHub builds are up to date.';
   }
 };
 
@@ -1066,14 +1069,21 @@ const syncGitHubProjects = async () => {
     if (cacheAge >= 0 && cacheAge < githubCacheMinutes * 60 * 1000) return;
   }
 
+  // Private repos opted in with the `show-on-portfolio` topic (empty when not configured or run locally).
+  const privateRepositories = fetch('/api/projects')
+    .then((response) => (response.ok ? response.json() : { repos: [] }))
+    .then((data) => (Array.isArray(data.repos) ? data.repos : []))
+    .catch(() => []);
+
   try {
     const response = await fetch(
       `https://api.github.com/users/${encodeURIComponent(githubUsername)}/repos?per_page=100&sort=updated&direction=desc`,
       { headers: { Accept: 'application/vnd.github+json' } },
     );
     if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
-    const repositories = await response.json();
-    if (!Array.isArray(repositories)) throw new Error('GitHub returned an unexpected response');
+    const publicRepositories = await response.json();
+    if (!Array.isArray(publicRepositories)) throw new Error('GitHub returned an unexpected response');
+    const repositories = [...publicRepositories, ...(await privateRepositories)];
     saveCachedGitHubRepos(repositories);
     applyGitHubProjects(repositories, 'live');
   } catch {
