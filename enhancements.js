@@ -145,7 +145,8 @@
     const visible = sections.filter((section) => !section.hidden && section.offsetParent !== null);
     stops = visible.map((section) => {
       const rect = section.getBoundingClientRect();
-      const target = rect.top + window.scrollY + rect.height / 2 - window.innerHeight / 2;
+      // A section becomes "current" once its top passes ~35% of the viewport (matches what the reader sees).
+      const target = rect.top + window.scrollY - window.innerHeight * 0.35;
       return { section, p: Math.min(1, Math.max(0, target / max)) };
     });
     track.querySelectorAll('.journey-stop').forEach((node) => node.remove());
@@ -177,7 +178,6 @@
 
     bar.style.transform = `scaleX(${p})`;
     fill.style.transform = `scaleY(${p})`;
-    walker.style.transform = `translate3d(0, ${p * trackHeight}px, 0)`;
     journey.classList.toggle('is-done', p > 0.985);
 
     let current = -1;

@@ -206,6 +206,28 @@ html[data-theme="dark"] :is(img, video, iframe, canvas, picture, svg image, [dat
 }
 .journey.is-done .journey-flag { opacity: 1; transform: scale(1.25) rotate(-8deg); }
 
+/* ---------- Journey rail v2: minimal dot navigation ----------
+   The explore chip (explore.js) already shows progress, so the rail is now a quiet section index:
+   small grey dots, the current section as a dark pill, labels on hover. Faded until you scroll or hover. */
+.journey { width: 40px; opacity: 0.4; transition: opacity 0.4s ease 0.8s; }
+.journey:hover, .journey:focus-within, .journey.is-walking { opacity: 1; transition-delay: 0s; }
+.journey-hud, .journey-walker, .journey-flag, .journey-fill { display: none !important; }
+.journey-track { right: 19px; width: 1px; background: rgba(30, 32, 37, 0.08); }
+.journey-stop { right: -8px; width: 18px; height: 22px; justify-content: center; }
+.journey-stop i {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(30, 32, 37, 0.22);
+  transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
+}
+.journey-stop.is-on i { background: rgba(30, 32, 37, 0.45); }
+.journey-stop.is-current i { height: 18px; background: #202124; transform: none; box-shadow: none; }
+.journey-stop:hover i { background: #202124; }
+.journey-stop span { right: 24px; }
+@media (prefers-reduced-motion: reduce) { .journey, .journey-stop i { transition: none; } }
+
 /* ---------- Pointer polish: tilt + magnetic ---------- */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .featured-project.is-tilting,
