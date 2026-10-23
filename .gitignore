@@ -9,3 +9,6 @@ __pycache__/
 node_modules/
 DESIGN.md
 premium-audit.json
+
+.vercel
+.env*
