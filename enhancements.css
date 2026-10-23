@@ -1,0 +1,220 @@
+/*
+  Enhancements layer — loaded after styles.css, so the original design is untouched.
+  Delete this file and enhancements.js (plus the two tags in index.html) to roll everything back.
+  Contents: dark theme, scroll-progress bar, section "journey" rail with walker,
+  cursor glow, card tilt and magnetic buttons (pointer devices only).
+*/
+
+/* ---------- Dark theme (smart invert) ----------
+   The original stylesheet hard-codes its colours, so the whole page is inverted
+   and media is inverted back. Hue-rotate keeps the blue/pastel accents recognisable. */
+html[data-theme="dark"] {
+  filter: invert(1) hue-rotate(180deg);
+  background: #fff;
+  color-scheme: dark;
+}
+html[data-theme="dark"] :is(img, video, iframe, canvas, picture, svg image, [data-keep-colors]) {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* ---------- Theme toggle ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 14px;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line, rgba(30, 32, 37, 0.23));
+  border-radius: 999px;
+  background: #fff;
+  color: #202124;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+/* The header is full below ~1280px, so the toggle floats above the quick dock instead. */
+@media (max-width: 1279px) {
+  .theme-toggle {
+    top: auto;
+    bottom: 92px;
+    box-shadow: 0 6px 18px rgba(30, 32, 37, 0.18);
+  }
+}
+.theme-toggle:hover { border-color: #405dea; box-shadow: 0 0 0 4px rgba(64, 93, 234, 0.14); }
+.theme-toggle:focus-visible { outline: 3px solid #405dea; outline-offset: 2px; }
+.theme-toggle span { display: block; transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+.theme-toggle:active span { transform: rotate(40deg) scale(0.9); }
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 3px;
+  background: linear-gradient(90deg, #405dea, #8f7bff);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* ---------- Cursor glow (pointer devices) ---------- */
+.cursor-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 40%), rgba(64, 93, 234, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.cursor-glow.is-on { opacity: 1; }
+
+/* ---------- Journey rail ---------- */
+.journey {
+  position: fixed;
+  top: 122px;
+  right: 22px;
+  bottom: 110px;
+  z-index: 15;
+  display: none;
+  width: 56px;
+  pointer-events: none;
+}
+@media (min-width: 1360px) and (min-height: 560px) {
+  .journey { display: block; }
+}
+.journey-hud {
+  position: absolute;
+  bottom: -62px;
+  right: 0;
+  font: 600 0.68rem/1 var(--mono, ui-monospace, monospace);
+  letter-spacing: 0.08em;
+  color: #4b515c;
+  white-space: nowrap;
+}
+.journey-hud b { color: #405dea; font-weight: 700; }
+.journey-track {
+  position: absolute;
+  top: 0;
+  right: 27px;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(30, 32, 37, 0.16);
+}
+.journey-fill {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100%;
+  border-radius: 2px;
+  background: #405dea;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+.journey-stop {
+  position: absolute;
+  right: -7px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 0;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateY(-50%);
+}
+.journey-stop i {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(30, 32, 37, 0.35);
+  border-radius: 50%;
+  background: #fbfbf8;
+  transition: background-color 0.25s, border-color 0.25s, transform 0.25s;
+}
+.journey-stop.is-on i { border-color: #405dea; background: #405dea; }
+.journey-stop.is-current i { transform: scale(1.25); box-shadow: 0 0 0 5px rgba(64, 93, 234, 0.18); }
+.journey-stop span {
+  position: absolute;
+  right: 26px;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid rgba(30, 32, 37, 0.85);
+  border-radius: 0.55rem;
+  background: #202124;
+  color: #fff;
+  font: 600 0.72rem/1 var(--sans, Inter, system-ui, sans-serif);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s, transform 0.18s;
+  pointer-events: none;
+}
+.journey-stop:hover span,
+.journey-stop:focus-visible span { opacity: 1; transform: none; }
+.journey-stop:focus-visible i { outline: 3px solid #405dea; outline-offset: 3px; }
+
+.journey-walker {
+  position: absolute;
+  right: 28px;
+  top: 0;
+  width: 26px;
+  height: 42px;
+  margin: -40px -13px 0 0;
+  color: #202124;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  pointer-events: none;
+}
+.journey-walker svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.journey-walker svg * { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.journey-walker .head { fill: #fbfbf8; }
+.journey-walker .leg-l,
+.journey-walker .leg-r,
+.journey-walker .arm-l,
+.journey-walker .arm-r { transform-origin: 13px 24px; }
+.journey-walker .arm-l,
+.journey-walker .arm-r { transform-origin: 13px 14px; }
+.journey.is-walking .leg-l { animation: journey-swing 0.5s ease-in-out infinite alternate; }
+.journey.is-walking .leg-r { animation: journey-swing 0.5s ease-in-out infinite alternate-reverse; }
+.journey.is-walking .arm-l { animation: journey-swing 0.5s ease-in-out infinite alternate-reverse; }
+.journey.is-walking .arm-r { animation: journey-swing 0.5s ease-in-out infinite alternate; }
+.journey.is-walking .journey-walker { animation: journey-bob 0.25s ease-in-out infinite alternate; }
+@keyframes journey-swing { from { transform: rotate(-26deg); } to { transform: rotate(26deg); } }
+@keyframes journey-bob { from { margin-top: -40px; } to { margin-top: -42px; } }
+
+.journey-flag {
+  position: absolute;
+  right: 20px;
+  bottom: -30px;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.55;
+  transition: opacity 0.3s, transform 0.3s;
+  transform-origin: bottom left;
+}
+.journey.is-done .journey-flag { opacity: 1; transform: scale(1.25) rotate(-8deg); }
+
+/* ---------- Pointer polish: tilt + magnetic ---------- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .featured-project.is-tilting,
+  .build-card.is-tilting { will-change: transform; transition-property: transform, box-shadow, background-color, border-color; transition-duration: 0.12s, 0.25s, 0.25s, 0.25s; }
+  :is(.header-cta, .profile-download, .contact-submit, .location-link, .rail-section-button).is-magnetic { transition: transform 0.15s ease-out; }
+}
+
+@media print { .journey, .scroll-progress, .cursor-glow, .theme-toggle { display: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  .journey *, .journey-walker, .theme-toggle span, .journey-stop i, .journey-stop span { animation: none !important; transition: none !important; }
+  .cursor-glow { display: none; }
+}

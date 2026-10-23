@@ -1,0 +1,52 @@
+/* Live layer styles — see live.js. Only opacity/transform animate. */
+.live-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+@media (max-width: 860px) { .live-grid { grid-template-columns: 1fr; } }
+
+.live-card {
+  min-height: 260px;
+  padding: 1.15rem 1.2rem;
+  border: 1px solid var(--line, rgba(30, 32, 37, 0.18));
+  border-radius: 18px;
+  background: #fff;
+  color: #202124;
+}
+.live-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.9rem; }
+.live-head small { font: 0.58rem var(--mono, ui-monospace, monospace); letter-spacing: 0.1em; text-transform: uppercase; color: #5d6173; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: #17a673; box-shadow: 0 0 0 0 rgba(23, 166, 115, 0.5); animation: live-pulse 2.4s ease-out infinite; }
+.live-dot--li { background: #0a66c2; box-shadow: 0 0 0 0 rgba(10, 102, 194, 0.5); }
+html.is-lite .live-dot { animation: none; }
+
+.live-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin: 0 0 1rem; }
+.live-stats div { padding: 0.7rem 0.75rem; border-radius: 12px; background: #f5f6fb; }
+.live-stats dt { color: #5d6173; font-size: 0.68rem; }
+.live-stats dd { margin: 0.2rem 0 0; font-size: clamp(1.3rem, 2.4vw, 1.75rem); font-weight: 800; letter-spacing: -0.04em; }
+
+.live-label { margin: 0 0 0.45rem; color: #5d6173; font: 0.58rem var(--mono, ui-monospace, monospace); letter-spacing: 0.1em; text-transform: uppercase; }
+.live-repos { display: grid; gap: 0.4rem; margin: 0 0 0.9rem; padding: 0; list-style: none; }
+.live-repos a { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; min-height: 44px; padding: 0.55rem 0.75rem; border: 1px solid #eceef5; border-radius: 12px; color: inherit; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+.live-repos a:hover { border-color: #405dea; transform: translateX(3px); }
+.live-repos strong { min-width: 0; overflow: hidden; font-size: 0.9rem; text-overflow: ellipsis; white-space: nowrap; }
+.live-repos span { flex: none; color: #5d6173; font-size: 0.72rem; }
+.live-more { color: #405dea; font-size: 0.8rem; font-weight: 700; }
+.live-status { color: #5d6173; font-size: 0.82rem; }
+
+.live-card--linkedin { display: flex; flex-direction: column; }
+.live-card--linkedin .LI-profile-badge { display: flex; flex: 1; justify-content: center; min-height: 200px; }
+.li-fallback { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; width: 100%; padding: 0.5rem; border-radius: 14px; color: #202124; text-align: center; text-decoration: none; }
+.li-fallback img { width: 72px; height: 72px; margin-bottom: 0.35rem; border-radius: 50%; object-fit: cover; object-position: center 14%; box-shadow: 0 0 0 3px #fff, 0 0 0 5px #0a66c2; }
+.li-fallback strong { font-size: 1.05rem; letter-spacing: -0.02em; }
+.li-fallback span { color: #4d5163; font-size: 0.82rem; }
+.li-fallback small { color: #5d6173; font-size: 0.72rem; }
+.li-fallback b { margin-top: 0.6rem; padding: 0.55rem 0.9rem; border-radius: 999px; background: #0a66c2; color: #fff; font-size: 0.78rem; }
+.li-fallback:hover b { background: #004182; }
+
+@keyframes live-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(23, 166, 115, 0.45); }
+  80%, 100% { box-shadow: 0 0 0 8px rgba(23, 166, 115, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } .live-repos a { transition: none; } }

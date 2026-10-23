@@ -1,0 +1,207 @@
+/*
+  Explore layer styles — see explore.js. Remove both files + their tags to roll back.
+  Only transform/opacity animate. No backdrop-filter.
+*/
+
+/* ---------- Performance guards ---------- */
+/* Off-screen sections pause their ambient loops (saves CPU/battery on every device). */
+.is-offscreen,
+.is-offscreen *,
+.is-offscreen *::before,
+.is-offscreen *::after { animation-play-state: paused !important; }
+
+/* Low-end phones, data saver, reduced motion: no blur, no ambient loops. */
+html.is-lite *,
+html.is-lite *::before,
+html.is-lite *::after { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+html.is-lite :is(.hero-dots, .build-index, .build-index *, .signal-orbit, .hero-signal *, .profile-avatar, .profile-avatar *, .map-destination, .map-here, .hero-portrait img),
+html.is-lite :is(.build-index, .site-header, .profile-rail)::before,
+html.is-lite :is(.build-index, .site-header, .profile-rail)::after { animation: none !important; }
+html.is-lite .cursor-glow { display: none !important; }
+
+/* Touch screens never see hover, so blur buys nothing but GPU cost there. */
+@media (hover: none) {
+  .quick-dock, .site-header, .hero-portrait figcaption, .about-photo-card figcaption { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .quick-dock { background: rgba(255, 255, 255, 0.97); }
+}
+
+/* ---------- Explore chip ---------- */
+.xp {
+  --xp-ink: #1d2030;
+  --xp-brand: #405dea;
+  --xp-ok: #17a673;
+  position: fixed;
+  z-index: 45;
+  left: var(--xp-left, 16px);
+  bottom: var(--xp-bottom, 24px);
+  font-family: var(--sans, system-ui, sans-serif);
+}
+/* --xp-left is set by explore.js to clear the sticky profile rail when it is beside the content.
+   Phones: the quick dock owns the bottom edge, so float just above it. */
+@media (max-width: 620px) { .xp { left: var(--xp-left, 10px); bottom: var(--xp-bottom, 76px); } }
+
+.xp-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.3rem 0.85rem 0.3rem 0.32rem;
+  border: 1px solid rgba(30, 32, 48, 0.14);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(30, 32, 48, 0.16);
+  color: var(--xp-ink);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.xp-chip:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(30, 32, 48, 0.2); }
+.xp-chip:focus-visible { outline: 3px solid var(--xp-brand); outline-offset: 2px; }
+.xp-ring { width: 34px; height: 34px; flex: none; transform: rotate(-90deg); }
+.xp-ring circle { fill: none; stroke: #e6e8f2; stroke-width: 3.4; }
+.xp-ring .xp-ring-fill { stroke: var(--xp-brand); stroke-linecap: round; transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.xp.is-complete .xp-ring-fill { stroke: var(--xp-ok); }
+.xp-chip-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; }
+.xp-chip-text b { font-size: 0.86rem; letter-spacing: -0.02em; }
+.xp-chip-text span { color: #5d6173; font-size: 0.64rem; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+.xp.is-nudge .xp-chip { animation: xp-nudge 1.6s ease-in-out 3; }
+.xp.is-nudge .xp-chip-text span { color: var(--xp-brand); font-weight: 700; }
+.xp.is-pop .xp-chip { animation: xp-pop 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ---------- Panel ---------- */
+.xp-panel {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: min(300px, calc(100vw - 20px));
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.9rem;
+  border: 1px solid rgba(30, 32, 48, 0.12);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 22px 48px rgba(30, 32, 48, 0.22);
+  color: var(--xp-ink);
+  transform-origin: bottom left;
+  animation: xp-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.xp-panel[hidden] { display: none; }
+.xp-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; }
+.xp-panel-head strong { font-size: 0.95rem; letter-spacing: -0.02em; }
+.xp-panel-head span { color: #5d6173; font-size: 0.7rem; white-space: nowrap; }
+.xp-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; margin: 0 0 0.7rem; padding: 0; list-style: none; }
+.xp-list button {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid #eceef5;
+  border-radius: 10px;
+  background: #f8f9fc;
+  color: var(--xp-ink);
+  font: inherit;
+  font-size: 0.76rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.xp-list button:hover { border-color: var(--xp-brand); background: #eef1ff; }
+.xp-list i { display: grid; place-items: center; width: 22px; height: 22px; flex: none; border-radius: 50%; background: #e6e8f2; color: #5d6173; font: 700 0.58rem/1 var(--mono, ui-monospace, monospace); font-style: normal; }
+.xp-list .is-seen i { background: var(--xp-ok); color: #fff; font-size: 0.72rem; }
+.xp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.xp-next {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--xp-brand);
+  color: #fff;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s;
+}
+.xp-next:hover { background: #2f4bd6; transform: translateY(-1px); }
+.xp-next[hidden] { display: none; }
+.xp-visitors { margin: 0.7rem 0 0; color: var(--xp-ink); font-size: 0.78rem; text-align: center; }
+.xp-visitors[hidden] { display: none; }
+.xp-tip { margin: 0.55rem 0 0; color: #7a7e8f; font-size: 0.66rem; text-align: center; }
+.xp-tip kbd { padding: 0.05rem 0.3rem; border: 1px solid #d6d9e4; border-radius: 4px; background: #f4f5f9; font: 0.62rem var(--mono, ui-monospace, monospace); }
+/* Keyboard tip is noise on touch screens. */
+@media (hover: none) { .xp-tip { display: none; } }
+
+/* ---------- Toast ---------- */
+.xp-toast {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  max-width: min(320px, calc(100vw - 20px));
+  padding: 0.5rem 0.8rem;
+  border-radius: 12px;
+  background: #1d2030;
+  color: #fff;
+  font-size: 0.76rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 10px 24px rgba(30, 32, 48, 0.25);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.xp-toast.is-on { opacity: 1; transform: translateY(0); }
+.xp.is-open .xp-toast { display: none; }
+
+/* ---------- Completion card ---------- */
+.xp-done {
+  width: min(440px, calc(100vw - 28px));
+  padding: 1.8rem 1.5rem 1.5rem;
+  border: 0;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 30px 70px rgba(20, 22, 40, 0.35);
+  color: #1d2030;
+  text-align: center;
+  overflow: hidden;
+}
+.xp-done[open] { animation: xp-in 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+.xp-done::backdrop { background: rgba(16, 18, 32, 0.55); }
+.xp-done-kicker { margin: 0 0 0.3rem; color: #17a673; font: 700 0.66rem var(--mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; }
+.xp-done h2 { margin: 0 0 0.6rem; font-size: clamp(1.45rem, 5vw, 1.9rem); letter-spacing: -0.04em; line-height: 1.05; }
+.xp-done p { margin: 0 0 1.2rem; color: #4d5163; font-size: 0.88rem; line-height: 1.55; }
+.xp-done-actions { display: grid; gap: 0.5rem; }
+.xp-btn { display: flex; min-height: 44px; align-items: center; justify-content: center; border: 1px solid #dfe2ec; border-radius: 12px; color: #1d2030; font-size: 0.86rem; font-weight: 700; text-decoration: none; transition: transform 0.15s, border-color 0.15s; }
+.xp-btn:hover { border-color: #405dea; transform: translateY(-1px); }
+.xp-btn--main { border-color: #405dea; background: #405dea; color: #fff; }
+.xp-done-close { position: absolute; top: 10px; right: 12px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #f1f2f7; color: #1d2030; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.xp-burst { position: absolute; top: 34px; left: 50%; pointer-events: none; }
+.xp-burst i { position: absolute; width: 8px; height: 8px; border-radius: 2px; background: #405dea; opacity: 0; animation: xp-burst 0.9s 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.xp-burst i:nth-child(3n) { background: #ff8f7a; }
+.xp-burst i:nth-child(3n + 1) { background: #17a673; }
+.xp-burst i:nth-child(4n) { background: #ffcf4a; }
+.xp-burst i:nth-child(1) { --a: 0deg; } .xp-burst i:nth-child(2) { --a: 30deg; } .xp-burst i:nth-child(3) { --a: 60deg; }
+.xp-burst i:nth-child(4) { --a: 90deg; } .xp-burst i:nth-child(5) { --a: 120deg; } .xp-burst i:nth-child(6) { --a: 150deg; }
+.xp-burst i:nth-child(7) { --a: 180deg; } .xp-burst i:nth-child(8) { --a: 210deg; } .xp-burst i:nth-child(9) { --a: 240deg; }
+.xp-burst i:nth-child(10) { --a: 270deg; } .xp-burst i:nth-child(11) { --a: 300deg; } .xp-burst i:nth-child(12) { --a: 330deg; }
+html.is-lite .xp-burst { display: none; }
+
+/* Footer visitor badge */
+.visitor-badge[hidden] { display: none; }
+
+@keyframes xp-in { from { opacity: 0; transform: translateY(8px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes xp-pop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes xp-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes xp-burst {
+  0% { opacity: 1; transform: rotate(var(--a)) translateY(0) scale(1); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateY(-90px) scale(0.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp *, .xp-done, .xp-done * { animation: none !important; transition: none !important; }
+}
+@media print { .xp, .xp-done { display: none !important; } }

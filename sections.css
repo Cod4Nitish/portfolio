@@ -1,0 +1,143 @@
+/*
+  Clarity sections: hero, "What I do", journey timeline.
+  Pattern borrowed from redoyanulhaque.me (intro -> what I do -> career).
+  Loaded after styles.css and enhancements.css. Remove the section markup and this file to roll back.
+*/
+.nx-hero, .nx-what, .nx-journey { scroll-margin-top: 88px; padding-inline: clamp(1.25rem, 7vw, 6.3rem); }
+
+.nx-section-head { margin-bottom: 2rem; max-width: 46rem; }
+.nx-section-head h2 { margin: 0.4rem 0 0.8rem; font-size: clamp(2.1rem, 4.6vw, 3.9rem); font-weight: 800; line-height: 0.98; letter-spacing: -0.045em; color: #202124; }
+.nx-section-head p:not(.eyebrow) { margin: 0; font-size: 1.05rem; line-height: 1.6; color: #4b515c; }
+
+/* ---------- Hero ---------- */
+.nx-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 2.2rem 3rem;
+  align-items: center;
+  padding-top: clamp(2.2rem, 5vw, 4rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+.nx-hello { margin: 0 0 0.3rem; font: 600 1.05rem/1 var(--sans, Inter, system-ui, sans-serif); color: #405dea; letter-spacing: 0.01em; }
+.nx-name { margin: 0; font-size: clamp(3.2rem, 8.4vw, 7rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.055em; color: #202124; }
+.nx-ch { display: inline-block; animation: nx-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i) * 32ms + 120ms); }
+.nx-word-wrap { display: inline-block; white-space: nowrap; }
+@keyframes nx-rise { from { opacity: 0; transform: translateY(45%); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+
+.nx-role { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 1.1rem 0 0; font-size: clamp(1.45rem, 3.2vw, 2.35rem); font-weight: 700; letter-spacing: -0.03em; color: #202124; }
+.nx-rotator { display: inline-grid; overflow: hidden; vertical-align: bottom; padding-bottom: 0.12em; color: #405dea; }
+.nx-word { grid-area: 1 / 1; opacity: 0; transform: translateY(110%); transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; white-space: nowrap; }
+.nx-word.is-active { opacity: 1; transform: none; }
+.nx-word.is-past { transform: translateY(-110%); }
+
+.nx-lead { max-width: 36rem; margin: 1.2rem 0 0; font-size: clamp(1.05rem, 1.6vw, 1.22rem); line-height: 1.65; color: #3a4049; }
+.nx-lead strong { color: #202124; }
+.nx-cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
+.nx-btn { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.9rem; padding: 0 1.2rem; border: 1px solid rgba(30, 32, 37, 0.85); border-radius: 999px; background: #fff; color: #202124; font: 600 0.95rem/1 var(--sans, Inter, system-ui, sans-serif); text-decoration: none; transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s; }
+.nx-btn:hover { box-shadow: 4px 4px 0 #202124; transform: translate(-2px, -2px); }
+.nx-btn:focus-visible { outline: 3px solid #405dea; outline-offset: 3px; }
+.nx-btn--primary { background: #405dea; border-color: #405dea; color: #fff; }
+
+.nx-glance { padding: 1.4rem 1.5rem; border: 1px solid rgba(30, 32, 37, 0.85); border-radius: 1.125rem; background: #fff; box-shadow: 6px 7px 0 #202124; }
+.nx-glance h2 { margin: 0 0 0.9rem; font: 700 0.72rem/1 var(--mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: #405dea; }
+.nx-glance dl { display: grid; gap: 0.85rem; margin: 0; }
+.nx-glance dl > div { display: grid; gap: 0.2rem; padding-bottom: 0.85rem; border-bottom: 1px dashed rgba(30, 32, 37, 0.22); }
+.nx-glance dl > div:last-child { padding-bottom: 0; border-bottom: 0; }
+.nx-glance dt { font: 600 0.7rem/1 var(--mono, ui-monospace, monospace); letter-spacing: 0.1em; text-transform: uppercase; color: #6b6e72; }
+.nx-glance dd { margin: 0; font-size: 0.98rem; line-height: 1.45; font-weight: 500; color: #202124; }
+
+.nx-proof { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; margin: 0.4rem 0 0; padding: 0; list-style: none; }
+.nx-proof li { display: grid; gap: 0.3rem; padding: 1rem 1.1rem; border: 1px solid rgba(30, 32, 37, 0.2); border-radius: 1rem; background: rgba(255, 255, 255, 0.8); }
+.nx-proof b { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: #405dea; }
+.nx-proof span { font-size: 0.9rem; line-height: 1.4; color: #4b515c; }
+
+/* ---------- What I do ---------- */
+.nx-what { padding-top: clamp(2rem, 5vw, 3.5rem); padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.nx-what-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.nx-what-card { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.4rem 1.4rem 1.3rem; border: 1px solid rgba(30, 32, 37, 0.85); border-radius: 1.125rem; transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s; }
+.nx-what-card--mint { background: #d8f7eb; }
+.nx-what-card--sun { background: #fff0bf; }
+.nx-what-card--coral { background: #ffe0d8; }
+.nx-what-card:hover { transform: translateY(-4px); box-shadow: 5px 6px 0 #202124; }
+.nx-num { font: 700 0.74rem/1 var(--mono, ui-monospace, monospace); letter-spacing: 0.14em; color: #202124; opacity: 0.6; }
+.nx-what-card h3 { margin: 0; font-size: 1.4rem; font-weight: 800; line-height: 1.12; letter-spacing: -0.03em; color: #202124; }
+.nx-what-card p { margin: 0; font-size: 1rem; line-height: 1.6; color: #2c3038; }
+.nx-what-card .nx-example { padding-top: 0.8rem; border-top: 1px dashed rgba(30, 32, 37, 0.4); font-size: 0.93rem; }
+.nx-what-card a { margin-top: auto; padding-top: 0.4rem; font-weight: 700; color: #202124; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+.nx-what-card a:hover { color: #405dea; }
+.nx-what-card a:focus-visible { outline: 3px solid #405dea; outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Journey timeline ---------- */
+.nx-journey { padding-top: clamp(2rem, 5vw, 3.5rem); padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.nx-timeline { position: relative; display: grid; gap: 1.1rem; margin: 0; padding: 0 0 0 1.9rem; list-style: none; }
+.nx-timeline::before { content: ""; position: absolute; top: 0.4rem; bottom: 0.4rem; left: 0.45rem; width: 2px; background: linear-gradient(#405dea, rgba(30, 32, 37, 0.18) 55%); border-radius: 2px; }
+.nx-step { position: relative; display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 0.4rem 1.5rem; padding: 1.1rem 1.3rem; border: 1px solid rgba(30, 32, 37, 0.2); border-radius: 1rem; background: rgba(255, 255, 255, 0.85); }
+.nx-step::before { content: ""; position: absolute; top: 1.45rem; left: -1.9rem; width: 0.95rem; height: 0.95rem; border: 2px solid #405dea; border-radius: 50%; background: #fbfbf8; }
+.nx-step--now { border-color: #405dea; box-shadow: 0 0 0 4px rgba(64, 93, 234, 0.1); }
+.nx-step--now::before { background: #405dea; animation: nx-pulse 2s ease-out infinite; }
+@keyframes nx-pulse { 0% { box-shadow: 0 0 0 0 rgba(64, 93, 234, 0.45); } 100% { box-shadow: 0 0 0 12px rgba(64, 93, 234, 0); } }
+.nx-when { font: 700 0.76rem/1.4 var(--mono, ui-monospace, monospace); letter-spacing: 0.06em; text-transform: uppercase; color: #405dea; padding-top: 0.2rem; }
+.nx-step h3 { margin: 0 0 0.35rem; font-size: 1.15rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; color: #202124; }
+.nx-step h3 small { font-size: 0.85em; font-weight: 600; color: #6b6e72; }
+.nx-step p { margin: 0; font-size: 0.98rem; line-height: 1.6; color: #3a4049; }
+
+@media (max-width: 1100px) {
+  .nx-hero { grid-template-columns: 1fr; }
+  .nx-glance { box-shadow: 4px 5px 0 #202124; }
+  .nx-what-grid { grid-template-columns: 1fr; }
+  .nx-proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .nx-step { grid-template-columns: 1fr; }
+  .nx-btn { flex: 1 1 auto; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-ch, .nx-step--now::before { animation: none !important; }
+  .nx-word, .nx-what-card, .nx-btn { transition: none !important; }
+}
+
+/* ---------- Responsive fixes (every width, 320px → 1920px+) ---------- */
+/* Tool kit: the 4-fixed-column grid overflowed (and was clipped) on 1000–1360px screens.
+   Auto-fill keeps every card whole at any width. */
+.portfolio-content .tool-grid { grid-template-columns: repeat(auto-fill, minmax(min(128px, 100%), 1fr)); }
+@media (max-width: 1359px) {
+  .portfolio-content .toolkit-section { grid-template-columns: 1fr; gap: 1.5rem; }
+  .portfolio-content .toolkit-notes { max-width: 470px; }
+}
+@media (max-width: 620px) {
+  .portfolio-content .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Header: nine links + CTA stop fitting below ~1080px, so tablets use the phone menu. */
+@media (min-width: 621px) and (max-width: 1080px) {
+  .site-header { grid-template-columns: 1fr auto; height: 64px; }
+  .site-nav { position: absolute; top: 64px; left: 0; right: 0; display: flex; flex-direction: column; gap: 0; max-height: 0; overflow: hidden; border-bottom: 0; background: rgba(251, 251, 248, 0.98); transition: max-height 0.25s ease; }
+  .site-nav a { padding: 1rem 1.6rem; border-bottom: 1px solid var(--line); }
+  .site-nav.is-open { max-height: 620px; border-bottom: 1px solid var(--line); }
+  .header-cta { display: none; }
+  .menu-button { display: flex; gap: 0.55rem; align-items: center; justify-self: end; padding: 0; border: 0; background: none; color: var(--ink); font: 0.62rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+  .menu-button i, .menu-button i::after { display: block; width: 16px; height: 1px; background: currentColor; content: ""; transition: transform 0.2s; }
+  .menu-button i::after { transform: translateY(5px); }
+  .menu-button[aria-expanded="true"] i { transform: translateY(3px) rotate(45deg); }
+  .menu-button[aria-expanded="true"] i::after { transform: rotate(-90deg); }
+}
+
+/* ---------- Design review fixes ---------- */
+/* Main project cards: the empty tinted square read as a missing image. */
+.featured-project::before { display: none; }
+/* Social handles like @predator_nitish overflowed their card. */
+.social-card strong { font-size: clamp(1rem, 1.45vw, 1.3rem); overflow-wrap: anywhere; }
+/* Reset buttons sat on top of note labels / the drag hint. Park them in empty corners. */
+#notes .hero-notes-reset { position: absolute !important; top: auto !important; right: auto !important; left: 1.5rem !important; bottom: 1rem !important; }
+.toolkit-notes-reset { top: auto !important; bottom: 0.8rem !important; }
+/* Inline links inside journey copy. */
+.nx-inline-link { color: #405dea; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.nx-inline-link:hover { color: #2f4bd6; }
+/* Phones: the coral "current build" note sat under the multi-agent note and ran off the right edge. */
+@media (max-width: 620px) {
+  #notes .note-coral { top: 41rem !important; right: auto !important; bottom: auto !important; left: 0.6rem !important; max-width: calc(100% - 1.2rem); }
+}
+/* Decorative pseudo-elements extend past the right edge on phones. `hidden` still allowed sideways
+   panning (and programmatic scroll); `clip` stops it and, unlike hidden, keeps position:sticky working. */
+html, body { overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }

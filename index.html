@@ -2,111 +2,304 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Nitish Singh — AI &amp; Full-Stack Developer Portfolio</title>
-    <meta name="description" content="Portfolio of Nitish Singh, an AI and full-stack developer from India building agentic AI systems (LangGraph, RAG, Claude), React/Next.js products, and Node.js/FastAPI backends. See ForgeMind, MRStay AI and PhishGuard AI." />
-    <meta name="author" content="Nitish Singh" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <link rel="canonical" href="https://cod4nitish.github.io/portfolio/" />
-
+    <meta name="description" content="Nitish Kumar is an AI engineer and full-stack developer in Greater Noida building agentic AI, RAG, automation, and useful web products." />
+    <meta name="author" content="Nitish Kumar" />
+    <meta name="keywords" content="Nitish Kumar, AI engineer, full-stack developer, agentic AI, RAG, multi-agent systems, FastAPI, Next.js, Greater Noida" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Nitish Singh — Portfolio" />
-    <meta property="og:title" content="Nitish Singh — AI &amp; Full-Stack Developer" />
-    <meta property="og:description" content="Agentic AI systems, RAG, and polished full-stack web products. Explore ForgeMind, MRStay AI and PhishGuard AI." />
-    <meta property="og:url" content="https://cod4nitish.github.io/portfolio/" />
-    <meta property="og:image" content="https://cod4nitish.github.io/portfolio/projects/portfolio.png" />
-    <meta property="og:image:alt" content="Preview of Nitish Singh's developer portfolio" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Nitish Singh — AI &amp; Full-Stack Developer" />
-    <meta name="twitter:description" content="Agentic AI systems, RAG, and polished full-stack web products." />
-    <meta name="twitter:image" content="https://cod4nitish.github.io/portfolio/projects/portfolio.png" />
-
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="Nitish Kumar — AI Engineer & Full-Stack Developer" />
+    <meta property="og:description" content="Agentic AI, RAG, automation, and full-stack products from Greater Noida." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nitish Kumar — AI Engineer & Full-Stack Developer" />
+    <meta name="twitter:description" content="Agentic AI, RAG, automation, and full-stack products from Greater Noida." />
+    <meta name="theme-color" content="#fbfbf8" />
+    <title>Nitish Kumar — AI Engineer & Full-Stack Developer</title>
+    <link rel="icon" type="image/svg+xml" href="assets/nitish-portfolio-favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=portfolio-structure-23" />
+    <link rel="stylesheet" href="enhancements.css?v=4" />
+    <link rel="stylesheet" href="sections.css?v=8" />
+    <link rel="stylesheet" href="explore.css?v=3" />
+    <link rel="stylesheet" href="live.css?v=2" />
+    <script>
+      /* Apply the saved theme before first paint so there is no light flash. */
+      try { var t = localStorage.getItem('portfolio-theme'); if (t === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+    </script>
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Person",
-          "@id": "https://cod4nitish.github.io/portfolio/#person",
-          "name": "Nitish Singh",
-          "url": "https://cod4nitish.github.io/portfolio/",
-          "image": "https://cod4nitish.github.io/portfolio/profile4.jpg",
-          "jobTitle": "AI & Full-Stack Developer",
-          "description": "AI and full-stack developer from India building agentic AI systems, RAG pipelines, and React/Next.js and Node.js products.",
-          "email": "mailto:theeditornitish@gmail.com",
-          "address": { "@type": "PostalAddress", "addressLocality": "Noida", "addressCountry": "IN" },
-          "alumniOf": { "@type": "CollegeOrUniversity", "name": "Dr. A.P.J. Abdul Kalam Technical University (AKTU)" },
-          "knowsAbout": ["Agentic AI", "Retrieval-augmented generation (RAG)", "LangGraph", "LangChain", "Generative AI", "TypeScript", "React", "Next.js", "Node.js", "NestJS", "FastAPI", "Python", "PostgreSQL", "REST APIs"],
-          "sameAs": [
-            "https://github.com/Cod4Nitish",
-            "https://www.linkedin.com/in/nitish-6206-nk",
-            "https://www.linkedin.com/in/nitish-fullstack-developer",
-            "https://x.com/predator_nitish",
-            "https://instagram.com/nitish.10.1"
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://cod4nitish.github.io/portfolio/#website",
-          "url": "https://cod4nitish.github.io/portfolio/",
-          "name": "Nitish Singh — Portfolio",
-          "inLanguage": "en",
-          "author": { "@id": "https://cod4nitish.github.io/portfolio/#person" }
-        },
-        {
-          "@type": "ProfilePage",
-          "url": "https://cod4nitish.github.io/portfolio/",
-          "mainEntity": { "@id": "https://cod4nitish.github.io/portfolio/#person" }
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Who is Nitish Singh?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Nitish Singh is an AI and full-stack developer from India (Noida) and a B.Tech Computer Science (AI) student who builds agentic AI systems, RAG pipelines and TypeScript web products." }
-            },
-            {
-              "@type": "Question",
-              "name": "What projects has Nitish Singh built?",
-              "acceptedAnswer": { "@type": "Answer", "text": "ForgeMind (an AI software engineer that coordinates GitHub, Jira and Slack work using LangGraph and Claude), MRStay AI (an agentic real-estate assistant using FastAPI, Gemini and ChromaDB), PhishGuard AI (a phishing-awareness UX prototype) and this developer portfolio." }
-            },
-            {
-              "@type": "Question",
-              "name": "What technologies does Nitish Singh work with?",
-              "acceptedAnswer": { "@type": "Answer", "text": "TypeScript, JavaScript, Python, React, Next.js, Node.js, NestJS, FastAPI, PostgreSQL, MongoDB, LangChain, LangGraph, RAG, Docker and GitHub Actions." }
-            },
-            {
-              "@type": "Question",
-              "name": "How can I contact Nitish Singh?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Email theeditornitish@gmail.com, message on LinkedIn, or see github.com/Cod4Nitish. He is open to collaborations, internships and product-focused engineering roles." }
-            }
-          ]
-        }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Nitish Kumar",
+        "jobTitle": "AI Engineer and Full-Stack Developer",
+        "description": "AI engineer and full-stack developer building agentic AI systems, RAG pipelines, automation, and useful web products.",
+        "address": { "@type": "PostalAddress", "addressLocality": "Greater Noida", "addressRegion": "Uttar Pradesh", "addressCountry": "IN" },
+        "sameAs": [
+          "https://www.linkedin.com/in/nitish-ai-engineer",
+          "https://github.com/Cod4Nitish",
+          "https://x.com/predator_nitish",
+          "https://www.instagram.com/nitish.10.1"
+        ],
+        "knowsAbout": ["Agentic AI", "Multi-agent systems", "RAG pipelines", "FastAPI", "Next.js", "Full-stack development"]
+      }
     </script>
   </head>
   <body>
-    <div id="root"></div>
-    <noscript>
-      <main style="font-family:system-ui,sans-serif;max-width:720px;margin:2rem auto;padding:0 1rem;line-height:1.6">
-        <h1>Nitish Singh — AI &amp; Full-Stack Developer</h1>
-        <p>Nitish Singh is an AI and full-stack developer from India (Noida), studying B.Tech Computer Science (AI) at AKTU. He builds agentic AI systems, RAG pipelines, and TypeScript web products.</p>
-        <h2>Projects</h2>
-        <ul>
-          <li><a href="https://github.com/Cod4Nitish/ForgeMind">ForgeMind</a> — an AI software engineer that turns plain-language requests into GitHub, Jira and Slack work (Next.js, TypeScript, LangGraph.js, Claude). <a href="https://forgemind-ashy.vercel.app">Live demo</a>.</li>
-          <li><a href="https://github.com/Cod4Nitish/MRStay_AI">MRStay AI</a> — an agentic real-estate assistant for lead qualification and property recommendations (Python, FastAPI, Gemini, ChromaDB).</li>
-          <li><a href="https://github.com/Cod4Nitish/PhishGuard-AI">PhishGuard AI</a> — a phishing-awareness and URL-security UX prototype (React, TypeScript, Tailwind CSS). <a href="https://cod4nitish.github.io/PhishGuard-AI/">Live demo</a>.</li>
-        </ul>
-        <h2>Skills</h2>
-        <p>TypeScript, JavaScript, Python, React, Next.js, Node.js, NestJS, FastAPI, PostgreSQL, MongoDB, LangChain, LangGraph, RAG, Docker, GitHub Actions.</p>
-        <h2>Contact</h2>
-        <p><a href="https://github.com/Cod4Nitish">GitHub</a> · <a href="https://www.linkedin.com/in/nitish-6206-nk">LinkedIn</a> · <a href="mailto:theeditornitish@gmail.com">theeditornitish@gmail.com</a></p>
-      </main>
-    </noscript>
-    <script type="module" src="/src/main.jsx"></script>
+    <a class="skip-link" href="#about">Skip to about</a>
+
+    <header class="site-header">
+      <div class="header-search" data-header-search>
+        <button class="site-search-button" type="button" aria-controls="portfolio-search" aria-expanded="false" data-search-trigger data-action="search" onclick="window.portfolioAction(this)"><span aria-hidden="true">⌕</span> Search</button>
+        <div class="site-search-inline" id="portfolio-search" data-search-panel hidden>
+          <label class="search-input-wrap" for="portfolio-search-input"><span aria-hidden="true">⌕</span><input id="portfolio-search-input" type="search" placeholder="Search projects, LinkedIn, GitHub, résumé…" autocomplete="off" data-portfolio-search /><button type="button" aria-label="Clear search" data-search-clear data-action="clear-search" onclick="window.portfolioAction(this)" hidden>×</button></label>
+          <div class="search-results-panel"><p class="search-status" data-search-status>Search projects, socials, résumé, events, and contact details.</p><div class="search-results" data-search-results></div></div>
+        </div>
+      </div>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-button data-action="menu" onclick="window.portfolioAction(this)">
+        <span>Menu</span><i aria-hidden="true"></i>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation" data-menu>
+        <a href="#about">About</a><a href="#work">Projects</a><a href="#notes">Notes</a><a href="#builds">Builds</a><a href="#toolkit">Tools</a><a href="#events">Events</a><a href="#location">Location</a><a href="#socials">Socials</a><a href="#contact">Contact</a>
+      </nav>
+      <a class="header-cta" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main class="site-shell" id="top">
+      <aside class="profile-rail profile-rail--wall" aria-label="Profile summary">
+        <p class="rail-kicker">NITISH / PORTFOLIO</p>
+        <div class="profile-avatar profile-avatar--photo"><img src="assets/nitish-portrait.jpeg" alt="Nitish wearing a black hoodie" data-profile-photo /><i aria-hidden="true"></i></div>
+        <div class="profile-name"><strong>Nitish Kumar</strong><span data-profile-role>AI Engineer &amp; Full-Stack Developer</span></div>
+        <div class="profile-location"><span class="online-dot" aria-hidden="true"></span> <span data-profile-country>India</span></div>
+        <div class="rail-experience"><span class="rail-experience-title" data-profile-internship>AI Agentic Intern · private startup team</span><small data-profile-experience>Building confidential multi-agent systems, AI automation, RAG pipelines, API backends, and microservice foundations designed to scale to 1,000+ users.</small><ul class="rail-experience-list" data-profile-internship-highlights><li>Multi-agent systems and specialised AI agents</li><li>AI automation, RAG pipelines, and API backends</li><li>Microservice foundations designed for 1,000+ users</li></ul><small class="rail-experience-duration" data-profile-internship-duration>2 months +</small></div>
+        <div class="rail-section-switcher" aria-label="Profile navigation">
+          <button class="rail-section-button rail-section-button--profile" type="button" aria-haspopup="dialog" aria-controls="profile-sheet" aria-expanded="false" data-profile-open data-action="open-profile" onclick="window.portfolioAction(this)"><span aria-hidden="true">◯</span> Profile <b aria-hidden="true">↗</b></button>
+          <a class="rail-section-button rail-section-button--portfolio is-selected" href="#work" aria-current="page"><span aria-hidden="true">▣</span> Portfolio <b aria-hidden="true">↓</b></a>
+        </div>
+        <div class="profile-actions"><a class="profile-download" href="assets/nitish-resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a></div>
+      </aside>
+
+      <div class="portfolio-content">
+        <section class="nx-hero" id="intro" aria-labelledby="nx-hero-title">
+          <div class="nx-hero-copy">
+            <p class="nx-hello">Hello! I’m</p>
+            <h1 id="nx-hero-title" class="nx-name" data-split-name>Nitish Kumar</h1>
+            <p class="nx-role"><span>An</span> <span class="nx-rotator" data-rotator data-words="AI Engineer|Full-Stack Developer|Agentic AI Builder"><span class="nx-word is-active">AI Engineer</span></span></p>
+            <p class="nx-lead">I build <strong>AI that does real work</strong> — assistants that plan and finish tasks, tools that answer from your own documents, and the websites and APIs that make them easy to use.</p>
+            <div class="nx-cta">
+              <a class="nx-btn nx-btn--primary" href="#work">See my projects <span aria-hidden="true">↓</span></a>
+              <a class="nx-btn" href="assets/nitish-resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+          <aside class="nx-glance" aria-label="Nitish at a glance">
+            <h2>At a glance</h2>
+            <dl>
+              <div><dt>I am</dt><dd>AI Engineer &amp; Full-Stack Developer</dd></div>
+              <div><dt>Right now</dt><dd>AI Agentic Intern at a private startup, building multi-agent systems and RAG pipelines</dd></div>
+              <div><dt>Studying</dt><dd>B.Tech CSE (Artificial Intelligence), NIET, Greater Noida</dd></div>
+              <div><dt>Based in</dt><dd>Greater Noida, India</dd></div>
+              <div><dt>Works with</dt><dd>Python · FastAPI · Next.js · React · TypeScript · PostgreSQL</dd></div>
+            </dl>
+          </aside>
+          <ul class="nx-proof" aria-label="Highlights">
+            <li><b>5</b><span>main AI &amp; full-stack builds</span></li>
+            <li><b>3</b><span>hackathon &amp; community wins in Bhopal</span></li>
+            <li><b>1,000+</b><span>users my internship systems are designed to scale to</span></li>
+            <li><b>₹11,000</b><span>won at the Claude Community Build Day</span></li>
+          </ul>
+        </section>
+
+        <section class="nx-what" id="what-i-do" aria-labelledby="nx-what-title" data-reveal>
+          <div class="nx-section-head"><p class="eyebrow">What I do</p><h2 id="nx-what-title">What does an AI engineer actually build?</h2><p>In plain words, here are the three things I do — each with a real project you can look at.</p></div>
+          <div class="nx-what-grid">
+            <article class="nx-what-card nx-what-card--mint">
+              <span class="nx-num">01</span>
+              <h3>AI agents that finish tasks</h3>
+              <p>Software that can plan a job, use tools, and carry it through — not just chat. It saves a team the repetitive follow-up work.</p>
+              <p class="nx-example"><b>Example:</b> MRStay AI qualifies real-estate leads and follows up with customers. ForgeMind triages GitHub issues and coordinates Jira and Slack.</p>
+              <a href="#work">See agent projects <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="nx-what-card nx-what-card--sun">
+              <span class="nx-num">02</span>
+              <h3>AI that answers from your documents</h3>
+              <p>You give it your own files, rules or notes. It answers only from them and shows where the answer came from, so you can trust it.</p>
+              <p class="nx-example"><b>Example:</b> Bhumi Help answers Bhopal building-rule questions in Hindi or English with the rule number and the exact PDF page.</p>
+              <a href="#work">See document-AI projects <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="nx-what-card nx-what-card--coral">
+              <span class="nx-num">03</span>
+              <h3>The full product around the AI</h3>
+              <p>The website, the backend API and the database that turn a smart idea into something people can open and use — fast and easy to understand.</p>
+              <p class="nx-example"><b>Example:</b> CallbackCV checks a résumé for Indian freshers and shows clear, role-aware feedback.</p>
+              <a href="#work">See product projects <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section class="about-section" id="about" aria-labelledby="about-title">
+          <div class="about-heading"><p class="eyebrow">About Nitish</p><h2 id="about-title">AI products that feel useful from the first click.</h2></div>
+          <div class="about-grid" data-reveal>
+            <article class="about-intro" data-note-workbench>
+              <div class="about-story"><p class="about-kicker">AI engineer · full-stack builder · Greater Noida</p><h3>Building clear systems for complex work.</h3><p>I’m Nitish Kumar, an AI Engineer and Full-Stack Developer who turns practical problems into agentic AI products. I work across multi-agent workflows, RAG pipelines, API services, automation, and the interfaces people actually use.</p><p>At a private startup, I contribute to confidential systems designed around reliability, useful automation, and scale. My approach stays simple: understand the workflow first, then ship something people can trust.</p><div class="about-signal-row"><span>Agentic AI</span><span>Product systems</span><span>APIs &amp; automation</span></div></div>
+              <button class="about-live-clock" type="button" data-about-live-clock data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" data-profile-time aria-live="polite" aria-label="Current time in Noida, India. Drag or use arrow keys to move the clock within this card."><span><b>NOIDA / INDIA</b><i>EST. 1900</i></span><strong data-current-time>--:--</strong><em data-current-date>Loading date</em><small>Currently building useful AI systems.</small></button>
+            </article>
+            <div class="fact-card mint-card" data-interaction-card data-card-family="focus" role="button" tabindex="0" aria-pressed="false" aria-label="Select current focus: Agentic AI systems"><span>Current focus</span><strong>Agentic AI<br />systems</strong><i aria-hidden="true">✦</i></div>
+            <div class="fact-card lilac-card" data-interaction-card data-card-family="focus" role="button" tabindex="0" aria-pressed="false" aria-label="Select current work: Multi-agent workflows and reliable automation"><span>Working on</span><strong>Multi-agent workflows<br />&amp; reliable automation</strong><i aria-hidden="true">↗</i></div>
+            <div class="fact-card site-card" data-interaction-card data-card-family="focus" role="button" tabindex="0" aria-pressed="false" aria-label="Select build approach: Useful, clear, shipped"><span>Build approach</span><strong>Useful.<br />Clear. Shipped.</strong><i aria-hidden="true">↗</i></div>
+            <div class="stack-card" data-interaction-card data-card-family="toolkit" role="button" tabindex="0" aria-pressed="false" aria-label="Highlight everyday toolkit"><span>Everyday toolkit</span><p>Python · FastAPI · Next.js · React · TypeScript · Node.js · PostgreSQL · Supabase</p></div>
+          </div>
+          <div class="about-principles" data-reveal><article class="principle-card principle-coral" data-interaction-card data-card-family="principle" role="button" tabindex="0" aria-pressed="false" aria-label="Select principle: Make it make sense"><span>01</span><strong>Make it make sense.</strong><p>Start with the real problem before reaching for the impressive model.</p></article><article class="principle-card principle-blue" data-interaction-card data-card-family="principle" role="button" tabindex="0" aria-pressed="false" aria-label="Select principle: Keep the interface calm"><span>02</span><strong>Keep the interface calm.</strong><p>Complexity belongs in the system, not in the person’s next click.</p></article><article class="principle-card principle-sun" data-interaction-card data-card-family="principle" role="button" tabindex="0" aria-pressed="false" aria-label="Select principle: Ship, learn, repeat"><span>03</span><strong>Ship, learn, repeat.</strong><p>Useful feedback beats a perfect first attempt every time.</p></article></div>
+        </section>
+
+        <section class="nx-journey" id="journey" aria-labelledby="nx-journey-title">
+          <div class="nx-section-head" data-reveal><p class="eyebrow">My journey</p><h2 id="nx-journey-title">Where I’ve been, and what I’m doing now.</h2><p>Newest first — work, wins and learning.</p></div>
+          <ol class="nx-timeline">
+            <li class="nx-step nx-step--now" data-reveal>
+              <span class="nx-when">Jul 2026 – Now</span>
+              <div class="nx-step-body"><h3>AI Agentic Intern <small>· private startup team</small></h3><p>Building confidential multi-agent systems, AI automation, RAG pipelines, API backends and microservice foundations designed to scale to 1,000+ users.</p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">Oct 2026</span>
+              <div class="nx-step-body"><h3>Shipped DropMorph <small>· v1.12.0</small></h3><p>A free, offline drag-and-drop file converter for Windows, macOS and Linux — 254 formats, nothing uploaded. <a class="nx-inline-link" href="https://dropmorph.vercel.app/" target="_blank" rel="noreferrer">Try it ↗</a></p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">19 Sep 2026</span>
+              <div class="nx-step-body"><h3>Quiz winner · Cerebras Cafe Compute, Bhopal</h3><p>Won the quiz at a hands-on developer meetup — 2,500 Cerebras credits and the winner cup.</p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">Bhopal · 2026</span>
+              <div class="nx-step-body"><h3>Winner · Claude Impact Lab &amp; Build Day</h3><p>Won with Team GLITCH at the Claude Community Impact Lab (Claude Pro/Max access awarded) and took the ₹11,000 prize at the Fable 5.1 Claude Community Build Day.</p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">2025</span>
+              <div class="nx-step-body"><h3>Hackathons &amp; ideathons</h3><p>Smart India Hackathon 2025 participant, plus ThinkBlitz (IIIT Delhi) and Code Slayer 2K25 (NIT Delhi) front-end challenges.</p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">Aug 2024 – Sep 2027</span>
+              <div class="nx-step-body"><h3>B.Tech, Computer Science &amp; Engineering (AI)</h3><p>Noida Institute of Engineering and Technology (NIET), Greater Noida · CGPA 7.5.</p></div>
+            </li>
+            <li class="nx-step" data-reveal>
+              <span class="nx-when">2021 – 2023</span>
+              <div class="nx-step-body"><h3>Diploma in Electrical Engineering</h3><p>Government Polytechnic, Garhwa, Jharkhand (JUT, Ranchi).</p></div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="credentials-section" id="education" aria-labelledby="credentials-title" data-reveal>
+          <div class="credentials-heading"><p class="eyebrow">Foundation</p><h2 id="credentials-title">Education, skills &amp; certifications.</h2><p>The learning and technical foundation behind the work.</p></div>
+          <div class="credentials-grid">
+            <section class="credentials-education" aria-labelledby="education-label"><span class="credential-label" id="education-label">Education</span><div class="education-card-grid" data-resume-education></div></section>
+            <section class="credential-card credential-card--skills" id="technical-skills" aria-labelledby="technical-skills-label"><span class="credential-label" id="technical-skills-label">Technical skills</span><div data-resume-skills></div></section>
+            <section class="credentials-certifications" id="certifications" aria-labelledby="certifications-label"><span class="credential-label" id="certifications-label">Certifications</span><div class="certification-card-grid" data-resume-certifications></div></section>
+          </div>
+        </section>
+
+        <section class="work-section" id="work" aria-labelledby="work-title">
+          <div class="section-header"><div><p class="eyebrow">Main projects</p><h2 id="work-title">The five builds I’m taking furthest.</h2></div><p>Five core systems first.<br />Everything else stays compact below.</p></div>
+          <div class="featured-project-grid" data-featured-project-list></div>
+          <div class="more-builds" data-reveal><span>Small builds below</span><p>Product experiments, public repositories, and selected work.</p></div>
+        </section>
+
+        <section class="hero" id="notes" aria-label="Nitish’s movable build notes" data-note-workbench>
+          <div class="hero-dots" aria-hidden="true"></div>
+          <p class="hero-notes-label">Build notes — drag these around</p>
+          <button class="note note-rag" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the RAG workflows note. Use arrow keys to move it."><span>RAG WORKFLOWS</span>right context,<br />better answers <b>✦</b></button>
+          <button class="note note-side" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the internship note. Use arrow keys to move it."><span>IN PROGRESS</span>Agentic AI intern<br />at a startup</button>
+          <button class="note note-left" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the AI systems note. Use arrow keys to move it."><span>AI SYSTEMS</span>agents · FastAPI ·<br />reliable APIs</button>
+          <button class="note note-coral" type="button" data-drag-note data-hero-build-update data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the current build update note. Use arrow keys to move it."><span data-hero-update-label>CURRENT BUILD UPDATE</span><strong data-hero-update-title>Scaling useful multi-agent systems.</strong><p data-hero-update-copy>RAG pipelines · automation · microservices</p></button>
+          <button class="note note-agent-loop" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the multi-agent lab note. Use arrow keys to move it."><span>MULTI-AGENT LAB</span>plan, hand off,<br />verify together</button>
+          <button class="note note-learning" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move the learning note. Use arrow keys to move it."><span>ALWAYS LEARNING</span>test, listen,<br />make it better</button>
+          <button class="notes-reset hero-notes-reset" type="button" data-notes-reset data-action="reset-notes" onclick="window.portfolioAction(this)">Reset notes</button>
+        </section>
+
+        <section class="project-library" id="builds" aria-labelledby="builds-title" data-reveal>
+          <div class="project-library-heading"><div><p class="eyebrow">Small builds</p><h2 id="builds-title">Experiments, tools, and useful side quests.</h2></div><p>Public repositories, product experiments, and selected private work—each with its own focus.</p></div>
+          <div class="build-controls" role="group" aria-label="Filter projects">
+            <button type="button" aria-pressed="true" data-project-filter="all" data-action="filter-builds" onclick="window.portfolioAction(this)">All builds</button><button type="button" aria-pressed="false" data-project-filter="ai" data-action="filter-builds" onclick="window.portfolioAction(this)">AI systems</button><button type="button" aria-pressed="false" data-project-filter="product" data-action="filter-builds" onclick="window.portfolioAction(this)">Product &amp; web</button><button type="button" aria-pressed="false" data-project-filter="foundation" data-action="filter-builds" onclick="window.portfolioAction(this)">Learning &amp; foundations</button>
+          </div>
+          <p class="github-sync-status" data-github-sync-status aria-live="polite">Checking public GitHub builds…</p>
+          <p class="build-count" data-project-count aria-live="polite"></p>
+          <div class="build-grid" data-project-list></div>
+          <p class="build-empty" data-project-empty hidden>No projects in this view yet.</p>
+        </section>
+
+        <section class="toolkit-section" id="toolkit" aria-labelledby="toolkit-title">
+          <div class="toolkit-notes" data-note-workbench aria-label="Move the toolkit notes around this space">
+            <p class="toolkit-note-hint">Drag a note, or use the arrow keys.</p>
+            <button class="mini-note mint-note" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move models to moments note. Use arrow keys to move it."><span>MODEL → MOMENT</span><br />turning ideas<br />into useful flows</button>
+            <button class="mini-note coral-note" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move product quality note. Use arrow keys to move it."><span>PRODUCT QUALITY</span><br />build it so you<br />don’t rage quit</button>
+            <button class="mini-note butter-note" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move curiosity note. Use arrow keys to move it."><span>CURIOUS ENGINEER</span><br />Google, test,<br />make it clearer</button>
+            <button class="mini-note sky-note" type="button" data-drag-note data-action="move-note" onclick="window.portfolioAction(this)" aria-label="Move Noida note. Use arrow keys to move it."><span>⌖</span><br /><small>NOIDA / NCR</small></button>
+            <button class="toolkit-notes-reset" type="button" data-notes-reset data-action="reset-notes" onclick="window.portfolioAction(this)">Reset toolkit notes</button>
+          </div>
+          <div class="toolkit-main" data-reveal>
+            <p class="eyebrow">Everyday stack</p>
+            <h2 id="toolkit-title">Tool kit.</h2>
+            <p class="toolkit-copy">Tools I use to take an idea from a quick prototype to a working release.</p><p class="tool-drag-hint">Drag a tool card to rearrange it. Keyboard: hold Alt + ← or →.</p><p class="tool-selection" data-tool-selection aria-live="polite">Select a tool to see where it helps in the build loop.</p>
+            <div class="tool-grid" aria-label="Technology toolkit" data-tool-grid></div>
+          </div>
+        </section>
+
+        <section class="events-section" id="events" aria-labelledby="events-title" data-reveal hidden>
+          <div class="section-header"><div><p class="eyebrow">Field notes</p><h2 id="events-title">Out in the world.</h2></div><p>Events, communities, and moments<br />that shaped the work.</p></div>
+          <div class="event-grid" data-event-list></div>
+        </section>
+
+        <section class="location-section" id="location" aria-labelledby="location-title" data-reveal>
+          <div class="map-illustration map-embed" aria-label="Map showing Pari Chowk in Greater Noida"><iframe title="Pari Chowk, Greater Noida map" src="https://www.google.com/maps?q=Pari%20Chowk%2C%20Greater%20Noida%2C%20Uttar%20Pradesh%2C%20India&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><a class="map-navigation-label" href="https://www.google.com/maps/dir/?api=1&amp;destination=Pari+Chowk%2C+Greater+Noida%2C+Uttar+Pradesh%2C+India" target="_blank" rel="noreferrer">Get directions</a></div>
+          <div class="location-copy"><p class="eyebrow">Based in Greater Noida</p><h2 id="location-title">Building useful systems from Pari Chowk.</h2><p>Working from Greater Noida, Uttar Pradesh—turning AI ideas into clear product flows, reliable APIs, and releases people can use.</p><div class="location-actions"><a href="#contact" class="location-link">Start a project conversation</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Pari+Chowk%2C+Greater+Noida%2C+Uttar+Pradesh%2C+India" target="_blank" rel="noreferrer" class="location-map-link">Open Pari Chowk directions</a></div></div>
+        </section>
+
+        <section class="social-section" id="socials" aria-labelledby="social-title">
+          <div class="social-heading"><div><p class="eyebrow">Keep in touch</p><h2 id="social-title">Find me around the internet.</h2></div><p>Professional work, open-source experiments, small thoughts, and a very real Instagram.</p></div>
+          <div class="social-signal-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="social-grid" data-reveal>
+            <a class="social-card linkedin-card" href="https://www.linkedin.com/in/nitish-ai-engineer" target="_blank" rel="noreferrer"><span class="social-icon">in</span><div><small>LinkedIn</small><strong>nitish-ai-engineer</strong></div><b aria-hidden="true">↗</b></a>
+            <a class="social-card github-card" href="https://github.com/Cod4Nitish" target="_blank" rel="noreferrer"><span class="social-icon">GH</span><div><small>GitHub</small><strong>@cod4nitish</strong></div><b aria-hidden="true">↗</b></a>
+            <a class="social-card x-card" href="https://x.com/predator_nitish" target="_blank" rel="noreferrer"><span class="social-icon">𝕏</span><div><small>X</small><strong>@predator_nitish</strong></div><b aria-hidden="true">↗</b></a>
+            <a class="social-card instagram-card" href="https://www.instagram.com/nitish.10.1" target="_blank" rel="noreferrer"><span class="social-icon">◎</span><div><small>Instagram</small><strong>@nitish.10.1</strong></div><b aria-hidden="true">↗</b></a>
+          </div>
+          <div class="live-grid" data-live>
+            <article class="live-card live-card--github" data-live-github aria-live="polite"><p class="live-status" data-live-status>Loading live GitHub activity…</p></article>
+            <article class="live-card live-card--linkedin" data-live-linkedin></article>
+          </div>
+        </section>
+
+        <section class="contact-section" id="contact" aria-labelledby="contact-title">
+          <div class="contact-intro"><p class="eyebrow">Let’s make something useful</p><h2 id="contact-title">Got an idea worth building?</h2><p>Tell me what you’re working on. I’ll bring curiosity, clear systems thinking, and a bias for shipping.</p><div class="contact-links"><a class="contact-link contact-link--gmail" href="mailto:theeditornitish@gmail.com"><span aria-hidden="true">M</span> theeditornitish@gmail.com</a><a class="contact-link contact-link--whatsapp" href="https://wa.me/916206889310" target="_blank" rel="noreferrer"><span aria-hidden="true">◔</span> WhatsApp · +91 62068 89310</a></div></div>
+          <form class="contact-form" data-contact-form novalidate><div class="contact-field"><label for="contact-name">Your name</label><input id="contact-name" name="name" autocomplete="name" placeholder="Your name" /></div><div class="contact-field"><label for="contact-email">Your email</label><input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" /></div><div class="contact-field contact-field-message"><label for="contact-message">Your message</label><textarea class="resize-none" id="contact-message" name="message" rows="4" placeholder="What do you want to build?"></textarea></div><button class="contact-submit contact-submit--email" type="submit"><span aria-hidden="true">✉</span> Create email</button><p class="contact-status" data-contact-status role="status" aria-live="polite"></p></form>
+        </section>
+
+        <footer><span>© <span data-year></span> Nitish Kumar Singh · All rights reserved</span><span>Made with curiosity &amp; good spacing.</span><span class="visitor-badge" data-visitor-badge hidden>👀 <b data-visitor-count></b> visitors</span><a href="#top">Back to top ↑</a></footer>
+      </div>
+    </main>
+    <dialog class="profile-dialog" id="profile-sheet" aria-labelledby="profile-sheet-title" data-profile-dialog>
+      <article class="profile-dialog-card">
+        <button class="profile-dialog-close" type="button" aria-label="Close profile" data-profile-close data-action="close-profile" onclick="window.portfolioAction(this)">×</button>
+        <div class="profile-dialog-intro">
+          <img src="assets/nitish-portrait.jpeg" alt="Nitish wearing a black hoodie" data-profile-photo />
+          <div><p>PROFILE</p><h2 id="profile-sheet-title">Nitish Kumar</h2><span>@nitish.10.1 · Noida, Uttar Pradesh, India</span></div>
+        </div>
+        <div class="profile-dialog-copy"><h3>About</h3><p>AI Engineer and Full-Stack Developer building agentic AI, RAG workflows, reliable APIs, and product experiences that stay clear for the people using them.</p></div>
+        <div class="profile-dialog-experience"><h3>Hands-on experience</h3><p data-profile-internship-detail>Building confidential multi-agent systems, AI automation, RAG pipelines, API backends, and microservice foundations designed to scale to 1,000+ users.</p><small data-profile-internship-start>Started 27 July 2026</small><div><span>Agentic AI</span><span>Multi-agent systems</span><span>RAG pipelines</span><span>Microservices</span></div></div>
+        <div class="profile-dialog-actions"><a href="https://www.linkedin.com/in/nitish-ai-engineer" target="_blank" rel="noreferrer">LinkedIn <b aria-hidden="true">↗</b></a><a href="https://github.com/Cod4Nitish" target="_blank" rel="noreferrer">GitHub <b aria-hidden="true">↗</b></a><a href="https://x.com/predator_nitish" target="_blank" rel="noreferrer">X / Twitter <b aria-hidden="true">↗</b></a><a href="assets/nitish-resume.pdf" download>Download résumé <b aria-hidden="true">↓</b></a><a href="assets/nitish-resume-designed.pdf" target="_blank" rel="noreferrer">Designed résumé <b aria-hidden="true">↗</b></a></div>
+      </article>
+    </dialog>
+
+    <nav class="quick-dock" aria-label="Quick navigation">
+      <a href="#top" aria-label="Home" data-dock-label="Home"><span aria-hidden="true">⌂</span></a>
+      <a href="#work" aria-label="My Work" data-dock-label="My Work"><span aria-hidden="true">✎</span></a>
+      <a href="#contact" aria-label="Message Me" data-dock-label="Message Me"><span aria-hidden="true">✉</span></a>
+      <a href="assets/nitish-resume.pdf" download aria-label="Find My Résumé" data-dock-label="Find My Résumé"><span aria-hidden="true">⇩</span></a>
+      <a href="#builds" aria-label="Apps I Build" data-dock-label="Apps I Build"><span aria-hidden="true">▦</span></a>
+      <button type="button" class="dock-search-button" aria-controls="portfolio-search" aria-expanded="false" aria-label="Search this portfolio" data-dock-label="Search" data-search-trigger data-action="search" onclick="window.portfolioAction(this)"><span aria-hidden="true">⌕</span></button>
+    </nav>
+    <script src="content/portfolio-data.js?v=portfolio-structure-19"></script>
+    <script src="script.js?v=portfolio-structure-20"></script>
+    <script src="enhancements.js?v=6"></script>
+    <script src="explore.js?v=3"></script>
+    <script src="live.js?v=3"></script>
   </body>
 </html>
