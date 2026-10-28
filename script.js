@@ -43,26 +43,9 @@ navigationLinks.forEach((link) => {
   });
 });
 
-const initialSectionId = window.location.hash.slice(1) || 'about';
-setCurrentNavigation(initialSectionId);
-
-if ('IntersectionObserver' in window && !reduceMotion) {
-  const navigationSections = navigationLinks
-    .map((link) => document.querySelector(link.getAttribute('href')))
-    .filter(Boolean);
-
-  const navigationObserver = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
-      if (visible?.target?.id) setCurrentNavigation(visible.target.id);
-    },
-    { rootMargin: '-18% 0px -68% 0px', threshold: [0.05, 0.2, 0.45] },
-  );
-
-  navigationSections.forEach((section) => navigationObserver.observe(section));
-}
+// Scroll-based highlighting lives in enhancements.js, so the menu and the side rail always agree.
+const initialSectionId = window.location.hash.slice(1);
+if (initialSectionId) setCurrentNavigation(initialSectionId);
 
 window.addEventListener('resize', () => setMenuState(false));
 document.querySelector('[data-year]').textContent = new Date().getFullYear();

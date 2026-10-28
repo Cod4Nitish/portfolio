@@ -5,8 +5,7 @@
   - GitHub: public, unauthenticated REST API (no token in the browser). Cached in localStorage
     for 30 minutes so a visitor never spends more than 2 requests of GitHub's 60/hour limit.
     Reuses the repo list script.js already cached when it is fresh.
-  - LinkedIn has no public API for personal profile data, so the official badge is the only
-    auto-updating option. Its script loads only when the Socials section is near the screen.
+  - LinkedIn has no public API for personal profile data, so its card is a static profile link.
   Nothing here runs until the Socials section is within ~600px of the viewport.
 */
 (() => {
@@ -56,7 +55,14 @@
         ? Promise.resolve(sharedRepos.repos)
         : cachedFetch(`nitish-github-recent:${USER.toLowerCase()}`, `https://api.github.com/users/${encodeURIComponent(USER)}/repos?per_page=100&sort=pushed`, []),
     ]);
-    if (!user && !repos.length) { panel.querySelector('[data-live-status]').textContent = 'GitHub is not reachable right now.'; return; }
+    if (!user && !repos.length) {
+      // Unauthenticated API is limited to 60 requests/hour per IP; keep the card useful when it trips.
+      panel.innerHTML = `
+        <div class="live-head"><span class="live-dot live-dot--off" aria-hidden="true"></span><small>GitHub</small></div>
+        <p class="live-status">Live stats are paused right now. The code is all on GitHub.</p>
+        <a class="live-more" href="https://github.com/${encodeURIComponent(USER)}" target="_blank" rel="noreferrer">Open GitHub profile ↗</a>`;
+      return;
+    }
 
     const visible = (Array.isArray(repos) ? repos : [])
       .filter((r) => r && !r.fork && !r.archived && !EXCLUDE.has(String(r.name).toLowerCase()))
@@ -80,13 +86,14 @@
       <a class="live-more" href="https://github.com/${encodeURIComponent(USER)}" target="_blank" rel="noreferrer">See all on GitHub ↗</a>`;
   };
 
-  const loadLinkedInBadge = () => {
+  // LinkedIn's badge script often swaps this card for a blank or "refused to connect" iframe,
+  // so the card stays a plain link to the profile and never claims to be live.
+  const renderLinkedIn = () => {
     const panel = mount.querySelector('[data-live-linkedin]');
     panel.innerHTML = `
-      <div class="live-head"><span class="live-dot live-dot--li" aria-hidden="true"></span><small data-li-label>LinkedIn</small></div>
-      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="${LINKEDIN_VANITY}" data-version="v1">
-        <!-- Fallback until (or if) LinkedIn's script replaces this with the official badge. -->
-        <a class="badge-base__link LI-simple-link li-fallback" href="https://www.linkedin.com/in/${LINKEDIN_VANITY}" target="_blank" rel="noreferrer">
+      <div class="live-head"><span class="live-dot live-dot--li" aria-hidden="true"></span><small>LinkedIn</small></div>
+      <div class="LI-profile-badge">
+        <a class="li-fallback" href="https://www.linkedin.com/in/${LINKEDIN_VANITY}" target="_blank" rel="noreferrer">
           <img src="${escapeHtml(profile.profilePhoto || 'assets/nitish-portrait.jpeg')}" alt="" width="72" height="72" loading="lazy" decoding="async">
           <strong>Nitish Kumar</strong>
           <span>${escapeHtml(profile.role || 'AI Engineer')}</span>
@@ -94,19 +101,6 @@
           <b>View profile on LinkedIn ↗</b>
         </a>
       </div>`;
-    const script = document.createElement('script');
-    script.src = 'https://platform.linkedin.com/badges/js/profile.js';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-    // Say "live" only once LinkedIn has actually swapped the fallback for its own badge.
-    const badge = panel.querySelector('.LI-profile-badge');
-    new MutationObserver((_, observer) => {
-      if (!badge.querySelector('.li-fallback')) {
-        panel.querySelector('[data-li-label]').textContent = 'Live from LinkedIn';
-        observer.disconnect();
-      }
-    }).observe(badge, { childList: true, subtree: true });
   };
 
   let started = false;
@@ -114,7 +108,7 @@
     if (started) return;
     started = true;
     renderGitHub();
-    loadLinkedInBadge();
+    renderLinkedIn();
   };
   if (!('IntersectionObserver' in window)) { start(); return; }
   const observer = new IntersectionObserver((entries) => {

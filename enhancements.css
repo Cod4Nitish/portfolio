@@ -206,6 +206,9 @@ html[data-theme="dark"] :is(img, video, iframe, canvas, picture, svg image, [dat
 }
 .journey.is-done .journey-flag { opacity: 1; transform: scale(1.25) rotate(-8deg); }
 
+/* ---------- Top progress line: minimal, matches the dot rail ---------- */
+.scroll-progress { height: 2px; background: #202124; opacity: 0.7; }
+
 /* ---------- Journey rail v2: minimal dot navigation ----------
    The explore chip (explore.js) already shows progress, so the rail is now a quiet section index:
    small grey dots, the current section as a dark pill, labels on hover. Faded until you scroll or hover. */

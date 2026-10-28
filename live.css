@@ -19,6 +19,7 @@
 .live-head small { font: 0.58rem var(--mono, ui-monospace, monospace); letter-spacing: 0.1em; text-transform: uppercase; color: #5d6173; }
 .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #17a673; box-shadow: 0 0 0 0 rgba(23, 166, 115, 0.5); animation: live-pulse 2.4s ease-out infinite; }
 .live-dot--li { background: #0a66c2; box-shadow: 0 0 0 0 rgba(10, 102, 194, 0.5); }
+.live-dot--off { background: #9aa0b4; box-shadow: none; animation: none; }
 html.is-lite .live-dot { animation: none; }
 
 .live-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin: 0 0 1rem; }

@@ -111,6 +111,7 @@
     toolkit: 'Tools', events: 'Events', location: 'Location', socials: 'Socials', contact: 'Contact',
   };
   const sections = [...document.querySelectorAll('.portfolio-content > section[id]')];
+  const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
   const journey = document.createElement('aside');
   journey.className = 'journey';
   journey.setAttribute('aria-label', 'Page progress');
@@ -162,6 +163,14 @@
       track.appendChild(button);
     });
     stopNodes = [...track.querySelectorAll('.journey-stop')];
+    // Each stop maps to its own menu link, or the nearest earlier one (e.g. Journey -> About).
+    // Sections before the first linked one (Intro, What I do) highlight nothing.
+    let lastLink = null;
+    stops.forEach((stop) => {
+      const own = navLinks.find((link) => link.getAttribute('href') === `#${stop.section.id}`);
+      if (own) lastLink = own;
+      stop.link = own || lastLink;
+    });
     trackHeight = track.clientHeight;
     lastCurrent = null;
     paint();
@@ -187,6 +196,13 @@
       stopNodes.forEach((node, index) => {
         node.classList.toggle('is-on', index <= current);
         node.classList.toggle('is-current', index === current);
+      });
+      const activeLink = current >= 0 ? stops[current].link : null;
+      navLinks.forEach((link) => {
+        const on = link === activeLink;
+        link.classList.toggle('is-current', on);
+        if (on) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
       });
       hud.innerHTML = stops.length
         ? `<b>${pad(Math.max(current, 0) + 1)}</b> / ${pad(stops.length)}`
